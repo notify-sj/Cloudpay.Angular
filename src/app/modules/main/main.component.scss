@@ -1,0 +1,17 @@
+iframe {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%; 
+    width:100%; 
+    border: none;
+}
+
+:host {
+    display: block;
+}
+
+.content-wrapper > *:first-child {
+    display: block;
+}
