@@ -1,34 +1,11 @@
-<div class="wrapper">
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img
-      class="animation__shake"
-      src="assets/img/loading-icon.gif"
-      alt="Cloudpay"
-      height="60"
-      width="60"
-    />
-  </div>
-  <app-header></app-header>
-  <app-menu-sidebar class="main-sidebar sidebar-dark-primary elevation-4"
-    (selected)="selectComponent($event)"
-  ></app-menu-sidebar>
-  <div class="content-wrapper">
+<app-header></app-header>
+
+<app-menu-sidebar class="sidebar-dark-primary"></app-menu-sidebar>
+
+<div class="content-wrapper">
     <router-outlet></router-outlet>
-  </div>
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block"><b>Version</b> {{ appVersion }}</div>
-<strong>
-    <span>Copyright &copy; {{ currentYear }}</span>
-    <a
-        href="#"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="margin: 0"
-    >
-        Cloudpay Technologies</a
-    >
-    <span>.</span>
-</strong>
-<span> All rights reserved.</span>
-</footer>
 </div>
+
+<app-footer></app-footer>
+<!-- <app-control-sidebar></app-control-sidebar> -->
+<div id="sidebar-overlay" (click)="onToggleMenuSidebar()"></div>

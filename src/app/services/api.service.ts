@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { environment } from './../../environments/environment';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { SessionVariable } from '@/shared/session-variable';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { environment } from 'environments/environment';
 import { Observable, catchError, retry, throwError } from 'rxjs';
-import { Result } from '@/shared/result';
+import { SessionVariable } from '@/utils/session-variable';
+import { Result } from '@/utils/result';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ApiService {
-  constructor(private http: HttpClient) { }
-
+    constructor(private http: HttpClient) {}
+    
   private getApiUrl(type: string, endpoint: string) {
     return this.getBaseUrl(type) + endpoint;
   }
@@ -28,16 +28,16 @@ export class ApiService {
     };
     return this.http
       .get<SessionVariable>(this.getApiUrl(type, endpoint), httpOptions)
-      .pipe(retry(1), catchError(this.errorHandl));
+      .pipe(retry(1), catchError(this.errorHandler));
   }
 
   get<T>(type: string, endpoint: string): Observable<Result<T>> {
     return this.http
       .get<T>(this.getApiUrl(type, endpoint))
-      .pipe(retry(1), catchError(this.errorHandl));
+      .pipe(retry(1), catchError(this.errorHandler));
   }
 
-  errorHandl(error) {
+  errorHandler(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       // Get client-side error

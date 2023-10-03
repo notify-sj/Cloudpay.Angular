@@ -1,74 +1,84 @@
-import { Component, OnInit } from '@angular/core';
-import { MENU } from '@modules/menu-sidebar/menu-sidebar.component';
+import {
+    Component,
+    OnChanges,
+    OnInit,
+    SimpleChanges,
+    ViewChild
+} from '@angular/core';
+import {MENU} from '@modules/main/menu-sidebar/menu-sidebar.component';
+import {PfDropdown} from '@profabric/angular-components';
 
 @Component({
-  selector: 'app-sidebar-search',
-  templateUrl: './sidebar-search.component.html',
-  styleUrls: ['./sidebar-search.component.scss']
+    selector: 'app-sidebar-search',
+    templateUrl: './sidebar-search.component.html',
+    styleUrls: ['./sidebar-search.component.scss']
 })
 export class SidebarSearchComponent implements OnInit {
-  public searchText: string = '';
-  public foundMenuItems = [];
+    public searchText: string = '';
+    public foundMenuItems = [];
+    @ViewChild('dropdown') dropdown: PfDropdown;
 
-  constructor() { }
+    constructor() {}
 
-  ngOnInit(): void { }
+    ngOnInit(): void {}
 
-  handleSearchTextChange(event) {
-    this.foundMenuItems = [];
+    handleSearchTextChange(event) {
+        this.foundMenuItems = [];
 
-    if (event.target.value) {
-      this.searchText = event.target.value;
-      this.findMenuItems(MENU);
-      return;
-    } else {
-      this.searchText = '';
-      // this.dropdown.isOpen = false;
+        if (event.target.value) {
+            this.searchText = event.target.value;
+            this.findMenuItems(MENU);
+            return;
+        } else {
+            this.searchText = '';
+            this.dropdown.isOpen = false;
+        }
     }
-  }
 
-  handleIconClick() {
-    this.searchText = '';
-    // this.dropdown.isOpen = false;
-  }
-
-  handleMenuItemClick() {
-    this.searchText = '';
-    // this.dropdown.isOpen = false;
-  }
-
-  findMenuItems(menu) {
-    if (!this.searchText) {
-      return;
+    handleIconClick() {
+        this.searchText = '';
+        this.dropdown.isOpen = false;
     }
-    console.log(this.searchText);
-    menu.forEach((menuItem) => {
-      if (menuItem.name
-        .toLowerCase()
-        .includes(this.searchText.toLowerCase())
-      ) {
-        this.foundMenuItems.push(menuItem);
-      }
-      if (menuItem.children) {
-        return this.findMenuItems(menuItem.children);
-      }
-    });
 
-    if (this.foundMenuItems.length > 0) {
-      // this.dropdown.isOpen = true;
+    handleMenuItemClick() {
+        this.searchText = '';
+        this.dropdown.isOpen = false;
     }
-  }
 
-  boldString(str, substr) {
-    return str.replaceAll(
-      this.capitalizeFirstLetter(substr),
-      `<strong class="text-light">${this.capitalizeFirstLetter(
-        substr
-      )}</strong>`
-    );
-  }
+    findMenuItems(menu) {
+        if (!this.searchText) {
+            return;
+        }
 
-  capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+        menu.forEach((menuItem) => {
+            if (
+                menuItem.path &&
+                menuItem.name
+                    .toLowerCase()
+                    .includes(this.searchText.toLowerCase())
+            ) {
+                this.foundMenuItems.push(menuItem);
+            }
+            if (menuItem.children) {
+                return this.findMenuItems(menuItem.children);
+            }
+        });
+
+        if (this.foundMenuItems.length > 0) {
+            this.dropdown.isOpen = true;
+        }
+    }
+
+    boldString(str, substr) {
+        return str.replaceAll(
+            this.capitalizeFirstLetter(substr),
+            `<strong class="text-light">${this.capitalizeFirstLetter(
+                substr
+            )}</strong>`
+        );
+    }
+
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 }

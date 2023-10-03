@@ -6,10 +6,12 @@ describe('SidebarSearchComponent', () => {
   let component: SidebarSearchComponent;
   let fixture: ComponentFixture<SidebarSearchComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [SidebarSearchComponent]
-    });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ SidebarSearchComponent ]
+    })
+    .compileComponents();
+
     fixture = TestBed.createComponent(SidebarSearchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

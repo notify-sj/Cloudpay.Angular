@@ -1,58 +1,79 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { MainComponent } from './modules/main/main.component';
-import { HeaderComponent } from './modules/header/header.component';
-import { MenuSidebarComponent } from './modules/menu-sidebar/menu-sidebar.component';
-import { ApiConfigService } from '@services/api-config.service';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { HeaderInterceptor } from '@services/api-header-service.interceptor';
-import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
-import { MenuItemComponent } from './components/menu-item/menu-item.component';
+
+import { AppRoutingModule } from '@/app-routing.module';
+import { AppComponent } from './app.component';
+import { MainComponent } from '@modules/main/main.component';
+import { HeaderComponent } from '@modules/main/header/header.component';
+import { FooterComponent } from '@modules/main/footer/footer.component';
+import { MenuSidebarComponent } from '@modules/main/menu-sidebar/menu-sidebar.component';
+import { BlankComponent } from '@pages/blank/blank.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SafePipe } from './pipes/safe-pipe';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from '@pages/dashboard/dashboard.component';
+import { ToastrModule } from 'ngx-toastr';
 
+import { CommonModule, registerLocaleData } from '@angular/common';
+import localeEn from '@angular/common/locales/en';
+import { MainMenuComponent } from './pages/main-menu/main-menu.component';
+import { SubMenuComponent } from './pages/main-menu/sub-menu/sub-menu.component';
+import { MenuItemComponent } from './components/menu-item/menu-item.component';
+import { StoreModule } from '@ngrx/store';
+import { authReducer } from './store/auth/reducer';
+import { uiReducer } from './store/ui/reducer';
+import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
+import { AppConfigService } from '@services/app-config.service';
+import { AppHeaderInterceptor } from '@services/app-header.service';
 
-function initApp(configService: ApiConfigService) {
-  return () => configService.initialize();
+registerLocaleData(localeEn, 'en-EN');
+
+function initApp(configService: AppConfigService) {
+    return () => configService.initialize();
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainComponent,
-    HeaderComponent,
-    MenuSidebarComponent,
-    SidebarSearchComponent,
-    MenuItemComponent, 
-    SafePipe, DashboardComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule
-  ],
-  providers: [
-    ApiConfigService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initApp,
-      deps: [ApiConfigService],
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS, 
-      useClass: HeaderInterceptor, 
-      multi: true,
-      deps: [ApiConfigService]
-    },
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        MainComponent,
+        HeaderComponent,
+        FooterComponent,
+        MenuSidebarComponent,
+        BlankComponent,
+        DashboardComponent,
+        MainMenuComponent,
+        SubMenuComponent,
+        MenuItemComponent,
+        SidebarSearchComponent
+    ],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        StoreModule.forRoot({ auth: authReducer, ui: uiReducer }),
+        HttpClientModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot({
+            timeOut: 3000,
+            positionClass: 'toast-top-right',
+            preventDuplicates: true
+        })
+    ],
+    providers: [
+        AppConfigService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initApp,
+            deps: [AppConfigService],
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AppHeaderInterceptor,
+            multi: true,
+            deps: [AppConfigService]
+        }],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
