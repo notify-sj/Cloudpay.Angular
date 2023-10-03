@@ -9,7 +9,7 @@ export class AppConfigService {
   private data: SessionVariable = {};
   constructor(private service: ApiService) { }
 
-  getConfig(): SessionVariable{
+  getConfig(): SessionVariable {
     return this.data;
   }
 
@@ -20,6 +20,7 @@ export class AppConfigService {
       if (token)
         this.service.getSessionVariable("admin", "admin/session", token).subscribe((sessionVariable) => {
           this.data = Object.assign({}, defaults || {}, sessionVariable || {});
+          console.log("APP_INITI");
           resolve(this.data);
         });
     });

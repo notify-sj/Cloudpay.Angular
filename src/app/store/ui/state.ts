@@ -12,6 +12,6 @@ export interface UiState {
     menuSidebarCollapsed: boolean;
     controlSidebarCollapsed: boolean;
     navbarVariant: string;
-    sidebarSkin: string;
+    sidebarSkin?: string;
     screenSize: any;
 }

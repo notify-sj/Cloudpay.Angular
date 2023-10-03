@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { Observable, catchError, retry, throwError } from 'rxjs';
+import { Observable, catchError, map, retry, throwError } from 'rxjs';
 import { SessionVariable } from '@/utils/session-variable';
 import { Result } from '@/utils/result';
 
@@ -31,10 +31,14 @@ export class ApiService {
       .pipe(retry(1), catchError(this.errorHandler));
   }
 
-  get<T>(type: string, endpoint: string): Observable<Result<T>> {
+  get<T>(type: string, endpoint: string): Observable<T> {
     return this.http
-      .get<T>(this.getApiUrl(type, endpoint))
-      .pipe(retry(1), catchError(this.errorHandler));
+      .get<Result<T>>(this.getApiUrl(type, endpoint))
+      .pipe(
+        map((response: Result<T>) => response.data),
+        retry(1), 
+        catchError(this.errorHandler)
+        );
   }
 
   errorHandler(error) {

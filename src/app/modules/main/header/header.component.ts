@@ -1,5 +1,5 @@
 import {AppState} from '@/store/state';
-import {ToggleControlSidebar, ToggleSidebarMenu} from '@/store/ui/actions';
+import {ToggleControlSidebar, ToggleSidebarMenu} from '@/store/ui/actions/ui.actions';
 import {UiState} from '@/store/ui/state';
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {UntypedFormGroup, UntypedFormControl} from '@angular/forms';

@@ -1,5 +1,5 @@
 import {AppState} from '@/store/state';
-import {ToggleSidebarMenu} from '@/store/ui/actions';
+import {ToggleSidebarMenu} from '@/store/ui/actions/ui.actions';
 import {UiState} from '@/store/ui/state';
 import {Component, HostBinding, OnInit, Renderer2} from '@angular/core';
 import {Store} from '@ngrx/store';
@@ -35,44 +35,44 @@ export class MainComponent implements OnInit {
             ({menuSidebarCollapsed, controlSidebarCollapsed, darkMode}) => {
                 if (menuSidebarCollapsed) {
                     this.renderer.removeClass(
-                        document.querySelector('app-root'),
+                        document.querySelector('body'),
                         'sidebar-open'
                     );
                     this.renderer.addClass(
-                        document.querySelector('app-root'),
+                        document.querySelector('body'),
                         'sidebar-collapse'
                     );
                 } else {
                     this.renderer.removeClass(
-                        document.querySelector('app-root'),
+                        document.querySelector('body'),
                         'sidebar-collapse'
                     );
                     this.renderer.addClass(
-                        document.querySelector('app-root'),
+                        document.querySelector('body'),
                         'sidebar-open'
                     );
                 }
 
                 if (controlSidebarCollapsed) {
                     this.renderer.removeClass(
-                        document.querySelector('app-root'),
+                        document.querySelector('body'),
                         'control-sidebar-slide-open'
                     );
                 } else {
                     this.renderer.addClass(
-                        document.querySelector('app-root'),
+                        document.querySelector('body'),
                         'control-sidebar-slide-open'
                     );
                 }
 
                 if (darkMode) {
                     this.renderer.addClass(
-                        document.querySelector('app-root'),
+                        document.querySelector('body'),
                         'dark-mode'
                     );
                 } else {
                     this.renderer.removeClass(
-                        document.querySelector('app-root'),
+                        document.querySelector('body'),
                         'dark-mode'
                     );
                 }

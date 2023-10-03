@@ -18,7 +18,7 @@
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
             <img
-                [src]="user.picture"
+                [src]="(user$ | async)?.emp_image"
                 fallback-src="assets/img/default-profile.png"
                 class="img-circle"
                 alt="User Image"
@@ -29,7 +29,7 @@
         </div>
         <div class="info">
             <a [routerLink]="['/profile']" class="d-block">
-                {{ user.email }}
+                {{ emp_email }}
             </a>
         </div>
     </div>

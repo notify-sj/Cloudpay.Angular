@@ -1,9 +1,11 @@
-import {AppState} from '@/store/state';
-import {UiState} from '@/store/ui/state';
-import {Component, HostBinding, OnInit} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {AppService} from '@services/app.service';
-import {Observable} from 'rxjs';
+import { AppState } from '@/store/state';
+import { loadUserProfile } from '@/store/ui/actions/user.actions';
+import { UiState } from '@/store/ui/state';
+import { EmployeeProfile } from '@/utils/employee-profile';
+import { Component, HostBinding, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppService } from '@services/app.service';
+import { Observable } from 'rxjs';
 
 const BASE_CLASSES = 'main-sidebar elevation-4';
 @Component({
@@ -14,20 +16,30 @@ const BASE_CLASSES = 'main-sidebar elevation-4';
 export class MenuSidebarComponent implements OnInit {
     @HostBinding('class') classes: string = BASE_CLASSES;
     public ui: Observable<UiState>;
-    public user;
+    public user$: Observable<EmployeeProfile>;
     public menu = MENU;
+
+    emp_image: string = "";
+    emp_email: string = "";
 
     constructor(
         public appService: AppService,
         private store: Store<AppState>
-    ) {}
+    ) {
+        this.ui = this.store.select('ui');
+        this.user$ = this.store.select('user');
+    }
 
     ngOnInit() {
-        this.ui = this.store.select('ui');
         this.ui.subscribe((state: UiState) => {
             this.classes = `${BASE_CLASSES} ${state.sidebarSkin}`;
         });
-        this.user = this.appService.user;
+        console.log((this.user$));
+        this.user$.subscribe((user: EmployeeProfile) => {
+            console.log(user.emp_email);
+            this.emp_email = user.emp_email;
+            this.emp_image = user.emp_image;
+        });
     }
 }
 
@@ -44,7 +56,7 @@ export const MENU = [
     },
     {
         name: 'Main Menu',
-        iconClasses: 'fas fa-folder',        
+        iconClasses: 'fas fa-folder',
         children: [
             {
                 name: 'Sub Menu',
