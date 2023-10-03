@@ -8,5 +8,7 @@
   "files": [
     "src/main.ts", 
     "src/polyfills.ts"
-  ]
+  ],
+  "include": ["**/*.d.ts"],
+  "exclude": ["node_modules"]
 }

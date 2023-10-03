@@ -2,12 +2,26 @@
   "name": "cloudpay",
   "version": "1.0.0",
   "scripts": {
+    "prepare": "husky install",
     "ng": "ng",
     "start": "ng serve",
     "build-prod": "ng build --configuration production --base-href /cloudpay/capp/",
     "build-dev": "ng build --configuration development --base-href /cloudpay/capp/",
     "watch": "ng build --watch --configuration development --base-href /cloudpay/capp/",
-    "test": "ng test"
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "update": "ng update --force @angular/cli @angular/core"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && ng lint && lint-staged"
+    }
   },
   "private": true,
   "dependencies": {
