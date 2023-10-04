@@ -20,7 +20,7 @@ import { MainMenuComponent } from './pages/main-menu/main-menu.component';
 import { SubMenuComponent } from './pages/main-menu/sub-menu/sub-menu.component';
 import { MenuItemComponent } from './components/menu-item/menu-item.component';
 import { Store, StoreModule, select } from '@ngrx/store';
-import { authReducer } from './store/auth/reducer';
+import { sessionVariableReducer } from './store/auth/reducer';
 import { uiReducer } from './store/ui/reducer';
 import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
 import { AppConfigService } from '@services/app-config.service';
@@ -30,6 +30,7 @@ import { UserEffects } from './store/user/effects';
 import { EffectsModule } from '@ngrx/effects';
 import { loadUserProfile } from './store/user/actions';
 import { filter } from 'rxjs';
+import { SessionVariableEffects } from './store/auth/effects';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -54,8 +55,8 @@ function initApp(configService: AppConfigService) {
     imports: [
         CommonModule,
         BrowserModule,
-        StoreModule.forRoot({ auth: authReducer, ui: uiReducer, user: userReducer }),
-        EffectsModule.forRoot([UserEffects]),
+        StoreModule.forRoot({ auth: sessionVariableReducer, ui: uiReducer, user: userReducer }),
+        EffectsModule.forRoot([UserEffects, SessionVariableEffects]),
         HttpClientModule,
         AppRoutingModule,
         ReactiveFormsModule,
@@ -71,14 +72,14 @@ function initApp(configService: AppConfigService) {
         {
             provide: APP_INITIALIZER,
             useFactory: initApp,
-            deps: [AppConfigService],
+            deps: [AppConfigService, Store],
             multi: true
         },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AppHeaderInterceptor,
             multi: true,
-            deps: [AppConfigService]
+            deps: [Store]
         }],
     bootstrap: [AppComponent]
 })

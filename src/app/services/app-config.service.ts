@@ -1,15 +1,18 @@
 import { SessionVariable } from '@/utils/session-variable';
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
+import { Store } from '@ngrx/store';
+import { loadSessionVariable } from '@/store/auth/actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppConfigService {
   private data: SessionVariable = {};
-  constructor(private service: ApiService) { }
+  constructor(private service: ApiService,
+    private store: Store) { }
 
-  getConfig(): SessionVariable {
+  async getConfig() {
     return this.data;
   }
 
@@ -20,6 +23,7 @@ export class AppConfigService {
       if (token)
         this.service.getSessionVariable("admin", "admin/session", token).subscribe((sessionVariable) => {
           this.data = Object.assign({}, defaults || {}, sessionVariable || {});
+          this.store.dispatch(loadSessionVariable());
           resolve(this.data);
         });
     });

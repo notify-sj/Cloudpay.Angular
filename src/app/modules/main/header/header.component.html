@@ -5,10 +5,10 @@
         ></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-        <a [routerLink]="isDisabled ? null : ['/']" class="nav-link">Home</a>
+        <a [routerLink]="isDisabled ? null : ['/']" class="nav-link">{{unitName}}</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-        <a [routerLink]="isDisabled ? null : ['/blank']" class="nav-link">Contact</a>
+        <a [routerLink]="isDisabled ? null : ['/blank']" class="nav-link">{{roleName}}</a>
     </li>
 </ul>
 

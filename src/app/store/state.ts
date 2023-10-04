@@ -1,8 +1,9 @@
 import { EmployeeProfile } from '@/utils/employee-profile';
 import { UiState } from './ui/state';
+import { SessionVariable } from '@/utils/session-variable';
 
 export interface AppState {
-    auth: any;
+    auth: SessionVariable;
     ui: UiState;
     user: EmployeeProfile;
 }
