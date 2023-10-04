@@ -3,5 +3,4 @@ export interface EmployeeProfile {
     emp_name?: string;
     emp_id?: number;
     emp_email?: string;
-    loaded?:boolean;
 }

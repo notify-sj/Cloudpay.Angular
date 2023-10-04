@@ -5,25 +5,29 @@ import { ApiService } from './api.service';
 import { EmployeeProfile } from '@/utils/employee-profile';
 import { Store } from '@ngrx/store';
 import { AppState } from '@/store/state';
-import { loadUserProfileSuccess } from '@/store/ui/actions/user.actions';
+import { loadUserProfile, loadUserProfileSuccess } from '@/store/user/actions';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AppService {
-    public user: EmployeeProfile = {};
+    public user: EmployeeProfile = null;
 
-    constructor(private router: Router, private toastr: ToastrService, 
-        private apiService: ApiService,
-        private store: Store<AppState>) { }
+    constructor(private router: Router, private store: Store,
+        private apiService: ApiService) { }
 
-    async getProfile(defaults?: EmployeeProfile): Promise<EmployeeProfile> {
+    async getUserProfile() {
+        if (this.user)
+            return this.user;
+        else null;
+    }
+
+    getProfile(defaults?: EmployeeProfile): Promise<EmployeeProfile> {
         return new Promise<EmployeeProfile>((resolve) => {
             this.apiService.get<EmployeeProfile>("hrms", "Employee/Profile").subscribe(profile => {
-                console.log(profile.emp_email);
                 this.user = Object.assign({}, defaults || {}, profile || {});
+                this.store.dispatch(loadUserProfile());
                 resolve(this.user);
-                this.store.dispatch(loadUserProfileSuccess({ profile }));
             });
         });
     }

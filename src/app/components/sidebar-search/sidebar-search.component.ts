@@ -1,7 +1,10 @@
 import {
     Component,
+    ElementRef,
+    Input,
     OnChanges,
     OnInit,
+    Renderer2,
     SimpleChanges,
     ViewChild
 } from '@angular/core';
@@ -16,9 +19,10 @@ import {PfDropdown} from '@profabric/angular-components';
 export class SidebarSearchComponent implements OnInit {
     public searchText: string = '';
     public foundMenuItems = [];
-    @ViewChild('dropdown') dropdown: PfDropdown;
+    @ViewChild('searchResult') searchResult: ElementRef;
+    @Input() sidebarSearch: ElementRef;
 
-    constructor() {}
+    constructor(private renderer: Renderer2) {}
 
     ngOnInit(): void {}
 
@@ -31,22 +35,33 @@ export class SidebarSearchComponent implements OnInit {
             return;
         } else {
             this.searchText = '';
-            this.dropdown.isOpen = false;
+            this.hideDiv();
         }
     }
 
+    hideDiv() {
+        this.renderer.setStyle(this.searchResult.nativeElement, 'display', 'none');
+        this.renderer.removeClass(this.sidebarSearch, 'sidebar-search-open');
+    }
+
+    showDiv() {
+        this.renderer.setStyle(this.searchResult.nativeElement, 'display', 'block');
+        this.renderer.addClass(this.sidebarSearch, 'sidebar-search-open');
+      }
+
     handleIconClick() {
         this.searchText = '';
-        this.dropdown.isOpen = false;
+        this.hideDiv();
     }
 
     handleMenuItemClick() {
         this.searchText = '';
-        this.dropdown.isOpen = false;
+        this.hideDiv();
     }
 
     findMenuItems(menu) {
-        if (!this.searchText) {
+        if (!this.searchText || this.searchText.length < 3) {
+            this.hideDiv();
             return;
         }
 
@@ -65,7 +80,7 @@ export class SidebarSearchComponent implements OnInit {
         });
 
         if (this.foundMenuItems.length > 0) {
-            this.dropdown.isOpen = true;
+            this.showDiv();
         }
     }
 

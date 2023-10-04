@@ -21,31 +21,20 @@ import { SubMenuComponent } from './pages/main-menu/sub-menu/sub-menu.component'
 import { MenuItemComponent } from './components/menu-item/menu-item.component';
 import { Store, StoreModule, select } from '@ngrx/store';
 import { authReducer } from './store/auth/reducer';
-import { uiReducer } from './store/ui/reducers/reducer';
+import { uiReducer } from './store/ui/reducer';
 import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
 import { AppConfigService } from '@services/app-config.service';
 import { AppHeaderInterceptor } from '@services/app-header.service';
-import { userReducer } from './store/ui/reducers/user.reducer';
-import { UserEffects } from './store/ui/effects/user.effects';
+import { userReducer } from './store/user/reducer';
+import { UserEffects } from './store/user/effects';
 import { EffectsModule } from '@ngrx/effects';
-import { loadUserProfile } from './store/ui/actions/user.actions';
+import { loadUserProfile } from './store/user/actions';
 import { filter } from 'rxjs';
 
 registerLocaleData(localeEn, 'en-EN');
 
-function initApp(configService: AppConfigService, store: Store) {
-    return () => configService.initialize().then(() => {
-        return new Promise<void>((resolve, reject) => {
-            store.dispatch(loadUserProfile());
-            // assume loadUserProfileSuccess action sets a loaded flag in the store
-            const userProfileLoaded$ = store.pipe(
-              select(isUserProfileLoaded),
-              filter(loaded => loaded),
-              take(1)
-            );
-            userProfileLoaded$.subscribe(() => resolve());
-          });
-    });
+function initApp(configService: AppConfigService) {
+    return () => configService.initialize();
 }
 
 @NgModule({
@@ -82,7 +71,7 @@ function initApp(configService: AppConfigService, store: Store) {
         {
             provide: APP_INITIALIZER,
             useFactory: initApp,
-            deps: [AppConfigService, Store],
+            deps: [AppConfigService],
             multi: true
         },
         {

@@ -1,8 +1,8 @@
 import { AppState } from '@/store/state';
-import { loadUserProfile } from '@/store/ui/actions/user.actions';
+import { loadUserProfile } from '@/store/user/actions';
 import { UiState } from '@/store/ui/state';
 import { EmployeeProfile } from '@/utils/employee-profile';
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppService } from '@services/app.service';
 import { Observable } from 'rxjs';
@@ -15,30 +15,31 @@ const BASE_CLASSES = 'main-sidebar elevation-4';
 })
 export class MenuSidebarComponent implements OnInit {
     @HostBinding('class') classes: string = BASE_CLASSES;
+    @ViewChild('sidebarSearch') sidebarSearch: ElementRef;
     public ui: Observable<UiState>;
     public user$: Observable<EmployeeProfile>;
     public menu = MENU;
 
     emp_image: string = "";
-    emp_email: string = "";
+    emp_name: string = "";
 
     constructor(
         public appService: AppService,
         private store: Store<AppState>
     ) {
         this.ui = this.store.select('ui');
-        this.user$ = this.store.select('user');
     }
 
     ngOnInit() {
         this.ui.subscribe((state: UiState) => {
             this.classes = `${BASE_CLASSES} ${state.sidebarSkin}`;
         });
-        console.log((this.user$));
-        this.user$.subscribe((user: EmployeeProfile) => {
-            console.log(user.emp_email);
-            this.emp_email = user.emp_email;
-            this.emp_image = user.emp_image;
+        
+        this.user$ = this.store.select('user');
+        this.user$.subscribe((user: any) => {
+            let profile = user.profile;
+            this.emp_name = profile.emp_name;
+            this.emp_image = `data:image/png;base64,${profile.emp_image}`;
         });
     }
 }

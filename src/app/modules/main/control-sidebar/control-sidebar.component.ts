@@ -3,7 +3,7 @@ import {
     SetNavbarVariant,
     SetSidebarSkin,
     ToggleDarkMode
-} from '@/store/ui/actions/ui.actions';
+} from '@/store/ui/actions';
 import {UiState} from '@/store/ui/state';
 import {
     Option,

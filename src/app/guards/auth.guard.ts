@@ -35,7 +35,7 @@ export class AuthGuard  {
         if (this.appService.user) {
             return true;
         }
-        console.log("Guard");
+        
         try {
             await this.appService.getProfile();
             return true;

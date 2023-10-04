@@ -1,11 +1,11 @@
-import {AppState} from '@/store/state';
-import {ToggleControlSidebar, ToggleSidebarMenu} from '@/store/ui/actions/ui.actions';
-import {UiState} from '@/store/ui/state';
-import {Component, HostBinding, OnInit} from '@angular/core';
-import {UntypedFormGroup, UntypedFormControl} from '@angular/forms';
-import {Store} from '@ngrx/store';
-import {AppService} from '@services/app.service';
-import {Observable} from 'rxjs';
+import { AppState } from '@/store/state';
+import { ToggleControlSidebar, ToggleSidebarMenu } from '@/store/ui/actions';
+import { UiState } from '@/store/ui/state';
+import { Component, HostBinding, OnInit } from '@angular/core';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AppService } from '@services/app.service';
+import { Observable } from 'rxjs';
 
 const BASE_CLASSES = 'main-header navbar navbar-expand';
 @Component({
@@ -17,11 +17,11 @@ export class HeaderComponent implements OnInit {
     @HostBinding('class') classes: string = BASE_CLASSES;
     public ui: Observable<UiState>;
     public searchForm: UntypedFormGroup;
-
+    isDisabled: boolean = true;
     constructor(
         private appService: AppService,
         private store: Store<AppState>
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.ui = this.store.select('ui');
