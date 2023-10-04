@@ -1,52 +1,51 @@
 <!-- Brand Logo -->
 <a [routerLink]="['/']" class="brand-link">
-    <img
-        src="assets/img/logo.png"
-        alt="AdminLTE Logo"
-        class="brand-image"
-        height="33"
-        width="33"
-        rounded
-        style="opacity: 0.8"
-    />
-    <span class="brand-text font-weight-light">AdminLTE 3</span>
+  <img
+    src="assets/img/logo.png"
+    alt="AdminLTE Logo"
+    class="brand-image"
+    height="33"
+    width="33"
+    rounded
+    style="opacity: 0.8"
+  />
+  <span class="brand-text font-weight-light">AdminLTE 3</span>
 </a>
 
 <!-- Sidebar -->
 <div class="sidebar">
-    <!-- Sidebar user (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-            <img
-                [src]="emp_image"
-                fallback-src="assets/img/default-profile.png"
-                class="img-circle elevation-2"
-                alt="User Image"
-            />
-        </div>
-        <div class="info">
-            <a [routerLink]="['/profile']" class="d-block">
-                {{ emp_name }}
-            </a>
-        </div>
+  <!-- Sidebar user (optional) -->
+  <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div class="image">
+      <img
+        [src]="emp_image"
+        fallback-src="assets/img/default-profile.png"
+        class="img-circle elevation-2"
+        alt="User Image"
+      />
     </div>
-
-    <div #sidebarSearch class="form-inline">
-        <app-sidebar-search [sidebarSearch]="sidebarSearch"></app-sidebar-search>
+    <div class="info">
+      <a [routerLink]="['/profile']" class="d-block">
+        {{ emp_name }}
+      </a>
     </div>
+  </div>
 
-    <!-- Sidebar Menu -->
-    <nav class="mt-2">
-        <ul
-            class="nav nav-pills nav-sidebar flex-column"
-            data-widget="treeview"
-            role="menu"
-            data-accordion="false"
-        >
-            <app-menu-item
-                *ngFor="let item of menu"
-                [menuItem]="item"
-            ></app-menu-item>
-        </ul>
-    </nav>
+  <div #sidebarSearch class="form-inline">
+    <app-sidebar-search [sidebarSearch]="sidebarSearch"></app-sidebar-search>
+  </div>
+
+  <!-- Sidebar Menu -->
+  <nav class="mt-2">
+    <ul
+      class="nav nav-pills nav-sidebar flex-column"
+      data-widget="treeview"
+      role="menu"
+      data-accordion="false"
+    >
+      <li class="nav-item" *ngFor="let item of menu">
+        <app-menu-item [menuItem]="item"></app-menu-item>
+      </li>
+    </ul>
+  </nav>
 </div>
