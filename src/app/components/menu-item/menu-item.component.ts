@@ -1,7 +1,12 @@
-import {Component, HostBinding, Input, OnInit} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
-import {filter} from 'rxjs/operators';
-import {openCloseAnimation, rotateAnimation} from './menu-item.animations';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { openCloseAnimation, rotateAnimation } from './menu-item.animations';
+import { MenuItem } from '@/utils/menu-item';
+import { MenuitemService } from './menuitem.service';
+import { AppState } from '@/store/state';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-menu-item',
@@ -10,16 +15,24 @@ import {openCloseAnimation, rotateAnimation} from './menu-item.animations';
     animations: [openCloseAnimation, rotateAnimation]
 })
 export class MenuItemComponent implements OnInit {
-    @Input() menuItem: any = null;
+    @Input() menuItem: MenuItem = null;
     public isExpandable: boolean = false;
-    @HostBinding('class.nav-item') isNavItem: boolean = true;
-    @HostBinding('class.menu-open') isMenuExtended: boolean = false;
+    public isMenuExtended: boolean = false;
+    private activeIds: Observable<number[]>;
+    private subscription: Subscription | null = null;
+
+    @HostBinding('class') get hostClasses() {
+        return `nav-item${this.isMenuExtended ? ' menu-is-opening menu-open' : ''}`;
+    }
     public isMainActive: boolean = false;
     public isOneOfChildrenActive: boolean = false;
 
-    constructor(private router: Router) {}
+    constructor(private router: Router,
+        private menuItemService: MenuitemService,
+        private store: Store<AppState>) { }
 
     ngOnInit(): void {
+        this.activeIds = this.store.select('activeMenuItem');
         if (
             this.menuItem &&
             this.menuItem.children &&
@@ -36,6 +49,19 @@ export class MenuItemComponent implements OnInit {
     }
 
     public handleMainMenuAction() {
+        this.menuItemService.ExtractParentID(this.menuItem.id);
+        this.subscription = this.activeIds.subscribe((res: any) => {
+            let activeId = res.activeIds as Array<number>;
+            if (activeId) {
+                let a = activeId.filter(y => y == this.menuItem.id);
+                if (a.length == 0) {
+                    this.toggleMenu();
+                    if (this.subscription) {
+                        this.subscription.unsubscribe();
+                    }
+                }
+            }
+        });
         if (this.isExpandable) {
             this.toggleMenu();
             return;

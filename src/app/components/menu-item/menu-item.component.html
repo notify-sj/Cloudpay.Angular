@@ -12,14 +12,10 @@
         ></i>
     </p>
 </a>
-<ul class="nav nav-treeview" *ngFor="let item of menuItem.children" [@openClose]="isMenuExtended">
-    <li class="nav-item">
-        <a
-            [routerLink]="item.path"
-            class="nav-link"
-        >
-            <i class="{{ item.iconClasses }}"></i>
-            <p>{{ item.name }}</p>
-        </a>
-    </li>
+<ul class="nav nav-treeview">
+    <app-menu-item [@openClose]="isMenuExtended"
+        class="nav-item"
+        *ngFor="let item of menuItem.children"
+        [menuItem]="item"
+      ></app-menu-item>
 </ul>

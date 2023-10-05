@@ -1,14 +1,16 @@
 export interface MenuItemDto {
-    name?:string;
-    iconClasses?:string;
+    name?: string;
+    iconClasses?: string;
     path?: Array<string>;
     routePath?: Array<string>;
     children?: Array<MenuItemDto>;
 }
 
 export class MenuItem {
-    name:string;
-    iconClasses:string;
+    id: number;
+    parentId: number;
+    name: string;
+    iconClasses: string;
     path: Array<string>;
     children: Array<MenuItem>;
 }

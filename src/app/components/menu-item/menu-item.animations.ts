@@ -1,6 +1,6 @@
 import {animate, AUTO_STYLE, state, style, transition, trigger} from '@angular/animations';
 
-const TRANSITION_DURATION = 250;
+const TRANSITION_DURATION = 300;
 
 export const openCloseAnimation = trigger('openClose', [
   state('true', style({ height: AUTO_STYLE })),

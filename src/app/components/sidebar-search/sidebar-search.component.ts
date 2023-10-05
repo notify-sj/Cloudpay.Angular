@@ -2,14 +2,11 @@ import {
     Component,
     ElementRef,
     Input,
-    OnChanges,
     OnInit,
     Renderer2,
-    SimpleChanges,
     ViewChild
 } from '@angular/core';
 import {MENU} from '@modules/main/menu-sidebar/menu-sidebar.component';
-import {PfDropdown} from '@profabric/angular-components';
 
 @Component({
     selector: 'app-sidebar-search',

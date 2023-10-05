@@ -43,9 +43,11 @@
       role="menu"
       data-accordion="false"
     >
-      <li class="nav-item" *ngFor="let item of menu">
-        <app-menu-item [menuItem]="item"></app-menu-item>
-      </li>
+      <app-menu-item
+        class="nav-item"
+        *ngFor="let item of menu"
+        [menuItem]="item"
+      ></app-menu-item>
     </ul>
   </nav>
 </div>

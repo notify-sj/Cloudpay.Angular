@@ -6,4 +6,5 @@ export interface AppState {
     auth: SessionVariable;
     ui: UiState;
     user: EmployeeProfile;
+    activeMenuItem: number[];
 }

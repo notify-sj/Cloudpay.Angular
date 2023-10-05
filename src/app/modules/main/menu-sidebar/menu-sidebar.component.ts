@@ -19,6 +19,7 @@ export class MenuSidebarComponent implements OnInit {
     public ui: Observable<UiState>;
     public user$: Observable<EmployeeProfile>;
     public menu = MENU;
+    private _id: number = 0;
 
     emp_image: string = "";
     emp_name: string = "";
@@ -28,6 +29,7 @@ export class MenuSidebarComponent implements OnInit {
         private store: Store<AppState>
     ) {
         this.ui = this.store.select('ui');
+        this._id = 0;
     }
 
     ngOnInit() {
@@ -50,21 +52,23 @@ export class MenuSidebarComponent implements OnInit {
             .subscribe((menus: Array<MenuItemDto>) => {
                 MENU.length = 0;
                 menus.forEach(item => {
-                    MENU.push(this.setMenuItem(item));
+                    MENU.push(this.setMenuItem(item, 0));
                 });
             });
     }
 
-    setMenuItem(menuItem: MenuItemDto): MenuItem {
+    setMenuItem(menuItem: MenuItemDto, parentId: number): MenuItem {
         let item = new MenuItem();
+        item.id = ++this._id;
+        item.parentId = parentId;
         item.name = menuItem.name;
         item.iconClasses = menuItem.iconClasses;
-        item.path = ['/'];
+        item.path = menuItem.routePath;
 
         if (menuItem.children?.length > 0) {
             item.children = [];
             menuItem.children.forEach(x => {
-                item.children.push(this.setMenuItem(x));
+                item.children.push(this.setMenuItem(x, item.id));
             });
         }
         return item;

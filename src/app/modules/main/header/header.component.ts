@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { AppService } from '@services/app.service';
 import { Observable } from 'rxjs';
 
-const BASE_CLASSES = 'main-header navbar navbar-expand';
+const BASE_CLASSES = 'main-header navbar navbar-expand navbar-white navbar-light border-bottom-0';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
