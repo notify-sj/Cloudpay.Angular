@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ApiService } from '@services/api.service';
 import { MenuItem, MenuItemDto } from '@/utils/menu-item';
+import { SessionVariable } from '@/utils/session-variable';
 
 const BASE_CLASSES = 'main-sidebar elevation-4';
 @Component({
@@ -18,8 +19,10 @@ export class MenuSidebarComponent implements OnInit {
     @ViewChild('sidebarSearch') sidebarSearch: ElementRef;
     public ui: Observable<UiState>;
     public user$: Observable<EmployeeProfile>;
+    public sessionVariable$: Observable<SessionVariable>;
     public menu = MENU;
     private _id: number = 0;
+    COMPANY_NAME: string = "";
 
     emp_image: string = "";
     emp_name: string = "";
@@ -42,6 +45,13 @@ export class MenuSidebarComponent implements OnInit {
             let profile = user.profile;
             this.emp_name = profile.emp_name;
             this.emp_image = `data:image/png;base64,${profile.emp_image}`;
+        });
+
+        
+        this.sessionVariable$ = this.store.select('auth');
+        this.sessionVariable$.subscribe((res: any) => {
+            let session = res.session as SessionVariable;
+            this.COMPANY_NAME = this.setDomainName(session.domainName);
         });
 
         this.GetMenus();
@@ -73,6 +83,24 @@ export class MenuSidebarComponent implements OnInit {
         }
         return item;
     }
+
+    setDomainName(domainName: string): string {
+        let _companyName = '';
+        switch (domainName) {
+          case 'AMPLE':
+            _companyName = 'Ample Payroll';
+            break;
+          case 'PAYMAX':
+          case 'RAPPORT':
+          case 'TRESPAY':
+            _companyName = domainName;
+            break;
+          default:
+            _companyName = 'CloudPay';
+            break;
+        }
+        return _companyName;
+      }
 }
 
 export const MENU: Array<MenuItem> = [];
