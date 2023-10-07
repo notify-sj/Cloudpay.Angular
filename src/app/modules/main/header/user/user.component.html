@@ -1,60 +1,37 @@
-<pf-dropdown hide-arrow class="user-menu">
-    <div slot="button">
-        <a class="nav-link">
-            <pf-image
-                [src]="user.picture"
-                fallback-src="assets/img/default-profile.png"
-                class="user-image-small"
-                width="25"
-                height="25"
-                alt="User Image"
-                rounded
-            ></pf-image>
-        </a>
-    </div>
-    <div slot="menu">
-        <li class="user-header bg-primary">
-            <pf-image
-                [src]="user.picture"
-                fallback-src="assets/img/default-profile.png"
-                class="user-image-big"
-                alt="User Image"
-                width="90"
-                height="90"
-                rounded
-            ></pf-image>
+<a class="nav-link" data-toggle="dropdown" [routerLink]="null">
+  <i class="fas fa-th-large"></i>
+</a>
+<div
+  class="dropdown-menu dropdown-menu-lg dropdown-menu-right dropdown-padding-right"
+>
+  <div class="card card-outline card-primary">
+    <div class="card-header box-profile">
+      <div class="text-center">
+        <img
+          class="profile-user-img img-fluid img-circle"
+          [src]="emp_image"
+          style="width: 90px; height: 90px; cursor: pointer"
+          alt="User profile picture"
+        />
+      </div>
 
-            <p>
-                <span>{{ user.email }}</span>
-                <small>
-                    <span class="mr-2">Member since</span>
-                    <span>{{ formatDate(user.createdAt) }}</span>
-                </small>
-            </p>
-        </li>
-        <!-- Menu Body -->
-        <li class="user-body">
-            <div class="row">
-                <div class="col-4 text-center">
-                    <a [routerLink]="['/']">Followers</a>
-                </div>
-                <div class="col-4 text-center">
-                    <a [routerLink]="['/']">Sales</a>
-                </div>
-                <div class="col-4 text-center">
-                    <a [routerLink]="['/']">Friends</a>
-                </div>
-            </div>
-            <!-- /.row -->
-        </li>
-        <!-- Menu Footer-->
-        <li class="user-footer">
-            <a [routerLink]="['/profile']" class="btn btn-default btn-flat">
-                Profile
-            </a>
-            <a (click)="logout()" class="btn btn-default btn-flat float-right">
-                Sign out
-            </a>
-        </li>
+      <h3 class="profile-username text-center">{{ emp_name }}</h3>
+
+      <p class="text-muted text-center">{{ emp_email }}</p>
     </div>
-</pf-dropdown>
+    <div class="card-body">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/profile']"
+            ><i class="far fa-user"></i>&nbsp;My Profile
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <a class="btn btn-primary btn-block" (click)="logout()"
+        ><i class="fa fa-sign-out"></i>&nbsp;<b>Sign Out</b></a
+      >
+    </div>
+  </div>
+</div>

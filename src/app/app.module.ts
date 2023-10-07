@@ -31,6 +31,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { SessionVariableEffects } from './store/auth/effects';
 import { MenuItemEffects } from './store/menuitem/effects';
 import { menuItemReducer } from './store/menuitem/reducer';
+import { UserComponent } from '@modules/main/header/user/user.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -50,7 +51,8 @@ function initApp(configService: AppConfigService) {
         MainMenuComponent,
         SubMenuComponent,
         MenuItemComponent,
-        SidebarSearchComponent
+        SidebarSearchComponent,
+        UserComponent
     ],
     imports: [
         CommonModule,

@@ -32,7 +32,7 @@ export class MainComponent implements OnInit {
         );
 
         this.ui.subscribe(
-            ({menuSidebarCollapsed, controlSidebarCollapsed, darkMode}) => {
+            ({menuSidebarCollapsed}) => {
                 if (menuSidebarCollapsed) {
                     this.renderer.removeClass(
                         document.querySelector('body'),
@@ -50,30 +50,6 @@ export class MainComponent implements OnInit {
                     this.renderer.addClass(
                         document.querySelector('body'),
                         'sidebar-open'
-                    );
-                }
-
-                if (controlSidebarCollapsed) {
-                    this.renderer.removeClass(
-                        document.querySelector('body'),
-                        'control-sidebar-slide-open'
-                    );
-                } else {
-                    this.renderer.addClass(
-                        document.querySelector('body'),
-                        'control-sidebar-slide-open'
-                    );
-                }
-
-                if (darkMode) {
-                    this.renderer.addClass(
-                        document.querySelector('body'),
-                        'dark-mode'
-                    );
-                } else {
-                    this.renderer.removeClass(
-                        document.querySelector('body'),
-                        'dark-mode'
                     );
                 }
             }

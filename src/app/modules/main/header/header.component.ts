@@ -1,11 +1,11 @@
 import { AppState } from '@/store/state';
-import { ToggleControlSidebar, ToggleSidebarMenu } from '@/store/ui/actions';
+import { ToggleSidebarMenu } from '@/store/ui/actions';
 import { UiState } from '@/store/ui/state';
 import { SessionVariable } from '@/utils/session-variable';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppService } from '@services/app.service';
+import { UserService } from '@services/user.service';
 import { Observable } from 'rxjs';
 
 const BASE_CLASSES = 'main-header navbar navbar-expand navbar-white navbar-light border-bottom-0';
@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
     roleName: string = "";
 
     constructor(
-        private appService: AppService,
+        private appService: UserService,
         private store: Store<AppState>
     ) {
     }
@@ -53,9 +53,5 @@ export class HeaderComponent implements OnInit {
 
     onToggleMenuSidebar() {
         this.store.dispatch(new ToggleSidebarMenu());
-    }
-
-    onToggleControlSidebar() {
-        this.store.dispatch(new ToggleControlSidebar());
     }
 }

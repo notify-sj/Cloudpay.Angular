@@ -3,13 +3,13 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { from, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as userActions from './actions';
-import { AppService } from '@services/app.service';
+import { UserService } from '@services/user.service';
 
 @Injectable()
 export class UserEffects {
   constructor(
     private actions$: Actions,
-    private userService: AppService
+    private userService: UserService
   ) {}
 
   loadUserProfile$ = createEffect(() => this.actions$.pipe(
