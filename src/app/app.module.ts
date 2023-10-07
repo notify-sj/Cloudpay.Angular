@@ -19,19 +19,15 @@ import localeEn from '@angular/common/locales/en';
 import { MainMenuComponent } from './pages/main-menu/main-menu.component';
 import { SubMenuComponent } from './pages/main-menu/sub-menu/sub-menu.component';
 import { MenuItemComponent } from './components/menu-item/menu-item.component';
-import { Store, StoreModule } from '@ngrx/store';
-import { sessionVariableReducer } from './store/auth/reducer';
-import { uiReducer } from './store/ui/reducer';
+import { Store } from '@ngrx/store';
 import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
 import { AppConfigService } from '@services/app-config.service';
 import { AppHeaderInterceptor } from '@services/app-header.service';
-import { userReducer } from './store/user/reducer';
-import { UserEffects } from './store/user/effects';
-import { EffectsModule } from '@ngrx/effects';
-import { SessionVariableEffects } from './store/auth/effects';
-import { MenuItemEffects } from './store/menuitem/effects';
-import { menuItemReducer } from './store/menuitem/reducer';
 import { UserComponent } from '@modules/main/header/user/user.component';
+import { LocalStoreModule } from './store/local-store.module';
+import { NotificationsComponent } from '@modules/main/header/notifications/notifications.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { NotificationDashboardComponent } from './components/notification-dashboard/notification-dashboard.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -52,18 +48,15 @@ function initApp(configService: AppConfigService) {
         SubMenuComponent,
         MenuItemComponent,
         SidebarSearchComponent,
-        UserComponent
+        UserComponent,
+        NotificationsComponent,
+        ModalComponent,
+        NotificationDashboardComponent
     ],
     imports: [
         CommonModule,
         BrowserModule,
-        StoreModule.forRoot({
-            auth: sessionVariableReducer, 
-            ui: uiReducer, 
-            user: userReducer,
-            activeMenuItem: menuItemReducer
-        }),
-        EffectsModule.forRoot([UserEffects, SessionVariableEffects, MenuItemEffects]),
+        LocalStoreModule,
         HttpClientModule,
         AppRoutingModule,
         ReactiveFormsModule,

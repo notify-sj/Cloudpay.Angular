@@ -3,7 +3,6 @@ import { EmployeeProfile } from '@/utils/employee-profile';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserService } from '@services/user.service';
-import { DateTime } from 'luxon';
 import { Observable } from 'rxjs';
 
 @Component({

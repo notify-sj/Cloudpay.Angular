@@ -5,7 +5,8 @@
 export const environment = {
     production: false,
     admin: 'http://localhost/Admin/api/',
-    hrms:'http://localhost/HRMS/api/'
+    hrms:'http://localhost/HRMS/api/',
+    notification:'http://localhost/Notification/api/'
 };
 
 /*
