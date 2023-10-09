@@ -37,7 +37,7 @@
     "@ngrx/effects": "^16.2.0",
     "@ngrx/store": "16.2.0",
     "@profabric/angular-components": "0.1.7",
-    "bootstrap": "4.6.1",
+    "bootstrap": "^4.6.1",
     "core-js": "3.25.0",
     "luxon": "3.0.3",
     "ngx-toastr": "17.0.2",

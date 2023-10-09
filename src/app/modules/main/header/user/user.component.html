@@ -1,8 +1,14 @@
-<a class="nav-link" data-toggle="dropdown" [routerLink]="null">
+<a
+  class="nav-link"
+  data-toggle="dropdown"
+  (click)="itemClick()"
+  [routerLink]="null"
+>
   <i class="fas fa-th-large"></i>
 </a>
 <div
   class="dropdown-menu dropdown-menu-lg dropdown-menu-right dropdown-padding-right"
+  [class.show]="isActive"
 >
   <div class="card card-outline card-primary">
     <div class="card-header box-profile">

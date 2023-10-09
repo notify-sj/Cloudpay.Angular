@@ -1,11 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import * as notificationActions from './actions';
-
-export const initialState = {};
+import { initialState } from './state';
 
 const _notificationReducer = createReducer(
   initialState,
-  on(notificationActions.loadNotificationSuccess, (state, { notification }) => ({ ...state, notification }))
+  on(notificationActions.loadNotificationsSuccess, (state, { notify }) => ({ ...state, notify }))
 );
 
 export function notificationReducer(state, action) {

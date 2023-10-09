@@ -3,11 +3,11 @@ import * as menuItemActions from './actions';
 
 export const initialState = {};
 
-const _menuItemReducer = createReducer(
+const _menuStateReducer = createReducer(
   initialState,
-  on(menuItemActions.loadMenuItemActiveIdsSuccess, (state, { activeIds }) => ({ ...state, activeIds }))
+  on(menuItemActions.loadMenuItemStateSuccess, (state, { menu }) => ({ ...state, menu }))
 );
 
-export function menuItemReducer(state, action) {
-  return _menuItemReducer(state, action);
+export function menuStateReducer(state, action) {
+  return _menuStateReducer(state, action);
 }

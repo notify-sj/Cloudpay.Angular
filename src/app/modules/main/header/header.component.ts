@@ -1,3 +1,4 @@
+import { loadNotifications } from '@/store/notifications/actions';
 import { AppState } from '@/store/state';
 import { ToggleSidebarMenu } from '@/store/ui/actions';
 import { UiState } from '@/store/ui/state';
@@ -37,6 +38,7 @@ export class HeaderComponent implements OnInit {
 
         this.sessionVariable = this.store.select('auth');
         this.sessionVariable.subscribe((res: any) => {
+            this.store.dispatch(loadNotifications());
             let session = res.session as SessionVariable;
             this.unitName = session.unitName;
             this.roleName = session.roleName;

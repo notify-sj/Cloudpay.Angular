@@ -1,9 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
+import * as modalActions from './actions';
 import { initialPopupItem } from './state';
-import { closeModal, openModal } from './actions';
 
-export const modalReducer = createReducer(
+const _modalReducer = createReducer(
   initialPopupItem,
-  on(openModal, (state, { item }) => ({ ...state, item })),
-  on(closeModal, () => initialPopupItem)
+  on(modalActions.openModalSuccess, (state, { item }) => ({ ...state, item }))
 );
+
+export function modalReducer(state, action) {
+  return _modalReducer(state, action);
+}

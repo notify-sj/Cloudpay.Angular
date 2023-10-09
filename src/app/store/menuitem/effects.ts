@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import * as menuItemActions from './actions';
-import { MenuitemService } from '@components/menu-item/menuitem.service';
+import { MenuitemService } from '@services/menuitem.service';
 
 @Injectable()
 export class MenuItemEffects {
@@ -12,9 +12,9 @@ export class MenuItemEffects {
     private menuItemService: MenuitemService) {}
 
   loadActiveIds$ = createEffect(() => this.actions$.pipe(
-    ofType(menuItemActions.loadMenuItemActiveIds),
-    switchMap(() => of(this.menuItemService.getActiveIds()).pipe(
-        map(activeIds => menuItemActions.loadMenuItemActiveIdsSuccess({ activeIds })),
+    ofType(menuItemActions.loadMenuItemState),
+    switchMap(() => of(this.menuItemService.getMenuState()).pipe(
+        map(menu => menuItemActions.loadMenuItemStateSuccess({ menu })),
         catchError(() => of({ type: '[User] Load MenuItem Error' }))
       ))
   ))

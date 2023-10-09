@@ -1,12 +1,15 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 import { openCloseAnimation, rotateAnimation } from './menu-item.animations';
 import { MenuItem } from '@/utils/menu-item';
-import { MenuitemService } from './menuitem.service';
+import { MenuitemService } from '../../services/menuitem.service';
 import { AppState } from '@/store/state';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { MenuState } from '@/store/menuitem/state';
+import { MenuType } from '@/utils/menu-type';
+import { selectMenuState } from '@/store/menuitem/selectors';
 
 @Component({
     selector: 'app-menu-item',
@@ -18,7 +21,7 @@ export class MenuItemComponent implements OnInit {
     @Input() menuItem: MenuItem = null;
     public isExpandable: boolean = false;
     public isMenuExtended: boolean = false;
-    private activeIds: Observable<number[]>;
+    private menuState: Observable<MenuState>;
     private subscription: Subscription | null = null;
 
     @HostBinding('class') get hostClasses() {
@@ -29,10 +32,11 @@ export class MenuItemComponent implements OnInit {
 
     constructor(private router: Router,
         private menuItemService: MenuitemService,
-        private store: Store<AppState>) { }
+        private store: Store<AppState>) {
+        this.menuState = this.store.pipe(select(selectMenuState));
+    }
 
     ngOnInit(): void {
-        this.activeIds = this.store.select('activeMenuItem');
         if (
             this.menuItem &&
             this.menuItem.children &&
@@ -50,10 +54,12 @@ export class MenuItemComponent implements OnInit {
 
     public handleMainMenuAction() {
         this.menuItemService.ExtractParentID(this.menuItem.id);
-        this.subscription = this.activeIds.subscribe((res: any) => {
-            let activeId = res.activeIds as Array<number>;
-            if (activeId) {
-                let a = activeId.filter(y => y == this.menuItem.id);
+        this.subscription = this.menuState.pipe(
+            filter((state) => state && state.type === MenuType.MENU),  // Only pass through if type is MenuType.MENU
+        ).subscribe(state => {
+            // Handle the menu state here
+            if (state.activeIds) {
+                let a = state.activeIds.filter(y => y == this.menuItem.id);
                 if (a.length == 0) {
                     this.toggleMenu();
                     if (this.subscription) {

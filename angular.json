@@ -22,24 +22,15 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": [ 
               "node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css",
               "node_modules/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css",
               "node_modules/admin-lte/dist/css/adminlte.min.css",
               "src/styles.scss",
               "node_modules/ngx-toastr/toastr.css"
             ],
-            "scripts": [
-              "node_modules/admin-lte/plugins/jquery/jquery.min.js",
-              "node_modules/admin-lte/plugins/jquery-ui/jquery-ui.min.js",
-              "node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js",
-              "node_modules/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js",
-              "node_modules/admin-lte/dist/js/adminlte.js"
-            ],
+            "scripts": [],
             "vendorChunk": true,
             "preserveSymlinks": true,
             "extractLicenses": false,
@@ -108,24 +99,15 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss",
-              "node_modules/ngx-toastr/toastr.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss", "node_modules/ngx-toastr/toastr.css"],
             "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         },
         "e2e": {
@@ -145,9 +127,7 @@
   },
   "cli": {
     "analytics": "43a7ce40-5fb9-4a0d-8b40-b48fc0426e9d",
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
+    "schematicCollections": ["@angular-eslint/schematics"]
   },
   "schematics": {
     "@angular-eslint/schematics:application": {

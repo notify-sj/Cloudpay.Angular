@@ -1,63 +1,42 @@
-import { ModalDirective } from '@/directives/modal.directive';
-import { Component, ComponentFactoryResolver, InjectionToken, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { AppState } from '@/store/state';
-import { Store } from '@ngrx/store';
-import { closeModal } from '@/store/modals/actions';
+import { selectModalState } from '@/store/modals/selector';
 import { PopupItem } from '@/store/modals/state';
-
-
-export const MODAL_DATA = new InjectionToken<any>('MODAL_DATA');
+import { AppState } from '@/store/state';
+import { Component, ElementRef, Input } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import * as bootstrap from 'bootstrap';
+import { Observable, Subscription, filter } from 'rxjs';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent implements OnInit, OnDestroy {
-  @ViewChild(ModalDirective, { static: true }) modalPopup!: ModalDirective;
-  item$: Observable<PopupItem>;
-  private subscription: Subscription;
-  item: PopupItem;
-  constructor(private store: Store<AppState>,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private injector: Injector) {
-    this.item$ = store.select('modal');
+export class ModalComponent {
+  size: 'default' | 'l' | 's' | 'xl' = 'default';
+  private modalInstance: any;
+  dynamicComponent: any;
+  modal: Observable<PopupItem>;
+  subscription: Subscription;
+
+  constructor(private elementRef: ElementRef, private store: Store<AppState>) {
+    this.modal = store.pipe(select(selectModalState));
   }
 
-  ngOnInit(): void {
-    this.subscription = this.item$.subscribe(
-      item => this.loadComponent(item)
-    );
+  ngAfterViewInit() {
+    this.modalInstance = new bootstrap.Modal(this.elementRef.nativeElement.querySelector('#myModal'));
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  private loadComponent(item: PopupItem) : void {
-    if(item.component) {
-      this.item = item;
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(item.component);
-      const viewContainerRef = this.modalPopup.viewContainerRef;
-      viewContainerRef.clear();
-
-      const injector = Injector.create({
-        parent: this.injector,
-        providers: [{ provide: MODAL_DATA, useValue: item.data }]
-      });
-      viewContainerRef.createComponent(componentFactory, null, injector);
-    }
-  }
-
-  close(): void {
-    this.store.dispatch(closeModal());
-  }
-
-  createInjector(data: any): Injector {
-    return Injector.create({
-      parent: this.injector,
-      providers: [{ provide: MODAL_DATA, useValue: data }]
+  open() {
+    this.subscription = this.modal.pipe(filter((state) => state !== undefined)).subscribe((item: PopupItem) => {
+      this.dynamicComponent = item.component;
+      this.size = item.size;
+      this.modalInstance.show();
     });
+  }
+
+  close() {
+    this.modalInstance.hide();
+    if(this.subscription)
+    this.subscription.unsubscribe();
   }
 }
