@@ -8,9 +8,9 @@
 >
   <div
     class="modal-dialog"
-    [class.modal-lg]="size === 'l'"
-    [class.modal-sm]="size === 's'"
-    [class.modal-xl]="size === 'xl'"
+    [class.modal-sm]="config?.size === 1"
+    [class.modal-lg]="config?.size === 2"
+    [class.modal-xl]="config?.size === 3"
   >
     <div class="modal-content">
       <div class="modal-header">
@@ -23,7 +23,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <ng-container *ngComponentOutlet="dynamicComponent"></ng-container>
+        <ng-container *ngComponentOutlet="config?.component"></ng-container>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

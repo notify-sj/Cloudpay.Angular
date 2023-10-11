@@ -12,7 +12,6 @@ export class NotificationService {
   constructor(private store: Store,
     private apiService: ApiService) { }
 
-
   getNotification() {
     if (this.notifications.getValue() !== null)
       return this.notifications;

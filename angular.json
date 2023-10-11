@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "adminlte": {
+    "cloudpay": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/adminlte",
+            "outputPath": "dist/cloudpay",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -78,18 +78,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "adminlte:build"
+            "browserTarget": "cloudpay:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "adminlte:build:production"
+              "browserTarget": "cloudpay:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "adminlte:build"
+            "browserTarget": "cloudpay:build"
           }
         },
         "test": {
@@ -114,11 +114,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "adminlte:serve"
+            "devServerTarget": "cloudpay:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "adminlte:serve:production"
+              "devServerTarget": "cloudpay:serve:production"
             }
           }
         }

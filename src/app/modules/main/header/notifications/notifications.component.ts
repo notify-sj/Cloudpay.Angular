@@ -1,12 +1,11 @@
+import { ModalOpener } from '@/store/modals/actions';
 import { PopupItem } from '@/store/modals/state';
 import { selectNotificationState } from '@/store/notifications/selector';
-import { NotificationState } from '@/store/notifications/state';
 import { AppState } from '@/store/state';
 import { pluralize } from '@/utils/common-functions';
 import { ModalSize } from '@/utils/modal-size';
 import { UserNotification } from '@/utils/user-notification';
-import { Component, HostBinding, HostListener, OnInit, ViewChild } from '@angular/core';
-import { ModalComponent } from '@components/modal/modal.component';
+import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
 
 import { NotificationDashboardComponent } from '@components/notification-dashboard/notification-dashboard.component';
 import { Store, select } from '@ngrx/store';
@@ -32,7 +31,6 @@ export class NotificationsComponent implements OnInit {
     selectedSize: ModalSize = ModalSize.default;
     component: any;
     isActive: boolean = false;
-    // @ViewChild('myModal') myModal: ModalComponent;
 
     constructor(private store: Store<AppState>, private modalService: ModalService) {
         this.notifications = this.store.pipe(select(selectNotificationState));
@@ -55,8 +53,8 @@ export class NotificationsComponent implements OnInit {
         const initialPopupItem: PopupItem = {
             component: NotificationDashboardComponent,
             size: this.selectedSize
-          };
-          this.modalService.SetPopupItem(initialPopupItem);
+        };
+        this.modalService.SetPopupItem(initialPopupItem);
     }
 
     itemClick() {

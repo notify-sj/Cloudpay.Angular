@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { sessionVariableReducer } from './auth/reducer';
@@ -13,6 +13,8 @@ import { notificationReducer } from './notifications/reducers';
 import { NotificationEffects } from './notifications/effects';
 import { modalReducer } from './modals/reducers';
 import { ModalEffects } from './modals/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 
 @NgModule({
   declarations: [],
@@ -32,7 +34,8 @@ import { ModalEffects } from './modals/effects';
       MenuItemEffects,
       NotificationEffects,
       ModalEffects
-    ])
+    ]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ]
 })
 export class LocalStoreModule { }
