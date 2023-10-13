@@ -10,7 +10,7 @@ import { selectModalState } from './store/modals/selector';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    modal: Observable<PopupItem>;    
+    modal: Observable<PopupItem>;
     constructor(private store: Store) {
         this.modal = this.store.pipe(select(selectModalState));
     }

@@ -1,8 +1,7 @@
 import { ModalSize } from '@/utils/modal-size';
-import { Type } from '@angular/core';
 
 export interface PopupItem {
-  component: Type<any> | null;
+  component: string;
   size: ModalSize;
 }
 

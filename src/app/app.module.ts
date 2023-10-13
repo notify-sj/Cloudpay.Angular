@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule, isDevMode } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from '@/app-routing.module';
@@ -28,6 +28,7 @@ import { LocalStoreModule } from './store/local-store.module';
 import { NotificationsComponent } from '@modules/main/header/notifications/notifications.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NotificationDashboardComponent } from './components/notification-dashboard/notification-dashboard.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -65,7 +66,8 @@ function initApp(configService: AppConfigService) {
             timeOut: 3000,
             positionClass: 'toast-top-right',
             preventDuplicates: true
-        })
+        }),
+        NgbModule
     ],
     providers: [
         AppConfigService,

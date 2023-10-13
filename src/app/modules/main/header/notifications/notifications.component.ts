@@ -1,4 +1,3 @@
-import { ModalOpener } from '@/store/modals/actions';
 import { PopupItem } from '@/store/modals/state';
 import { selectNotificationState } from '@/store/notifications/selector';
 import { AppState } from '@/store/state';
@@ -7,7 +6,6 @@ import { ModalSize } from '@/utils/modal-size';
 import { UserNotification } from '@/utils/user-notification';
 import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
 
-import { NotificationDashboardComponent } from '@components/notification-dashboard/notification-dashboard.component';
 import { Store, select } from '@ngrx/store';
 import { ModalService } from '@services/modal.service';
 import { Observable } from 'rxjs';
@@ -49,9 +47,9 @@ export class NotificationsComponent implements OnInit {
         });
     }
 
-    openModal() {
+    async openModal() {
         const initialPopupItem: PopupItem = {
-            component: NotificationDashboardComponent,
+            component: "NotificationDashboardComponent",
             size: this.selectedSize
         };
         this.modalService.SetPopupItem(initialPopupItem);

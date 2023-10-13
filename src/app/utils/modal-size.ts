@@ -3,4 +3,5 @@ export enum ModalSize {
     's',    // Small
     'l',    // Large
     'xl'    // Extra Large
+    
 }

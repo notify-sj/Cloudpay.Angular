@@ -21,16 +21,23 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
   imports: [
     CommonModule,
     StoreModule.forRoot({
-        auth: sessionVariableReducer, 
-        ui: uiReducer, 
-        user: userReducer,
-        menuState: menuStateReducer,
-        notification: notificationReducer,
-        modal: modalReducer
+      auth: sessionVariableReducer,
+      ui: uiReducer,
+      user: userReducer,
+      menuState: menuStateReducer,
+      notification: notificationReducer,
+      modal: modalReducer
+    }, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictStateSerializability: true,
+        strictActionSerializability: true,
+      }
     }),
     EffectsModule.forRoot([
-      UserEffects, 
-      SessionVariableEffects, 
+      UserEffects,
+      SessionVariableEffects,
       MenuItemEffects,
       NotificationEffects,
       ModalEffects
