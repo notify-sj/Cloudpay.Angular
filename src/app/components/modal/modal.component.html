@@ -1,34 +1,36 @@
-<div
-  class="modal fade swing animated"
-  role="dialog"
-  id="myModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div
-    class="modal-dialog"
-    [class.modal-sm]="config?.size === 1"
-    [class.modal-lg]="config?.size === 2"
-    [class.modal-xl]="config?.size === 3"
-  >
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <ng-container *ngComponentOutlet="component"></ng-container>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
+<ng-template #confirmationModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-title">
+      {{ modalTitle }}
+    </h5>
+    <button
+      type="button"
+      class="close"
+      aria-describedby="modal-title"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-</div>
+  <div class="modal-body">
+    <p>
+      <ng-container *ngComponentOutlet="component; injector: myInjector"></ng-container>
+    </p>
+  </div>
+  <div class="modal-footer" *ngIf="config.footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="d('Cross click')"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="c('Save click')"
+    >
+      Ok
+    </button>
+  </div>
+</ng-template>

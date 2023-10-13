@@ -11,8 +11,6 @@ import { UserEffects } from './user/effects';
 import { EffectsModule } from '@ngrx/effects';
 import { notificationReducer } from './notifications/reducers';
 import { NotificationEffects } from './notifications/effects';
-import { modalReducer } from './modals/reducers';
-import { ModalEffects } from './modals/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 
@@ -25,8 +23,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       ui: uiReducer,
       user: userReducer,
       menuState: menuStateReducer,
-      notification: notificationReducer,
-      modal: modalReducer
+      notification: notificationReducer
     }, {
       runtimeChecks: {
         strictStateImmutability: true,
@@ -39,8 +36,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       UserEffects,
       SessionVariableEffects,
       MenuItemEffects,
-      NotificationEffects,
-      ModalEffects
+      NotificationEffects
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ]

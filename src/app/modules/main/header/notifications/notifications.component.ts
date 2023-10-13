@@ -1,13 +1,12 @@
-import { PopupItem } from '@/store/modals/state';
 import { selectNotificationState } from '@/store/notifications/selector';
 import { AppState } from '@/store/state';
 import { pluralize } from '@/utils/common-functions';
+import { ComponentData } from '@/utils/component-data';
 import { ModalSize } from '@/utils/modal-size';
+import { PopupItem } from '@/utils/popup-item';
 import { UserNotification } from '@/utils/user-notification';
 import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
-
 import { Store, select } from '@ngrx/store';
-import { ModalService } from '@services/modal.service';
 import { Observable } from 'rxjs';
 @Component({
     selector: 'app-notifications',
@@ -26,11 +25,12 @@ export class NotificationsComponent implements OnInit {
     notification_data: UserNotification[] = [];
     NotifiCount: number = 3;
     public notifications: Observable<UserNotification[]>;
-    selectedSize: ModalSize = ModalSize.default;
+    selectedSize: ModalSize = ModalSize.lg;
     component: any;
     isActive: boolean = false;
+    _popupItem: PopupItem;
 
-    constructor(private store: Store<AppState>, private modalService: ModalService) {
+    constructor(private store: Store<AppState>) {
         this.notifications = this.store.pipe(select(selectNotificationState));
     }
 
@@ -47,12 +47,17 @@ export class NotificationsComponent implements OnInit {
         });
     }
 
-    async openModal() {
-        const initialPopupItem: PopupItem = {
-            component: "NotificationDashboardComponent",
-            size: this.selectedSize
+    async openModal(notification: UserNotification) {
+        let cd: ComponentData = {
+            data: notification
         };
-        this.modalService.SetPopupItem(initialPopupItem);
+        this._popupItem = {
+            component: "NotificationDashboardComponent",
+            size: this.selectedSize,
+            title: "Notifications",
+            footer: false,
+            data: cd
+        };
     }
 
     itemClick() {

@@ -25,7 +25,7 @@
     "
   >
     <div class="dropdown-divider" *ngIf="!last"></div>
-    <a class="dropdown-item text-truncate" (click)="openModal()">
+    <a class="dropdown-item text-truncate" (click)="openModal(notification)">
       <i class="fa fa-bullhorn mr-2"></i>
       {{ notification.notification_heading }}
       <span class="float-right text-muted text-sm">{{
@@ -36,3 +36,4 @@
   <div class="dropdown-divider"></div>
   <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
 </div>
+<app-modal #myModal [config]="_popupItem"></app-modal>
