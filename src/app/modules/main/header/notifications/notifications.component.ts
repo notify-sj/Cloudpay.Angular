@@ -47,13 +47,26 @@ export class NotificationsComponent implements OnInit {
         });
     }
 
-    async openModal(notification: UserNotification) {
+    openNotificationDashboard(notification: UserNotification) {
         let cd: ComponentData = {
             data: notification
         };
         this._popupItem = {
             component: "NotificationDashboardComponent",
             size: this.selectedSize,
+            title: "Notifications",
+            footer: false,
+            data: cd
+        };
+    }
+
+    openNotification() {
+        let cd: ComponentData = {
+            data: this.notification_data
+        };
+        this._popupItem = {
+            component: "NotificationListComponent",
+            size: ModalSize.xl,
             title: "Notifications",
             footer: false,
             data: cd

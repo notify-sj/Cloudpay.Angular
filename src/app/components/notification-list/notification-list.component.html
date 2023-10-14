@@ -1,0 +1,27 @@
+<div class="row form-group">
+  <div class="col-xs-12 col-sm-12">
+    <div class="table-responsive">
+      <table
+        datatable
+        [dtOptions]="dtOptions"
+        [dtTrigger]="dtTrigger"
+        class="table table-bordered table-hover"
+      >
+        <thead>
+          <tr>
+            <th>Notification Type</th>
+            <th>Notification Date</th>
+            <th class="text-truncate">Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let notify of notifications">
+            <td>{{ notify.notification_type }}</td>
+            <td>{{ notify.notification_date }}</td>
+            <td>{{ notify.notification_message }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

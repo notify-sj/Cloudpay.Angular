@@ -1,16 +1,18 @@
 import { ComponentType, component_data } from '@/utils/constants';
 import { PopupItem } from '@/utils/popup-item';
-import { Component, Injector, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, Type, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Injector, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, Type, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { OverlayScrollbars } from 'overlayscrollbars';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent implements OnChanges, OnInit {
+export class ModalComponent implements OnChanges, OnInit, AfterViewInit {
   @Input() config: PopupItem;
   @ViewChild('confirmationModal') private modalContent!: TemplateRef<ModalComponent>
+  @ViewChild('modalBody') private modalBody!: ElementRef;
   modalTitle: string;
   public myInjector: Injector;
   component: Type<any>;
@@ -18,6 +20,9 @@ export class ModalComponent implements OnChanges, OnInit {
     private injector: Injector) {
     config.backdrop = 'static';
     config.keyboard = false;
+  }
+  ngAfterViewInit(): void {
+    const osInstance = OverlayScrollbars(this.modalBody.nativeElement, {});
   }
 
   ngOnChanges(changes: SimpleChanges): void {

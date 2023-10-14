@@ -12,10 +12,8 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <p>
-      <ng-container *ngComponentOutlet="component; injector: myInjector"></ng-container>
-    </p>
+  <div #modalBody class="modal-body" overlay-scrollbars>
+    <ng-container *ngComponentOutlet="component; injector: myInjector"></ng-container>
   </div>
   <div class="modal-footer" *ngIf="config.footer">
     <button

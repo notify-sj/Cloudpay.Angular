@@ -29,6 +29,9 @@ import { NotificationsComponent } from '@modules/main/header/notifications/notif
 import { ModalComponent } from './components/modal/modal.component';
 import { NotificationDashboardComponent } from './components/notification-dashboard/notification-dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NotificationListComponent } from '@components/notification-list/notification-list.component';
+import { DataTablesModule } from 'angular-datatables';
+import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -52,7 +55,8 @@ function initApp(configService: AppConfigService) {
         UserComponent,
         NotificationsComponent,
         ModalComponent,
-        NotificationDashboardComponent
+        NotificationDashboardComponent,
+        NotificationListComponent
     ],
     imports: [
         CommonModule,
@@ -67,7 +71,9 @@ function initApp(configService: AppConfigService) {
             positionClass: 'toast-top-right',
             preventDuplicates: true
         }),
-        NgbModule
+        NgbModule, 
+        DataTablesModule,
+        OverlayscrollbarsModule
     ],
     providers: [
         AppConfigService,
