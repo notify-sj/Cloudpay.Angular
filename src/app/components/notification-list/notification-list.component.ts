@@ -29,7 +29,9 @@ export class NotificationListComponent implements OnInit, OnDestroy {
 
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 5
+      pageLength: 5,
+      responsive: true, // Enable responsive design
+      autoWidth: false, // Disable auto-width for columns
     };
     setTimeout(function () {
       this.dtTrigger.next();
