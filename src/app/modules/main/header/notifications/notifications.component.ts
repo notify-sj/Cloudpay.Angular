@@ -66,7 +66,7 @@ export class NotificationsComponent implements OnInit {
         };
         this._popupItem = {
             component: "NotificationListComponent",
-            size: ModalSize.xl,
+            size: this.selectedSize,
             title: "Notifications",
             footer: false,
             data: cd

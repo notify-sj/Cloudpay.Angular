@@ -1,5 +1,7 @@
 import { ComponentData } from '@/utils/component-data';
 import { component_data } from '@/utils/constants';
+import { ModalSize } from '@/utils/modal-size';
+import { PopupItem } from '@/utils/popup-item';
 import { UserNotification } from '@/utils/user-notification';
 import { Component, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
@@ -14,6 +16,8 @@ export class NotificationListComponent implements OnInit, OnDestroy {
   @Input() _componentData: ComponentData;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
+  _popupItem: PopupItem;
+  selectedSize: ModalSize = ModalSize.lg;
   @ViewChild(DataTableDirective, { static: false }) dtElement: any;
 
   public notifications: UserNotification[] = [];
@@ -36,5 +40,18 @@ export class NotificationListComponent implements OnInit, OnDestroy {
     setTimeout(function () {
       this.dtTrigger.next();
     }.bind(this));
-  }
+  }  
+
+  openNotificationDashboard(notification: UserNotification) {
+    let cd: ComponentData = {
+        data: notification
+    };
+    this._popupItem = {
+        component: "NotificationDashboardComponent",
+        size: this.selectedSize,
+        title: "Notifications",
+        footer: false,
+        data: cd
+    };
+}
 }

@@ -1,4 +1,5 @@
 import { ComponentType, component_data } from '@/utils/constants';
+import { ModalSize } from '@/utils/modal-size';
 import { PopupItem } from '@/utils/popup-item';
 import { AfterViewInit, Component, ElementRef, Injector, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, Type, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -22,7 +23,8 @@ export class ModalComponent implements OnChanges, OnInit, AfterViewInit {
     config.keyboard = false;
   }
   ngAfterViewInit(): void {
-    const osInstance = OverlayScrollbars(this.modalBody.nativeElement, {});
+    if (this.modalBody)
+      OverlayScrollbars(this.modalBody.nativeElement, {});
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -41,6 +43,6 @@ export class ModalComponent implements OnChanges, OnInit, AfterViewInit {
       providers: [{ provide: component_data, useValue: this.config.data }],
       parent: this.injector,
     });
-    this.modalService.open(this.modalContent, { size: this.config.size.toString() })
+    this.modalService.open(this.modalContent, { size: ModalSize[this.config.size] })
   }
 }

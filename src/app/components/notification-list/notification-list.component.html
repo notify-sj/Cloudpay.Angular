@@ -15,7 +15,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let notify of notifications">
+          <tr *ngFor="let notify of notifications"(click)="openNotificationDashboard(notify)">
             <td>{{ notify.notification_type }}</td>
             <td>{{ notify.notification_date }}</td>
             <td class="text-truncate" style="max-width: 150px;">{{ notify.notification_message }}</td>
@@ -25,3 +25,4 @@
     </div>
   </div>
 </div>
+<app-modal #myModal [config]="_popupItem"></app-modal>
