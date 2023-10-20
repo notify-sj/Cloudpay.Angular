@@ -48,7 +48,7 @@ export class MenuSidebarComponent implements OnInit {
             this.emp_image = `data:image/png;base64,${profile.emp_image}`;
         });
 
-        
+
         this.sessionVariable$ = this.store.select('auth');
         this.sessionVariable$.subscribe((res: any) => {
             let session = res.session as SessionVariable;
@@ -88,48 +88,20 @@ export class MenuSidebarComponent implements OnInit {
     setDomainName(domainName: string): string {
         let _companyName = '';
         switch (domainName) {
-          case 'AMPLE':
-            _companyName = 'Ample Payroll';
-            break;
-          case 'PAYMAX':
-          case 'RAPPORT':
-          case 'TRESPAY':
-            _companyName = domainName;
-            break;
-          default:
-            _companyName = 'CloudPay';
-            break;
+            case 'AMPLE':
+                _companyName = 'Ample Payroll';
+                break;
+            case 'PAYMAX':
+            case 'RAPPORT':
+            case 'TRESPAY':
+                _companyName = domainName;
+                break;
+            default:
+                _companyName = 'CloudPay';
+                break;
         }
         return _companyName;
-      }
+    }
 }
 
 export const MENU: Array<MenuItem> = [];
-
-
-// {
-//     name: 'Dashboard',
-//     iconClasses: 'fas fa-tachometer-alt',
-//     path: ['/']
-// },
-// {
-//     name: 'Blank',
-//     iconClasses: 'fas fa-file',
-//     path: ['/blank']
-// },
-// {
-//     name: 'Main Menu',
-//     iconClasses: 'fas fa-folder',
-//     children: [
-//         {
-//             name: 'Sub Menu',
-//             iconClasses: 'far fa-address-book',
-//             path: ['/sub-menu-1']
-//         },
-//         {
-//             name: 'Blank',
-//             iconClasses: 'fas fa-file',
-//             path: ['/sub-menu-2']
-//         }
-//     ]
-// }

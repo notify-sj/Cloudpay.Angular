@@ -5,7 +5,9 @@ export enum Endpoint {
     LoginConfig,
     Profile,
     Notification,
-    Menu
+    Menu,
+    AssignedUnits,
+    SwitchUnit
 }
 
 export class EndpointDetail {
@@ -29,3 +31,5 @@ Endpoints.set(Endpoint.LoginConfig, new EndpointDetail("hrms", "Employee/loginco
 Endpoints.set(Endpoint.Profile, new EndpointDetail("hrms", "Employee/Profile", "User Profile"));
 Endpoints.set(Endpoint.Notification, new EndpointDetail("notification", "Notification", "User Notification"));
 Endpoints.set(Endpoint.Menu, new EndpointDetail("admin", "admin/menu/Angular", "Menu"));
+Endpoints.set(Endpoint.AssignedUnits, new EndpointDetail("admin", "Admin/unit", "Assigned Units"));
+Endpoints.set(Endpoint.SwitchUnit, new EndpointDetail("admin", "Admin/switchUnit", "Switch Unit"));

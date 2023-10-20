@@ -5,9 +5,11 @@ import { EmployeeProfile } from '@/utils/employee-profile';
 import { Store } from '@ngrx/store';
 import { loadUserProfile } from '@/store/user/actions';
 import { LoginConfig } from '@/utils/login-config';
-import { BaseResult } from '@/utils/result';
+import { BaseResult, Result } from '@/utils/result';
 import { Endpoint } from '@/utils/endpoint-constants';
 import { ToastrService } from 'ngx-toastr';
+import { Unit } from '@/utils/unit';
+import { AppConfigService } from './app-config.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,12 +19,14 @@ export class UserService {
 
     constructor(private router: Router, private store: Store,
         private apiService: ApiService,
-        private toastr: ToastrService) { }
+        private toastr: ToastrService,
+        private appConfig: AppConfigService) { }
 
     async getUserProfile() {
         if (this.user)
             return this.user;
-        else null;
+        else 
+        return this.getProfile();
     }
 
     getProfile(defaults?: EmployeeProfile): Promise<EmployeeProfile> {
@@ -48,12 +52,20 @@ export class UserService {
         });
     }
 
+    getAssignedUnits(): Promise<Array<Unit>> {
+        return new Promise<Array<Unit>>((resolve) => {
+            this.apiService.get<Array<Unit>>(Endpoint.AssignedUnits).subscribe(units => {
+                resolve(units);
+            });
+        });
+    }
+
     changePassword(value: any) {
-        const param = {
+        const data = {
             old_pass: value.currentPassword,
             new_pass: value.newPassword,
         };
-        this.apiService.put<BaseResult>(Endpoint.ChangePassword, param)
+        this.apiService.put<BaseResult>(Endpoint.ChangePassword, data)
             .subscribe((result: BaseResult) => {
                 if (result.status === "Success") {
                     this.toastr.success(result.message, "Change Password");
@@ -65,4 +77,19 @@ export class UserService {
                     this.toastr.info(result.message, "Change Password");
             });
     }
+    
+    switchUnit(unit: Unit) {
+        const data = {
+            UNIT_ENTID: unit.UNIT_ENTID,
+            UNIT_INIT: unit.UNIT_INIT,
+        };
+        this.apiService.put<Result<number>>(Endpoint.SwitchUnit, data)
+            .subscribe((result: Result<number>) => {
+                if (result.status === "Success") {
+                    this.appConfig.reload(null, result.data.toString());
+                }
+                else
+                    this.toastr.info(result.message, "Switch Unit");
+            });
+      }
 }

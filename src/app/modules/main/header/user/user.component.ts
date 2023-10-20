@@ -20,8 +20,8 @@ export class UserComponent extends HeaderChildComponent implements OnInit {
 
     constructor(private store: Store<AppState>,
         private userService: UserService) {
-            super();
-         }
+        super();
+    }
 
     ngOnInit(): void {
         this.user$ = this.store.select('user');
@@ -35,18 +35,5 @@ export class UserComponent extends HeaderChildComponent implements OnInit {
 
     logout() {
         this.userService.logout();
-    }
-
-    itemClick() {
-        this.isActive = !this.isActive;
-    }
-
-    @HostListener('document:click', ['$event'])
-    handleDocumentClick(event: Event): void {
-        // Check if the click is outside the dropdown button
-        const clickedInside = event.target && (event.target as HTMLElement).closest('.dropdown');
-        if (!clickedInside && this.isActive) {
-            this.isActive = !this.isActive;
-        }
     }
 }

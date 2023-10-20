@@ -22,11 +22,22 @@ export class AppConfigService {
       const url = new URL(window.location.href);
       const token = url.searchParams.get('token');
       if (token)
-        this.service.getSessionVariable(Endpoint.SessionVariable, token).subscribe((sessionVariable) => {
-          this.data = Object.assign({}, defaults || {}, sessionVariable || {});
-          this.store.dispatch(loadSessionVariable());
-          resolve(this.data);
-        });
+        this.getSessionVariable(defaults, token, resolve);
+    });
+  }
+
+  getSessionVariable(defaults: SessionVariable, token: string, resolve) {
+    this.service.getSessionVariable(Endpoint.SessionVariable, token).subscribe((sessionVariable) => {
+      this.data = Object.assign({}, defaults || {}, sessionVariable || {});
+      this.store.dispatch(loadSessionVariable());
+      resolve(this.data);
+    });
+  }
+
+  reload(defaults?: SessionVariable, token?: string): Promise<SessionVariable> {
+    return new Promise<SessionVariable>((resolve) => {
+      if (token)
+        this.getSessionVariable(defaults, token, resolve);
     });
   }
 }

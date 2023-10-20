@@ -2,8 +2,10 @@ import { loadNotifications } from '@/store/notifications/actions';
 import { AppState } from '@/store/state';
 import { ToggleSidebarMenu } from '@/store/ui/actions';
 import { UiState } from '@/store/ui/state';
+import { loadUserProfile } from '@/store/user/actions';
 import { LoginConfig } from '@/utils/login-config';
 import { SessionVariable } from '@/utils/session-variable';
+import { Unit } from '@/utils/unit';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -23,8 +25,10 @@ export class HeaderComponent implements OnInit {
     public sessionVariable: Observable<SessionVariable>;
     isDisabled: boolean = true;
     unitName: string = "";
+    unitInit: string = "";
     roleName: string = "";
     loginConfig: LoginConfig = null;
+    units: Array<Unit> = null;
 
     constructor(
         private appService: UserService,
@@ -41,16 +45,24 @@ export class HeaderComponent implements OnInit {
         this.sessionVariable = this.store.select('auth');
         this.sessionVariable.subscribe((res: any) => {
             this.store.dispatch(loadNotifications());
-            let session = res.session as SessionVariable;
+                        let session = res.session as SessionVariable;
             this.unitName = session.unitName;
             this.roleName = session.roleName;
+            this.unitInit = session.unit;
+
+            this.GetLoginConfig();
+            this.GetAssignedUnits();
         });
 
         this.searchForm = new UntypedFormGroup({
             search: new UntypedFormControl(null)
         });
-        
-        this.GetLoginConfig();
+    }
+
+    GetAssignedUnits() {
+        this.appService.getAssignedUnits().then((result) => {
+            this.units = result.filter(x => x.UNIT_INIT != this.unitInit);
+        });
     }
 
     logout() {
@@ -60,10 +72,10 @@ export class HeaderComponent implements OnInit {
     onToggleMenuSidebar() {
         this.store.dispatch(new ToggleSidebarMenu());
     }
-  
+
     GetLoginConfig() {
-      this.appService.getLoginConfig().then((result) => {
-        this.loginConfig = result;
-      });
+        this.appService.getLoginConfig().then((result) => {
+            this.loginConfig = result;
+        });
     }
 }

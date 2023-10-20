@@ -11,14 +11,16 @@ import { Endpoint, EndpointDetail, Endpoints } from '@/utils/endpoint-constants'
   providedIn: 'root'
 })
 export class ApiService {
-  title: string;
   constructor(private http: HttpClient, private toaster: ToastrService) {
     this.errorHandler = this.errorHandler.bind(this);
   }
 
+  private getEndpointDetail(type: Endpoint): EndpointDetail {
+    return Endpoints.get(type) as EndpointDetail;
+  }
+
   private getApiUrl(type: Endpoint) {
-    let _endpoint = Endpoints.get(type) as EndpointDetail;
-    this.title = _endpoint.title;
+    let _endpoint = this.getEndpointDetail(type);
     return this.getBaseUrl(_endpoint.type) + _endpoint.url;
   }
 
@@ -35,7 +37,7 @@ export class ApiService {
     };
     return this.http
       .get<SessionVariable>(this.getApiUrl(_endpoint), httpOptions)
-      .pipe(retry(1), catchError(this.errorHandler));
+      .pipe(retry(1), catchError(err => this.errorHandler(err, _endpoint)));
   }
 
   get<T>(_endpoint: Endpoint): Observable<T> {
@@ -44,7 +46,7 @@ export class ApiService {
       .pipe(
         map((response: Result<T>) => response.data),
         retry(1),
-        catchError(this.errorHandler)
+        catchError(err => this.errorHandler(err, _endpoint))
       );
   }
 
@@ -52,21 +54,22 @@ export class ApiService {
     return this.http
       .put<T>(this.getApiUrl(_endpoint), data)
       .pipe(retry(1),
-        catchError(this.errorHandler)
+        catchError(err => this.errorHandler(err, _endpoint))
       );
   }
 
-  errorHandler(res) {
+  errorHandler(res, type: Endpoint) {
     let errorMessage = '';
     if (res.error instanceof ErrorEvent) {
       // Get client-side error
       errorMessage = res.error.message;
     } else {
       // Get server-side error
-      this.toaster.error(res.error.message, this.title);
+      let _endpoint = this.getEndpointDetail(type);
+      this.toaster.error(res.error.message, _endpoint.title);
       errorMessage = `Error Code: ${res.status}\nMessage: ${res.message}`;
     }
-    console.error(errorMessage);
+    console.log(errorMessage);
     return throwError(() => {
       return errorMessage;
     });

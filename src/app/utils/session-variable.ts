@@ -3,4 +3,5 @@ export interface SessionVariable {
     roleName?: string;
     unitName?: string;
     domainName?: string;
+    unit?: string;
 }
