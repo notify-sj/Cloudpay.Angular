@@ -40,7 +40,10 @@ export class UserService {
     }
 
     logout() {
-        window.parent.postMessage('logout', '*');
+        let data = {
+            type: "logout"
+        }
+        window.parent.postMessage(data, '*');
     }
 
     getLoginConfig(defaults?: LoginConfig): Promise<LoginConfig> {
@@ -86,7 +89,12 @@ export class UserService {
         this.apiService.put<Result<number>>(Endpoint.SwitchUnit, data)
             .subscribe((result: Result<number>) => {
                 if (result.status === "Success") {
-                    this.appConfig.reload(null, result.data.toString());
+                    const url = new URL(window.location.href);                    
+                    let data = {
+                        type: "switchUnit",
+                        token: url.origin + url.pathname + "?token=" + result.data.toString()
+                    }
+                    window.parent.postMessage(data, '*');
                 }
                 else
                     this.toastr.info(result.message, "Switch Unit");
