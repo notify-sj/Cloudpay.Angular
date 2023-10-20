@@ -2,6 +2,7 @@ import { loadNotifications } from '@/store/notifications/actions';
 import { AppState } from '@/store/state';
 import { ToggleSidebarMenu } from '@/store/ui/actions';
 import { UiState } from '@/store/ui/state';
+import { LoginConfig } from '@/utils/login-config';
 import { SessionVariable } from '@/utils/session-variable';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit {
     isDisabled: boolean = true;
     unitName: string = "";
     roleName: string = "";
+    loginConfig: LoginConfig = null;
 
     constructor(
         private appService: UserService,
@@ -47,6 +49,8 @@ export class HeaderComponent implements OnInit {
         this.searchForm = new UntypedFormGroup({
             search: new UntypedFormControl(null)
         });
+        
+        this.GetLoginConfig();
     }
 
     logout() {
@@ -55,5 +59,11 @@ export class HeaderComponent implements OnInit {
 
     onToggleMenuSidebar() {
         this.store.dispatch(new ToggleSidebarMenu());
+    }
+  
+    GetLoginConfig() {
+      this.appService.getLoginConfig().then((result) => {
+        this.loginConfig = result;
+      });
     }
 }

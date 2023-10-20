@@ -1,5 +1,5 @@
 import { ComponentData } from '@/utils/component-data';
-import { component_data } from '@/utils/constants';
+import { component_data } from '@/utils/component-constant';
 import { ModalSize } from '@/utils/modal-size';
 import { PopupItem } from '@/utils/popup-item';
 import { UserNotification } from '@/utils/user-notification';

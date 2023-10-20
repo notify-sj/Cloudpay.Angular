@@ -1,4 +1,4 @@
-import { ComponentType, component_data } from '@/utils/constants';
+import { ComponentType, component_data } from '@/utils/component-constant';
 import { ModalSize } from '@/utils/modal-size';
 import { PopupItem } from '@/utils/popup-item';
 import { AfterViewInit, Component, ElementRef, Injector, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, Type, ViewChild } from '@angular/core';

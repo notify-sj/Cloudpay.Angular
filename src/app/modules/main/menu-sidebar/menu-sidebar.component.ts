@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from '@services/api.service';
 import { MenuItem, MenuItemDto } from '@/utils/menu-item';
 import { SessionVariable } from '@/utils/session-variable';
+import { Endpoint } from '@/utils/endpoint-constants';
 
 const BASE_CLASSES = 'main-sidebar elevation-4';
 @Component({
@@ -58,7 +59,7 @@ export class MenuSidebarComponent implements OnInit {
     }
 
     GetMenus() {
-        this.apiService.get<Array<MenuItemDto>>("admin", "admin/menu/Angular")
+        this.apiService.get<Array<MenuItemDto>>(Endpoint.Menu)
             .subscribe((menus: Array<MenuItemDto>) => {
                 MENU.length = 0;
                 menus.forEach(item => {

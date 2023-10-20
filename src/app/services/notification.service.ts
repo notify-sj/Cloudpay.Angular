@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { ApiService } from './api.service';
 import { UserNotification } from '@/utils/user-notification';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Endpoint } from '@/utils/endpoint-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class NotificationService {
   }
 
   private getNotifications(): Observable<UserNotification[]> {
-    return this.apiService.get<UserNotification[]>("notification", "Notification")
+    return this.apiService.get<UserNotification[]>(Endpoint.Notification)
       .pipe(
         tap(notifications => this.notifications.next(notifications)));
   }

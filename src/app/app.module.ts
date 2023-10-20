@@ -32,6 +32,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationListComponent } from '@components/notification-list/notification-list.component';
 import { DataTablesModule } from 'angular-datatables';
 import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
+import { ChangePasswordComponent } from './modules/main/header/change-password/change-password.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -56,7 +57,8 @@ function initApp(configService: AppConfigService) {
         NotificationsComponent,
         ModalComponent,
         NotificationDashboardComponent,
-        NotificationListComponent
+        NotificationListComponent,
+        ChangePasswordComponent
     ],
     imports: [
         CommonModule,

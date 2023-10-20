@@ -1,5 +1,5 @@
 import { ComponentData } from '@/utils/component-data';
-import { component_data } from '@/utils/constants';
+import { component_data } from '@/utils/component-constant';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 
 @Component({

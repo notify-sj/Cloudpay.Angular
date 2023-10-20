@@ -1,25 +1,32 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Observable, catchError, map, retry, throwError } from 'rxjs';
 import { SessionVariable } from '@/utils/session-variable';
 import { Result } from '@/utils/result';
+import { ToastrService } from 'ngx-toastr';
+import { Endpoint, EndpointDetail, Endpoints } from '@/utils/endpoint-constants';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ApiService {
-    constructor(private http: HttpClient) {}
-    
-  private getApiUrl(type: string, endpoint: string) {
-    return this.getBaseUrl(type) + endpoint;
+  title: string;
+  constructor(private http: HttpClient, private toaster: ToastrService) {
+    this.errorHandler = this.errorHandler.bind(this);
+  }
+
+  private getApiUrl(type: Endpoint) {
+    let _endpoint = Endpoints.get(type) as EndpointDetail;
+    this.title = _endpoint.title;
+    return this.getBaseUrl(_endpoint.type) + _endpoint.url;
   }
 
   private getBaseUrl(type: string) {
     return environment[type];
   }
 
-  getSessionVariable(type: string, endpoint: string, token: string): Observable<SessionVariable> {
+  getSessionVariable(_endpoint: Endpoint, token: string): Observable<SessionVariable> {
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -27,30 +34,39 @@ export class ApiService {
       }),
     };
     return this.http
-      .get<SessionVariable>(this.getApiUrl(type, endpoint), httpOptions)
+      .get<SessionVariable>(this.getApiUrl(_endpoint), httpOptions)
       .pipe(retry(1), catchError(this.errorHandler));
   }
 
-  get<T>(type: string, endpoint: string): Observable<T> {
+  get<T>(_endpoint: Endpoint): Observable<T> {
     return this.http
-      .get<Result<T>>(this.getApiUrl(type, endpoint))
+      .get<Result<T>>(this.getApiUrl(_endpoint))
       .pipe(
         map((response: Result<T>) => response.data),
-        retry(1), 
+        retry(1),
         catchError(this.errorHandler)
-        );
+      );
   }
 
-  errorHandler(error) {
+  put<T>(_endpoint: Endpoint, data: any): Observable<T> {
+    return this.http
+      .put<T>(this.getApiUrl(_endpoint), data)
+      .pipe(retry(1),
+        catchError(this.errorHandler)
+      );
+  }
+
+  errorHandler(res) {
     let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
+    if (res.error instanceof ErrorEvent) {
       // Get client-side error
-      errorMessage = error.error.message;
+      errorMessage = res.error.message;
     } else {
       // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      this.toaster.error(res.error.message, this.title);
+      errorMessage = `Error Code: ${res.status}\nMessage: ${res.message}`;
     }
-    console.log(errorMessage);
+    console.error(errorMessage);
     return throwError(() => {
       return errorMessage;
     });

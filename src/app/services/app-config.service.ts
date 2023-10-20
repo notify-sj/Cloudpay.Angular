@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Store } from '@ngrx/store';
 import { loadSessionVariable } from '@/store/auth/actions';
+import { Endpoint } from '@/utils/endpoint-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class AppConfigService {
       const url = new URL(window.location.href);
       const token = url.searchParams.get('token');
       if (token)
-        this.service.getSessionVariable("admin", "admin/session", token).subscribe((sessionVariable) => {
+        this.service.getSessionVariable(Endpoint.SessionVariable, token).subscribe((sessionVariable) => {
           this.data = Object.assign({}, defaults || {}, sessionVariable || {});
           this.store.dispatch(loadSessionVariable());
           resolve(this.data);

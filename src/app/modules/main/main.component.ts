@@ -1,9 +1,9 @@
-import {AppState} from '@/store/state';
-import {ToggleSidebarMenu} from '@/store/ui/actions';
-import {UiState} from '@/store/ui/state';
-import {Component, HostBinding, OnInit, Renderer2} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import { AppState } from '@/store/state';
+import { ToggleSidebarMenu } from '@/store/ui/actions';
+import { UiState } from '@/store/ui/state';
+import { Component, HostBinding, OnInit, Renderer2 } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-main',
@@ -14,7 +14,7 @@ export class MainComponent implements OnInit {
     @HostBinding('class') class = 'wrapper';
     public ui: Observable<UiState>;
 
-    constructor(private renderer: Renderer2, private store: Store<AppState>) {}
+    constructor(private renderer: Renderer2, private store: Store<AppState>) { }
 
     ngOnInit() {
         this.ui = this.store.select('ui');
@@ -32,7 +32,7 @@ export class MainComponent implements OnInit {
         );
 
         this.ui.subscribe(
-            ({menuSidebarCollapsed}) => {
+            ({ menuSidebarCollapsed }) => {
                 if (menuSidebarCollapsed) {
                     this.renderer.removeClass(
                         document.querySelector('body'),

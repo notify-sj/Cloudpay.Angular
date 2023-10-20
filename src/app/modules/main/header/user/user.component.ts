@@ -1,24 +1,17 @@
 import { AppState } from '@/store/state';
 import { EmployeeProfile } from '@/utils/employee-profile';
-import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MenuitemService } from '@services/menuitem.service';
 import { UserService } from '@services/user.service';
 import { Observable } from 'rxjs';
+import { HeaderChildComponent } from '../header-child.component';
 
 @Component({
     selector: 'app-user',
     templateUrl: './user.component.html',
     styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnInit {
-    @HostBinding('class')
-    get hostClasses() {
-        return this.classString;
-    }
-
-    private classString: string = 'nav-item dropdown';
-
+export class UserComponent extends HeaderChildComponent implements OnInit {
     public user$: Observable<EmployeeProfile>;
     emp_image: string = "";
     emp_name: string = "";
@@ -26,8 +19,9 @@ export class UserComponent implements OnInit {
     isActive: boolean = false;
 
     constructor(private store: Store<AppState>,
-        private userService: UserService,
-        private menuItemService: MenuitemService) { }
+        private userService: UserService) {
+            super();
+         }
 
     ngOnInit(): void {
         this.user$ = this.store.select('user');
