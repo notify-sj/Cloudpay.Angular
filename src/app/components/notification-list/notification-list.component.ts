@@ -51,7 +51,8 @@ export class NotificationListComponent implements OnInit, OnDestroy {
         size: this.selectedSize,
         title: "Notifications",
         footer: false,
-        data: cd
+        data: cd,
+        okButtonLabel: "Ok"
     };
 }
 }

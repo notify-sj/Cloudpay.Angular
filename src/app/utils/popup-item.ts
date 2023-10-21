@@ -7,4 +7,5 @@ export class PopupItem {
     title: string;
     footer: boolean;
     data: ComponentData;
+    okButtonLabel: string;
 }

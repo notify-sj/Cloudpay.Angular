@@ -53,7 +53,8 @@ export class NotificationsComponent extends HeaderChildComponent implements OnIn
             size: this.selectedSize,
             title: "Notifications",
             footer: false,
-            data: cd
+            data: cd,
+            okButtonLabel: "Ok"
         };
     }
 
@@ -66,7 +67,8 @@ export class NotificationsComponent extends HeaderChildComponent implements OnIn
             size: this.selectedSize,
             title: "Notifications",
             footer: false,
-            data: cd
+            data: cd,
+            okButtonLabel: "Ok"
         };
     }
 }

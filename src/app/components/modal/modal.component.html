@@ -13,7 +13,9 @@
     </button>
   </div>
   <div #modalBody class="modal-body" overlay-scrollbars>
-    <ng-container *ngComponentOutlet="component; injector: myInjector"></ng-container>
+    <ng-container
+      *ngComponentOutlet="component; injector: myInjector"
+    ></ng-container>
   </div>
   <div class="modal-footer" *ngIf="config.footer">
     <button
@@ -23,12 +25,8 @@
     >
       Cancel
     </button>
-    <button
-      type="button"
-      class="btn btn-primary"
-      (click)="c('Save click')"
-    >
-      Ok
+    <button type="button" class="btn btn-primary" (click)="onOkButtonClick()">
+      {{ okButtonLable }}
     </button>
   </div>
 </ng-template>
