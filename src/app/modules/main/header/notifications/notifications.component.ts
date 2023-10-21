@@ -9,6 +9,7 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 import { HeaderChildComponent } from '@modules/main/header/header-child.component';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { DropdownService } from '../dropdown.service';
 @Component({
     selector: 'app-notifications',
     templateUrl: './notifications.component.html',
@@ -24,8 +25,9 @@ export class NotificationsComponent extends HeaderChildComponent implements OnIn
     component: any;
     _popupItem: PopupItem;
 
-    constructor(private store: Store<AppState>) {
-        super();
+    constructor(private store: Store<AppState>,
+        dropdownService: DropdownService) {
+        super(dropdownService);
         this.notifications = this.store.pipe(select(selectNotificationState));
     }
 

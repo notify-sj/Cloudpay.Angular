@@ -4,6 +4,7 @@ import { ToggleSidebarMenu } from '@/store/ui/actions';
 import { UiState } from '@/store/ui/state';
 import { loadUserProfile } from '@/store/user/actions';
 import { LoginConfig } from '@/utils/login-config';
+import { Role } from '@/utils/role';
 import { SessionVariable } from '@/utils/session-variable';
 import { Unit } from '@/utils/unit';
 import { Component, HostBinding, OnInit } from '@angular/core';
@@ -29,6 +30,7 @@ export class HeaderComponent implements OnInit {
     roleName: string = "";
     loginConfig: LoginConfig = null;
     units: Array<Unit> = null;
+    roles: Array<Role> = null;
 
     constructor(
         private appService: UserService,
@@ -52,10 +54,16 @@ export class HeaderComponent implements OnInit {
 
             this.GetLoginConfig();
             this.GetAssignedUnits();
+            this.GetAssignedRoles();
         });
 
         this.searchForm = new UntypedFormGroup({
             search: new UntypedFormControl(null)
+        });
+    }
+    GetAssignedRoles() {
+        this.appService.getAssignedRoles().then((result) => {
+            this.roles = result.filter(x => x.ROLE_NAME != this.roleName);
         });
     }
 

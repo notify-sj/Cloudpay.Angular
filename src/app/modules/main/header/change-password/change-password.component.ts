@@ -3,6 +3,7 @@ import { Component, HostBinding, HostListener, Input, OnChanges, OnInit, SimpleC
 import { AbstractControl, FormBuilder, FormControlOptions, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { HeaderChildComponent } from '@modules/main/header/header-child.component';
 import { UserService } from '@services/user.service';
+import { DropdownService } from '../dropdown.service';
 
 @Component({
   selector: 'app-change-password',
@@ -15,8 +16,9 @@ export class ChangePasswordComponent extends HeaderChildComponent implements OnI
   changePasswordForm: FormGroup;
 
   constructor(private fb: FormBuilder,
-    private appService: UserService) {
-    super();
+    private appService: UserService,
+    dropdownService: DropdownService) {
+    super(dropdownService);
     this.changePasswordForm = this.fb.group({
       currentPassword: ['', Validators.required],
       newPassword: ['', Validators.required],
@@ -39,7 +41,7 @@ export class ChangePasswordComponent extends HeaderChildComponent implements OnI
   }
 
   itemClick(): void {
-    this.isActive = !this.isActive;
+    super.itemClick();
     this.resetForm();
   }
 

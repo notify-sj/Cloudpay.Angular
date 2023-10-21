@@ -1,23 +1,23 @@
-import { Unit } from '@/utils/unit';
 import { Component, Input } from '@angular/core';
 import { HeaderChildComponent } from '../header-child.component';
+import { Role } from '@/utils/role';
 import { UserService } from '@services/user.service';
 import { DropdownService } from '../dropdown.service';
 
 @Component({
-  selector: 'app-units',
-  templateUrl: './units.component.html',
-  styleUrls: ['./units.component.scss']
+  selector: 'app-roles',
+  templateUrl: './roles.component.html',
+  styleUrls: ['./roles.component.scss']
 })
-export class UnitsComponent extends HeaderChildComponent {
-  @Input() units: Array<Unit> = [];
+export class RolesComponent extends HeaderChildComponent {
+  @Input() roles: Array<Role> = [];
 
   constructor(private userService: UserService,
     dropdownService: DropdownService) {
     super(dropdownService);
   }
 
-  changeUnit(unit: Unit) {
-    this.userService.switchUnit(unit);
+  changeRole(role: Role) {
+    this.userService.switchRole(role);
   }
 }

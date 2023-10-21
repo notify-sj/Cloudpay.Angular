@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { UserService } from '@services/user.service';
 import { Observable } from 'rxjs';
 import { HeaderChildComponent } from '../header-child.component';
+import { DropdownService } from '../dropdown.service';
 
 @Component({
     selector: 'app-user',
@@ -19,8 +20,9 @@ export class UserComponent extends HeaderChildComponent implements OnInit {
     isActive: boolean = false;
 
     constructor(private store: Store<AppState>,
-        private userService: UserService) {
-        super();
+        private userService: UserService,
+        dropdownService: DropdownService) {
+        super(dropdownService);
     }
 
     ngOnInit(): void {

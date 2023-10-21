@@ -10,6 +10,7 @@ import { Endpoint } from '@/utils/endpoint-constants';
 import { ToastrService } from 'ngx-toastr';
 import { Unit } from '@/utils/unit';
 import { AppConfigService } from './app-config.service';
+import { Role } from '@/utils/role';
 
 @Injectable({
     providedIn: 'root'
@@ -25,8 +26,8 @@ export class UserService {
     async getUserProfile() {
         if (this.user)
             return this.user;
-        else 
-        return this.getProfile();
+        else
+            return this.getProfile();
     }
 
     getProfile(defaults?: EmployeeProfile): Promise<EmployeeProfile> {
@@ -63,6 +64,14 @@ export class UserService {
         });
     }
 
+    getAssignedRoles(): Promise<Array<Role>> {
+        return new Promise<Array<Role>>((resolve) => {
+            this.apiService.get<Array<Role>>(Endpoint.AssignedRoles).subscribe(roles => {
+                resolve(roles);
+            });
+        });
+    }
+
     changePassword(value: any) {
         const data = {
             old_pass: value.currentPassword,
@@ -74,13 +83,13 @@ export class UserService {
                     this.toastr.success(result.message, "Change Password");
                     setTimeout(function () {
                         this.logout();
-                      }.bind(this), 1000);
+                    }.bind(this), 1000);
                 }
                 else
                     this.toastr.info(result.message, "Change Password");
             });
     }
-    
+
     switchUnit(unit: Unit) {
         const data = {
             UNIT_ENTID: unit.UNIT_ENTID,
@@ -89,7 +98,7 @@ export class UserService {
         this.apiService.put<Result<number>>(Endpoint.SwitchUnit, data)
             .subscribe((result: Result<number>) => {
                 if (result.status === "Success") {
-                    const url = new URL(window.location.href);                    
+                    const url = new URL(window.location.href);
                     let data = {
                         type: "switchUnit",
                         token: url.origin + url.pathname + "?token=" + result.data.toString()
@@ -99,5 +108,27 @@ export class UserService {
                 else
                     this.toastr.info(result.message, "Switch Unit");
             });
-      }
+    }
+
+
+    switchRole(role: Role) {
+        const data = {
+            ROLE_NAME: role.ROLE_NAME,
+            ROLE_ID: role.ROLE_ID,
+        };
+        this.apiService.put<Result<string>>(Endpoint.SwitchRole, data)
+            .subscribe((result: Result<string>) => {
+                if (result.status === "Success") {
+                    let data = {
+                        type: "switchRole",
+                        token: result.data.toString(),
+                        roleName: role.ROLE_NAME,
+                        roleId: role.ROLE_ID
+                    }
+                    window.parent.postMessage(data, '*');
+                }
+                else
+                    this.toastr.info(result.message, "Switch Role");
+            });
+    }
 }

@@ -4,25 +4,25 @@
   (click)="itemClick()"
   [routerLink]="null"
 >
-  <i class="fas fa-building"></i>
+  <i class="fas fa-user"></i>
 </a>
 <div
   class="dropdown-menu dropdown-menu-lg dropdown-menu-right dropdown-padding-right"
   [class.show]="isActive"
 >
 <span class="dropdown-item dropdown-header">
-    Assigned Units
+    Assigned Roles
   </span>
   <div
     *ngFor="
-      let unit of units;
+      let role of roles;
       let last = last
     "
   >
     <div class="dropdown-divider" *ngIf="!last"></div>
-    <a class="dropdown-item text-truncate" (click)="changeUnit(unit)">
-      <i class="fas fa-building mr-2"></i>
-      {{ unit.UNIT_NAME }}
+    <a class="dropdown-item text-truncate" (click)="changeRole(role)">
+      <i class="fas fa-user mr-2"></i>
+      {{ role.ROLE_NAME }}
     </a>
   </div>
   <!-- <div class="dropdown-divider"></div> -->

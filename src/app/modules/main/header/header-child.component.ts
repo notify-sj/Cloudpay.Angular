@@ -1,4 +1,6 @@
-import { Component, HostBinding, HostListener } from "@angular/core";
+import { Component, HostBinding, HostListener, OnInit } from "@angular/core";
+import { DropdownService } from "./dropdown.service";
+import { Subscription } from "rxjs";
 
 @Component({
     template: ''
@@ -8,13 +10,28 @@ export abstract class HeaderChildComponent implements ActiveHeaderMenu {
     get hostClasses() {
         return this.classString;
     }
-
     private classString: string = 'nav-item dropdown';
-
     isActive: boolean = false;
+    id = Math.random();
+    private subscription: Subscription;
+    dropdownService: DropdownService;
+
+    constructor(_dropdownService: DropdownService) {
+        this.dropdownService = _dropdownService;
+        this.subscription = this.dropdownService.dropdownToggle$.subscribe(
+            id => {
+                if (id !== this.id) {
+                    this.isActive = false;
+                }
+            }
+        );
+    }
 
     itemClick() {
         this.isActive = !this.isActive;
+        if (this.isActive) {
+            this.dropdownService.toggleDropdown(this.id);
+          }
     }
 
     @HostListener('document:click', ['$event'])
@@ -24,6 +41,10 @@ export abstract class HeaderChildComponent implements ActiveHeaderMenu {
         if (!clickedInside && this.isActive) {
             this.isActive = !this.isActive;
         }
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }
 
