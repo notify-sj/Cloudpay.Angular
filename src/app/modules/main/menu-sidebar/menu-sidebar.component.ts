@@ -8,6 +8,7 @@ import { ApiService } from '@services/api.service';
 import { MenuItem, MenuItemDto } from '@/utils/menu-item';
 import { SessionVariable } from '@/utils/session-variable';
 import { Endpoint } from '@/utils/endpoint-constants';
+import { TabService } from '../header/tab.service';
 
 const BASE_CLASSES = 'main-sidebar elevation-4';
 @Component({
@@ -30,7 +31,8 @@ export class MenuSidebarComponent implements OnInit {
 
     constructor(
         public apiService: ApiService,
-        private store: Store<AppState>
+        private store: Store<AppState>,
+        private tabService: TabService
     ) {
         this.ui = this.store.select('ui');
         this._id = 0;
@@ -75,6 +77,7 @@ export class MenuSidebarComponent implements OnInit {
         item.name = menuItem.name;
         item.iconClasses = menuItem.iconClasses;
         item.path = menuItem.routePath;
+        item.isDefault = menuItem.isDefault;
 
         if (menuItem.children?.length > 0) {
             item.children = [];

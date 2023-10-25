@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
     _popupItem: PopupItem;
-    selectedSize: ModalSize = ModalSize.lg;
+    selectedSize: ModalSize = ModalSize.sm;
 
     openDashboardSettings() {
         let cd: ComponentData = {

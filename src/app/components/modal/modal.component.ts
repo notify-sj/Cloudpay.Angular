@@ -3,7 +3,6 @@ import { ModalSize } from '@/utils/modal-size';
 import { PopupItem } from '@/utils/popup-item';
 import { AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, ElementRef, Injector, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, Type, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { OverlayScrollbars } from 'overlayscrollbars';
 import { ModalActions } from './modal-actions';
 
 @Component({
@@ -11,7 +10,7 @@ import { ModalActions } from './modal-actions';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent implements OnChanges, OnInit, AfterViewInit {
+export class ModalComponent implements OnChanges, OnInit {
   @Input() config: PopupItem;
   @ViewChild('confirmationModal') private modalContent!: TemplateRef<ModalComponent>
   @ViewChild('modalBody') private modalBody!: ElementRef;
@@ -28,11 +27,7 @@ export class ModalComponent implements OnChanges, OnInit, AfterViewInit {
     config.backdrop = 'static';
     config.keyboard = false;
   }
-  ngAfterViewInit(): void {
-    if (this.modalBody)
-      OverlayScrollbars(this.modalBody.nativeElement, {});
-  }
-
+  
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.config && this.config && this.config.component) {
       this.component = ComponentType.get(this.config.component);

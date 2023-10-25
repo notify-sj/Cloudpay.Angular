@@ -31,11 +31,15 @@ import { NotificationDashboardComponent } from './components/notification-dashbo
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationListComponent } from '@components/notification-list/notification-list.component';
 import { DataTablesModule } from 'angular-datatables';
-import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
 import { ChangePasswordComponent } from './modules/main/header/change-password/change-password.component';
 import { UnitsComponent } from './modules/main/header/units/units.component';
 import { RolesComponent } from './modules/main/header/roles/roles.component';
 import { DashboardSettingsComponent } from './pages/dashboard/dashboard-settings/dashboard-settings.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { ProfileComponent } from '@pages/profile/profile.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { TabComponent } from './components/tab/tab.component';
+import { NavbarComponent } from './modules/main/header/navbar/navbar.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -64,7 +68,12 @@ function initApp(configService: AppConfigService) {
         ChangePasswordComponent,
         UnitsComponent,
         RolesComponent,
-        DashboardSettingsComponent
+        DashboardSettingsComponent,
+        BreadcrumbComponent,
+        ProfileComponent,
+        LoadingComponent,
+        TabComponent,
+        NavbarComponent
     ],
     imports: [
         CommonModule,
@@ -80,8 +89,7 @@ function initApp(configService: AppConfigService) {
             preventDuplicates: true
         }),
         NgbModule, 
-        DataTablesModule,
-        OverlayscrollbarsModule
+        DataTablesModule
     ],
     providers: [
         AppConfigService,

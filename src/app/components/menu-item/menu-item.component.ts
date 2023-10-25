@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, switchMap } from 'rxjs/operators';
 import { openCloseAnimation, rotateAnimation } from './menu-item.animations';
@@ -10,6 +10,7 @@ import { Observable, Subscription } from 'rxjs';
 import { MenuState } from '@/store/menuitem/state';
 import { MenuType } from '@/utils/menu-type';
 import { selectMenuState } from '@/store/menuitem/selectors';
+import { TabService } from '@modules/main/header/tab.service';
 
 @Component({
     selector: 'app-menu-item',
@@ -17,7 +18,7 @@ import { selectMenuState } from '@/store/menuitem/selectors';
     styleUrls: ['./menu-item.component.scss'],
     animations: [openCloseAnimation, rotateAnimation]
 })
-export class MenuItemComponent implements OnInit {
+export class MenuItemComponent implements OnInit, OnChanges {
     @Input() menuItem: MenuItem = null;
     public isExpandable: boolean = false;
     public isMenuExtended: boolean = false;
@@ -32,8 +33,15 @@ export class MenuItemComponent implements OnInit {
 
     constructor(private router: Router,
         private menuItemService: MenuitemService,
-        private store: Store<AppState>) {
+        private store: Store<AppState>,
+        private tabService: TabService) {
         this.menuState = this.store.pipe(select(selectMenuState));
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes && this.menuItem && this.menuItem.isDefault) {
+            this.activateMenu();
+        }
     }
 
     ngOnInit(): void {
@@ -72,6 +80,12 @@ export class MenuItemComponent implements OnInit {
             this.toggleMenu();
             return;
         }
+        this.activateMenu();
+    }
+
+    private activateMenu() {
+        this.tabService.addTab(this.menuItem.id, this.menuItem.name, 
+            this.menuItem.path, this.menuItem.isDefault);
         this.router.navigate(this.menuItem.path);
     }
 

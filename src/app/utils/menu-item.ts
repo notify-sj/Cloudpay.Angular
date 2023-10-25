@@ -4,6 +4,7 @@ export interface MenuItemDto {
     path?: Array<string>;
     routePath?: Array<string>;
     children?: Array<MenuItemDto>;
+    isDefault?: boolean;
 }
 
 export class MenuItem {
@@ -13,4 +14,5 @@ export class MenuItem {
     iconClasses: string;
     path: Array<string>;
     children: Array<MenuItem>;
+    isDefault: boolean;
 }

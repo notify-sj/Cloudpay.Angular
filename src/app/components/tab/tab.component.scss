@@ -1,0 +1,25 @@
+.btn-iframe-close {
+  color: #dc3545;
+  position: absolute;
+  line-height: 1;
+  right: 0.125rem;
+  top: 0.125rem;
+  z-index: 10;
+  visibility: hidden;
+}
+
+.nav-link:hover {
+  .btn-iframe-close {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    visibility: visible;
+  }
+}
+
+.nav-link {
+  cursor: pointer;
+}

@@ -4,7 +4,6 @@ import { UiState } from '@/store/ui/state';
 import { AfterViewInit, Component, ElementRef, HostBinding, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { OverlayScrollbars } from 'overlayscrollbars';
 
 
 @Component({
@@ -12,15 +11,22 @@ import { OverlayScrollbars } from 'overlayscrollbars';
     templateUrl: './main.component.html',
     styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit, AfterViewInit {
+export class MainComponent implements OnInit {
     @HostBinding('class') class = 'wrapper';
     public ui: Observable<UiState>;
     @ViewChild('contentWrapper', { static: false }) private contentWrapper!: ElementRef;
+    isLoading = true;
 
     constructor(private renderer: Renderer2, private store: Store<AppState>,
         private elRef: ElementRef) { }
 
     ngOnInit() {
+        // Simulate an asynchronous operation, e.g., API requests or other setup.
+        setTimeout(() => {
+            // Set isLoading to false when your application is ready to load.
+            this.isLoading = false;
+        }, 2000); // Adjust the time as needed.
+
         this.ui = this.store.select('ui');
         this.renderer.removeClass(
             document.querySelector('app-root'),
@@ -58,27 +64,6 @@ export class MainComponent implements OnInit, AfterViewInit {
                 }
             }
         );
-    }
-
-    ngAfterViewInit(): void {
-        const headerElement = this.elRef.nativeElement.querySelector('app-header');
-        const footerElement = this.elRef.nativeElement.querySelector('app-footer');
-
-        const headerHeight = headerElement.offsetHeight;
-        const footerHeight = footerElement.offsetHeight;
-
-        this.setContentWrapperHeight(headerHeight, footerHeight);
-
-        const contentWrapperElement = this.elRef.nativeElement.querySelector('.content-wrapper');
-        OverlayScrollbars(contentWrapperElement, {});
-    }
-
-    setContentWrapperHeight(headerHeight: number, footerHeight: number): void {
-        const contentWrapperElement = this.elRef.nativeElement.querySelector('.content-wrapper');
-        const totalHeight = `calc(100vh - ${headerHeight}px - ${footerHeight}px)`;
-
-        this.renderer.setStyle(contentWrapperElement, 'height', totalHeight);
-        this.renderer.setStyle(contentWrapperElement, 'overflow-y', 'auto');
     }
 
     onToggleMenuSidebar() {

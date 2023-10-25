@@ -1,19 +1,11 @@
-<!-- <div class="preloader flex-column justify-content-center align-items-center">
-    <img
-      class="animation__shake"
-      src="assets/img/loading-icon.gif"
-      alt="Cloudpay"
-      height="60"
-      width="60"
-    />
-  </div> -->
-<app-header></app-header>
+<app-loading *ngIf="isLoading"></app-loading>
+<app-header *ngIf="!isLoading"></app-header>
 
-<app-menu-sidebar class="main-sidebar sidebar-dark-primary elevation-4"></app-menu-sidebar>
+<app-menu-sidebar *ngIf="!isLoading" class="main-sidebar sidebar-dark-primary elevation-4"></app-menu-sidebar>
 
-<div class="content-wrapper" #contentWrapper>
+<div *ngIf="!isLoading" class="content-wrapper" #contentWrapper>
     <router-outlet></router-outlet>
 </div>
 
-<app-footer></app-footer>
-<div id="sidebar-overlay" (click)="onToggleMenuSidebar()"></div>
+<app-footer *ngIf="!isLoading"></app-footer>
+<div id="sidebar-overlay" *ngIf="!isLoading" (click)="onToggleMenuSidebar()"></div>

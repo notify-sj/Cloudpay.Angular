@@ -24,13 +24,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       user: userReducer,
       menuState: menuStateReducer,
       notification: notificationReducer
-    }, {
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
-        strictStateSerializability: true,
-        strictActionSerializability: true,
-      }
     }),
     EffectsModule.forRoot([
       UserEffects,

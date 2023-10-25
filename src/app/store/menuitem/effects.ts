@@ -9,13 +9,16 @@ import { MenuitemService } from '@services/menuitem.service';
 export class MenuItemEffects {
   constructor(
     private actions$: Actions,
-    private menuItemService: MenuitemService) {}
+    private menuItemService: MenuitemService) { }
 
   loadActiveIds$ = createEffect(() => this.actions$.pipe(
     ofType(menuItemActions.loadMenuItemState),
     switchMap(() => of(this.menuItemService.getMenuState()).pipe(
-        map(menu => menuItemActions.loadMenuItemStateSuccess({ menu })),
-        catchError(() => of({ type: '[User] Load MenuItem Error' }))
-      ))
+      map(menu => {
+        console.log('Menu State:', menu);
+        return menuItemActions.loadMenuItemStateSuccess({ menu });
+      }),
+      catchError(() => of({ type: '[User] Load MenuItem Error' }))
+    ))
   ))
 }

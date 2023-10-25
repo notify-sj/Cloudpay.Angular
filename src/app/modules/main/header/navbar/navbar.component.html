@@ -1,0 +1,27 @@
+<li class="nav-item">
+  <a class="nav-link" (click)="onToggleMenuSidebar()" role="button"
+    ><i class="fas fa-bars"></i
+  ></a>
+</li>
+<li class="nav-item">
+  <a
+    #prev
+    class="nav-link scroll-btn"
+    (click)="scroll(-scrollStep)"
+    [class.display]="isScrollable"
+    ><i class="fas fa-angle-double-left"></i
+  ></a>
+</li>
+<app-tab
+  [tabData]="tab"
+  [width]="width"
+  *ngFor="let tab of tabService.tabs"
+  role="presentation"
+></app-tab>
+<a
+  #next
+  class="nav-link scroll-btn"
+  (click)="scroll(scrollStep)"
+  [class.display]="isScrollable"
+  ><i class="fas fa-angle-double-right"></i
+></a>

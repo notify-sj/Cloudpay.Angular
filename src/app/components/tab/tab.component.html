@@ -1,0 +1,15 @@
+<a
+  (click)="activateTab()"
+  class="nav-link"
+  data-toggle="row"
+  role="tab"
+  aria-selected="true"
+  >{{ tabData.label }}
+  <a
+  [routerLink]="null"
+  class="btn-iframe-close"
+  (click)="closeTab()"
+>
+  <i class="fas fa-times"></i></a></a
+>
+
