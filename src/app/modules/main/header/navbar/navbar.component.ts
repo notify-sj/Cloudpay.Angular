@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { TabService } from '../tab.service';
 import { Tab } from '@/utils/tab';
 
-const BASE_CLASSES = 'navbar-nav overflow-hidden';
+const BASE_CLASSES = 'navbar-nav';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -12,6 +12,7 @@ const BASE_CLASSES = 'navbar-nav overflow-hidden';
 })
 export class NavbarComponent implements AfterViewChecked, AfterViewInit, OnInit {
   @HostBinding('class') classes: string = BASE_CLASSES;
+  @ViewChild('navbar') navbar: any;
   @ViewChild('next') nextBtn: any;
   @ViewChild('prev') prevBtn: any;
   @Input() width: number;
@@ -27,14 +28,15 @@ export class NavbarComponent implements AfterViewChecked, AfterViewInit, OnInit 
   ) {
   }
   ngOnInit(): void {
-    this.navbarElement = this.elemRef.nativeElement;
+    // this.navbarElement = this.elemRef.nativeElement;
 
   }
   ngAfterViewInit(): void {
   }
 
   ngAfterViewChecked() {
-    this.renderer.setStyle(this.navbarElement, 'max-width', `${this.width - 100}px`);
+    this.navbarElement = this.navbar.nativeElement;
+    this.renderer.setStyle(this.navbarElement, 'max-width', `${this.width - 200}px`);
     this.renderer.setStyle(this.nextBtn.nativeElement, 'right', `${window.innerWidth - this.width + 8}px`);
     // this.renderer.setStyle(this.prevBtn.nativeElement, 'left', `10px`);
     this.checkScrolling();

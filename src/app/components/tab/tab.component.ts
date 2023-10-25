@@ -18,11 +18,9 @@ export class TabComponent {
   @Input() tabData: Tab;
   @Input() width: number = 0;
 
-  constructor(private tabService: TabService, private router: Router,
-    private elemRef: ElementRef) { }
+  constructor(private tabService: TabService, private router: Router) { }
 
   closeTab() {
-    console.log(this.elemRef.nativeElement.offsetWidth);
     if (!this.tabData.isDefault) {
       let index = this.tabService.tabs.indexOf(this.tabData);
       this.tabService.closeTab(index);

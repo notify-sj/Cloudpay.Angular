@@ -15,3 +15,8 @@
   .display {
     display: block !important; /* or display: inline-block; or any appropriate value */
   }
+
+  .no-scroll {
+    /* Add styles to prevent scrolling here */
+    overflow-x: hidden; /* Example: Hide horizontal overflow */
+  }

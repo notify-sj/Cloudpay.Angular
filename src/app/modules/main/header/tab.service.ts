@@ -8,7 +8,7 @@ export class TabService {
   tabs: Tab[] = [];
 
   addTab(id: number, label: string, route: string[], isDefault: boolean) {
-    // if (!this.tabs.find(x => x.id === id))
+    if (!this.tabs.find(x => x.id === id))
       this.tabs.push(new Tab(id, label, route, isDefault));
   }
 
