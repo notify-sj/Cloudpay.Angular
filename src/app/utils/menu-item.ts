@@ -16,3 +16,5 @@ export class MenuItem {
     children: Array<MenuItem>;
     isDefault: boolean;
 }
+
+export const MENU: Array<MenuItem> = [];

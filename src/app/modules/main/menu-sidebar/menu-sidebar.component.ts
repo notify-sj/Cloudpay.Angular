@@ -5,7 +5,7 @@ import { Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ApiService } from '@services/api.service';
-import { MenuItem, MenuItemDto } from '@/utils/menu-item';
+import { MENU, MenuItem, MenuItemDto } from '@/utils/menu-item';
 import { SessionVariable } from '@/utils/session-variable';
 import { Endpoint } from '@/utils/endpoint-constants';
 import { TabService } from '../../../services/tab.service';
@@ -120,5 +120,3 @@ export class MenuSidebarComponent implements OnInit {
         this.router.navigate(path);
     }
 }
-
-export const MENU: Array<MenuItem> = [];

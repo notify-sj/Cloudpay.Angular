@@ -1,9 +1,8 @@
 import { loadMenuItemState } from '@/store/menuitem/actions';
 import { MenuState } from '@/store/menuitem/state';
-import { MenuItem } from '@/utils/menu-item';
+import { MENU, MenuItem } from '@/utils/menu-item';
 import { MenuType } from '@/utils/menu-type';
 import { Injectable } from '@angular/core';
-import { MENU } from '@modules/main/menu-sidebar/menu-sidebar.component';
 import { Store } from '@ngrx/store';
 
 @Injectable({

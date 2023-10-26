@@ -1,3 +1,4 @@
+import { MENU } from '@/utils/menu-item';
 import {
     Component,
     ElementRef,
@@ -6,7 +7,6 @@ import {
     Renderer2,
     ViewChild
 } from '@angular/core';
-import {MENU} from '@modules/main/menu-sidebar/menu-sidebar.component';
 
 @Component({
     selector: 'app-sidebar-search',

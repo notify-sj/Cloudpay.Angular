@@ -1,6 +1,6 @@
 import { AppState } from '@/store/state';
 import { EmployeeProfile } from '@/utils/employee-profile';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserService } from '@services/user.service';
 import { Observable } from 'rxjs';
@@ -8,8 +8,7 @@ import { HeaderChildComponent } from '../header-child.component';
 import { DropdownService } from '../../../../services/dropdown.service';
 import { SessionVariable } from '@/utils/session-variable';
 import { findMenuItemByPath } from '@/utils/common-functions';
-import { MENU } from '@modules/main/menu-sidebar/menu-sidebar.component';
-import { MenuItem } from '@/utils/menu-item';
+import { MENU, MenuItem } from '@/utils/menu-item';
 import { Tab } from '@/utils/tab';
 import { TabService } from '@services/tab.service';
 import { Router } from '@angular/router';
