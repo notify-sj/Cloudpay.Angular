@@ -1,7 +1,7 @@
 import { component_data } from '@/utils/component-constant';
 import { ComponentData } from '@/utils/component-data';
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { ModalActions } from '@components/modal/modal-actions';
+import { ModalActions } from '@modules/shared/components/modal/modal-actions';
 
 @Component({
   selector: 'app-dashboard-settings',

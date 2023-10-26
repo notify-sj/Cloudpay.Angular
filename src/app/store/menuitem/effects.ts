@@ -15,7 +15,6 @@ export class MenuItemEffects {
     ofType(menuItemActions.loadMenuItemState),
     switchMap(() => of(this.menuItemService.getMenuState()).pipe(
       map(menu => {
-        console.log('Menu State:', menu);
         return menuItemActions.loadMenuItemStateSuccess({ menu });
       }),
       catchError(() => of({ type: '[User] Load MenuItem Error' }))

@@ -8,7 +8,7 @@ import { ApiService } from '@services/api.service';
 import { MenuItem, MenuItemDto } from '@/utils/menu-item';
 import { SessionVariable } from '@/utils/session-variable';
 import { Endpoint } from '@/utils/endpoint-constants';
-import { TabService } from '../header/tab.service';
+import { TabService } from '../../../services/tab.service';
 
 const BASE_CLASSES = 'main-sidebar elevation-4';
 @Component({
@@ -25,14 +25,14 @@ export class MenuSidebarComponent implements OnInit {
     public menu = MENU;
     private _id: number = 0;
     COMPANY_NAME: string = "";
+    ROLE_NAME: string = "";
 
     emp_image: string = "";
     emp_name: string = "";
 
     constructor(
         public apiService: ApiService,
-        private store: Store<AppState>,
-        private tabService: TabService
+        private store: Store<AppState>
     ) {
         this.ui = this.store.select('ui');
         this._id = 0;
@@ -55,6 +55,7 @@ export class MenuSidebarComponent implements OnInit {
         this.sessionVariable$.subscribe((res: any) => {
             let session = res.session as SessionVariable;
             this.COMPANY_NAME = this.setDomainName(session.domainName);
+            this.ROLE_NAME = session.roleName;
         });
 
         this.GetMenus();

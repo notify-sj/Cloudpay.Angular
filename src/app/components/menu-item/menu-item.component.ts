@@ -10,7 +10,7 @@ import { Observable, Subscription } from 'rxjs';
 import { MenuState } from '@/store/menuitem/state';
 import { MenuType } from '@/utils/menu-type';
 import { selectMenuState } from '@/store/menuitem/selectors';
-import { TabService } from '@modules/main/header/tab.service';
+import { TabService } from '@services/tab.service';
 import { Tab } from '@/utils/tab';
 
 @Component({
@@ -93,7 +93,6 @@ export class MenuItemComponent implements OnInit, OnChanges {
 
     public toggleMenu() {
         this.isMenuExtended = !this.isMenuExtended;
-        console.log(this.menuItem);
     }
 
     public calculateIsActive(url: string) {

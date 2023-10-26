@@ -5,11 +5,11 @@ import { ComponentData } from '@/utils/component-data';
 import { ModalSize } from '@/utils/modal-size';
 import { PopupItem } from '@/utils/popup-item';
 import { UserNotification } from '@/utils/user-notification';
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderChildComponent } from '@modules/main/header/header-child.component';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { DropdownService } from '../dropdown.service';
+import { DropdownService } from '../../../../services/dropdown.service';
 @Component({
     selector: 'app-notifications',
     templateUrl: './notifications.component.html',

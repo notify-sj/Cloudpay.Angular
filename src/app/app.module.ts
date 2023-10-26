@@ -11,13 +11,10 @@ import { MenuSidebarComponent } from '@modules/main/menu-sidebar/menu-sidebar.co
 import { BlankComponent } from '@pages/blank/blank.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DashboardComponent } from '@pages/dashboard/dashboard.component';
 import { ToastrModule } from 'ngx-toastr';
 
 import { CommonModule, registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
-import { MainMenuComponent } from './pages/main-menu/main-menu.component';
-import { SubMenuComponent } from './pages/main-menu/sub-menu/sub-menu.component';
 import { MenuItemComponent } from './components/menu-item/menu-item.component';
 import { Store } from '@ngrx/store';
 import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
@@ -26,7 +23,6 @@ import { AppHeaderInterceptor } from '@services/app-header.service';
 import { UserComponent } from '@modules/main/header/user/user.component';
 import { LocalStoreModule } from './store/local-store.module';
 import { NotificationsComponent } from '@modules/main/header/notifications/notifications.component';
-import { ModalComponent } from './components/modal/modal.component';
 import { NotificationDashboardComponent } from './components/notification-dashboard/notification-dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationListComponent } from '@components/notification-list/notification-list.component';
@@ -34,12 +30,12 @@ import { DataTablesModule } from 'angular-datatables';
 import { ChangePasswordComponent } from './modules/main/header/change-password/change-password.component';
 import { UnitsComponent } from './modules/main/header/units/units.component';
 import { RolesComponent } from './modules/main/header/roles/roles.component';
-import { DashboardSettingsComponent } from './pages/dashboard/dashboard-settings/dashboard-settings.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
-import { ProfileComponent } from '@pages/profile/profile.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { TabComponent } from './components/tab/tab.component';
 import { NavbarComponent } from './modules/main/header/navbar/navbar.component';
+import { SelfModule } from '@modules/self/self.module';
+import { SharedModule } from '@modules/shared/shared.module';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -55,22 +51,16 @@ function initApp(configService: AppConfigService) {
         FooterComponent,
         MenuSidebarComponent,
         BlankComponent,
-        DashboardComponent,
-        MainMenuComponent,
-        SubMenuComponent,
         MenuItemComponent,
         SidebarSearchComponent,
         UserComponent,
         NotificationsComponent,
-        ModalComponent,
         NotificationDashboardComponent,
         NotificationListComponent,
         ChangePasswordComponent,
         UnitsComponent,
         RolesComponent,
-        DashboardSettingsComponent,
         BreadcrumbComponent,
-        ProfileComponent,
         LoadingComponent,
         TabComponent,
         NavbarComponent
@@ -89,7 +79,9 @@ function initApp(configService: AppConfigService) {
             preventDuplicates: true
         }),
         NgbModule, 
-        DataTablesModule
+        DataTablesModule,
+        SelfModule,
+        SharedModule
     ],
     providers: [
         AppConfigService,

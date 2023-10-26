@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { HeaderChildComponent } from '../header-child.component';
 import { Role } from '@/utils/role';
 import { UserService } from '@services/user.service';
-import { DropdownService } from '../dropdown.service';
+import { DropdownService } from '../../../../services/dropdown.service';
 
 @Component({
   selector: 'app-roles',

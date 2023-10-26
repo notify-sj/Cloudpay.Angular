@@ -3,7 +3,7 @@ import { Component, HostBinding, HostListener, Input, OnChanges, OnInit, SimpleC
 import { AbstractControl, FormBuilder, FormControlOptions, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { HeaderChildComponent } from '@modules/main/header/header-child.component';
 import { UserService } from '@services/user.service';
-import { DropdownService } from '../dropdown.service';
+import { DropdownService } from '../../../../services/dropdown.service';
 
 @Component({
   selector: 'app-change-password',

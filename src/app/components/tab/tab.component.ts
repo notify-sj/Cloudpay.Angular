@@ -1,7 +1,7 @@
 import { Tab } from '@/utils/tab';
 import { Component, HostBinding, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { TabService } from '@modules/main/header/tab.service';
+import { TabService } from '@services/tab.service';
 
 @Component({
   selector: 'app-tab',

@@ -1,5 +1,5 @@
 import { Component, HostBinding, HostListener, OnInit } from "@angular/core";
-import { DropdownService } from "./dropdown.service";
+import { DropdownService } from "../../../services/dropdown.service";
 import { Subscription } from "rxjs";
 
 @Component({

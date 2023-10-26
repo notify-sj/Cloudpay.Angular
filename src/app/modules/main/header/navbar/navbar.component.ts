@@ -1,7 +1,7 @@
 import { ToggleSidebarMenu } from '@/store/ui/actions';
 import { AfterContentChecked, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TabService } from '../tab.service';
+import { TabService } from '../../../../services/tab.service';
 import { Tab } from '@/utils/tab';
 
 const BASE_CLASSES = 'navbar-nav';
