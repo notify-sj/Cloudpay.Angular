@@ -7,6 +7,12 @@ import { Observable } from 'rxjs';
 import { HeaderChildComponent } from '../header-child.component';
 import { DropdownService } from '../../../../services/dropdown.service';
 import { SessionVariable } from '@/utils/session-variable';
+import { findMenuItemByPath } from '@/utils/common-functions';
+import { MENU } from '@modules/main/menu-sidebar/menu-sidebar.component';
+import { MenuItem } from '@/utils/menu-item';
+import { Tab } from '@/utils/tab';
+import { TabService } from '@services/tab.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-user',
@@ -24,7 +30,9 @@ export class UserComponent extends HeaderChildComponent implements OnInit {
 
     constructor(private store: Store<AppState>,
         private userService: UserService,
-        dropdownService: DropdownService) {
+        dropdownService: DropdownService,
+        private tabService: TabService,
+        private router: Router) {
         super(dropdownService);
     }
 
@@ -46,5 +54,13 @@ export class UserComponent extends HeaderChildComponent implements OnInit {
 
     logout() {
         this.userService.logout();
+    }
+
+    openProfile() {
+        const path = ['/' + this.ROLE_NAME.toLowerCase() + '/profile'];
+        const foundMenuItem = findMenuItemByPath(MENU, path) as MenuItem;
+        let tab = new Tab(foundMenuItem.id, foundMenuItem.name, foundMenuItem.path, foundMenuItem.isDefault);
+        this.tabService.addTab(tab);
+        this.router.navigate(path);
     }
 }

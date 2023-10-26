@@ -9,6 +9,9 @@ import { MenuItem, MenuItemDto } from '@/utils/menu-item';
 import { SessionVariable } from '@/utils/session-variable';
 import { Endpoint } from '@/utils/endpoint-constants';
 import { TabService } from '../../../services/tab.service';
+import { Router } from '@angular/router';
+import { findMenuItemByPath } from '@/utils/common-functions';
+import { Tab } from '@/utils/tab';
 
 const BASE_CLASSES = 'main-sidebar elevation-4';
 @Component({
@@ -32,7 +35,9 @@ export class MenuSidebarComponent implements OnInit {
 
     constructor(
         public apiService: ApiService,
-        private store: Store<AppState>
+        private store: Store<AppState>,
+        private tabService: TabService,
+        private router: Router
     ) {
         this.ui = this.store.select('ui');
         this._id = 0;
@@ -105,6 +110,14 @@ export class MenuSidebarComponent implements OnInit {
                 break;
         }
         return _companyName;
+    }
+
+    openProfile() {
+        const path = ['/' + this.ROLE_NAME.toLowerCase() + '/profile'];
+        const foundMenuItem = findMenuItemByPath(MENU, path) as MenuItem;
+        let tab = new Tab(foundMenuItem.id, foundMenuItem.name, foundMenuItem.path, foundMenuItem.isDefault);
+        this.tabService.addTab(tab);
+        this.router.navigate(path);
     }
 }
 

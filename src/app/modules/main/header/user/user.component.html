@@ -28,7 +28,7 @@
     <div class="card-body">
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/' + ROLE_NAME.toLowerCase() +'/profile']"
+          <a class="nav-link" (click)="openProfile()"
             ><i class="far fa-user"></i>&nbsp;My Profile
           </a>
         </li>

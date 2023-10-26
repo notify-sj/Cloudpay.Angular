@@ -25,7 +25,7 @@
       />
     </div>
     <div class="info">
-      <a [routerLink]="['/' + ROLE_NAME.toLowerCase() +'/profile']" class="d-block">
+      <a (click)="openProfile()" class="d-block">
         {{ emp_name }}
       </a>
     </div>
