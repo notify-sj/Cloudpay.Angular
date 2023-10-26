@@ -1,5 +1,5 @@
 import { Tab } from '@/utils/tab';
-import { Component, ElementRef, HostBinding, Input } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { TabService } from '@modules/main/header/tab.service';
 
@@ -8,7 +8,7 @@ import { TabService } from '@modules/main/header/tab.service';
   templateUrl: './tab.component.html',
   styleUrls: ['./tab.component.scss']
 })
-export class TabComponent {
+export class TabComponent implements OnInit, OnDestroy, OnChanges {
   @HostBinding('class')
   get hostClasses() {
     return this.classString;
@@ -16,15 +16,26 @@ export class TabComponent {
   private classString: string = 'nav-item';
 
   @Input() tabData: Tab;
-  @Input() width: number = 0;
 
   constructor(private tabService: TabService, private router: Router) { }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes && this.tabData)
+      this.tabService.addTab(this.tabData);
+  }
+
+  ngOnInit(): void {
+
+  }
+
+  ngOnDestroy(): void {
+    this.tabService.removeTab(this.tabData.id);
+  }
+
   closeTab() {
     if (!this.tabData.isDefault) {
-      let index = this.tabService.tabs.indexOf(this.tabData);
-      this.tabService.closeTab(index);
-      let d = this.tabService.tabs[--index];
+      let index = this.tabService.removeTab(this.tabData.id);
+      let d = this.tabService.getTab(--index);
       this.router.navigate(d.route);
     }
   }

@@ -11,6 +11,7 @@ import { MenuState } from '@/store/menuitem/state';
 import { MenuType } from '@/utils/menu-type';
 import { selectMenuState } from '@/store/menuitem/selectors';
 import { TabService } from '@modules/main/header/tab.service';
+import { Tab } from '@/utils/tab';
 
 @Component({
     selector: 'app-menu-item',
@@ -84,8 +85,9 @@ export class MenuItemComponent implements OnInit, OnChanges {
     }
 
     private activateMenu() {
-        this.tabService.addTab(this.menuItem.id, this.menuItem.name, 
+        let tab = new Tab(this.menuItem.id, this.menuItem.name, 
             this.menuItem.path, this.menuItem.isDefault);
+        this.tabService.addTab(tab);
         this.router.navigate(this.menuItem.path);
     }
 

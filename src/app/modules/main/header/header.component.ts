@@ -5,7 +5,7 @@ import { LoginConfig } from '@/utils/login-config';
 import { Role } from '@/utils/role';
 import { SessionVariable } from '@/utils/session-variable';
 import { Unit } from '@/utils/unit';
-import { AfterViewInit, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UserService } from '@services/user.service';
@@ -35,7 +35,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     constructor(
         private appService: UserService,
         private store: Store<AppState>,
-        private elemRef: ElementRef
+        private elemRef: ElementRef,
+        private cdRef: ChangeDetectorRef
     ) { }
 
     ngAfterViewInit(): void {
@@ -45,6 +46,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.width += this.userMenu.nativeElement.clientWidth;
 
         this.width = window.innerWidth - this.width;
+        this.cdRef.detectChanges();
     }
 
     ngOnInit() {

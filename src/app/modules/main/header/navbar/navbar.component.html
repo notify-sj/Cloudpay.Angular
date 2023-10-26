@@ -11,8 +11,7 @@
 <ul class="navbar-nav overflow-hidden" #navbar>
   <app-tab
     [tabData]="tab"
-    [width]="width"
-    *ngFor="let tab of tabService.tabs"
+    *ngFor="let tab of tabs"
     role="presentation"
   ></app-tab>
 </ul>
