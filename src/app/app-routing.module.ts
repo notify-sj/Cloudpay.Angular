@@ -4,6 +4,7 @@ import {MainComponent} from '@modules/main/main.component';
 import {DashboardComponent} from '@pages/dashboard/dashboard.component';
 import {AuthGuard} from '@guards/auth.guard';
 import { ProfileComponent } from '@pages/profile/profile.component';
+import { BlankComponent } from '@pages/blank/blank.component';
 
 const routes: Routes = [
     {
@@ -19,6 +20,10 @@ const routes: Routes = [
             {
                 path: 'profile',
                 component: ProfileComponent
+            },
+            {
+                path: 'blank',
+                component: BlankComponent
             }
         ]
     },

@@ -85,7 +85,7 @@ export class MenuItemComponent implements OnInit, OnChanges {
     }
 
     private activateMenu() {
-        let tab = new Tab(this.menuItem.id, this.menuItem.name, 
+        let tab = new Tab(this.menuItem.id, this.menuItem.name,
             this.menuItem.path, this.menuItem.isDefault);
         this.tabService.addTab(tab);
         this.router.navigate(this.menuItem.path);
@@ -93,11 +93,25 @@ export class MenuItemComponent implements OnInit, OnChanges {
 
     public toggleMenu() {
         this.isMenuExtended = !this.isMenuExtended;
+        console.log(this.menuItem);
     }
 
     public calculateIsActive(url: string) {
         this.isMainActive = false;
         this.isOneOfChildrenActive = false;
+        let menuState = this.menuItemService.getMenuState();
+        let activeIds = [];
+        if (menuState && menuState.activeIds.length > 0) {
+            activeIds = menuState.activeIds;
+        }
+
+        if (activeIds.filter(x => x === this.menuItem.id).length > 0) {
+            this.isMainActive = true;
+        }
+        else {
+            this.isMainActive = false;
+        }
+
         if (this.isExpandable) {
             this.menuItem.children.forEach((item) => {
                 if (item.path[0] === url) {
