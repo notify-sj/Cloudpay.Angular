@@ -1,38 +1,83 @@
 <div class="card card-primary card-outline">
-    <div class="card-body box-profile">
-        <div class="text-center">
-            <img
-            class="img-circle elevation-2"
-            style="width: 90px; height: 90px; cursor: pointer"
-            alt="User Image"
-                [src]="data?.emp_image"
-                alt="User profile picture"
-                rounded
-            />
-        </div>
-
-        <h3 class="profile-username text-center">
-            {{data?.emp_name}}
-        </h3>
-
-        <p class="text-muted text-center">Software Engineer</p>
-
-        <ul class="list-group list-group-unbordered mb-3">
-            <li class="list-group-item">
-                <b>Followers</b>
-                <a class="float-right">1,402</a>
-            </li>
-            <li class="list-group-item">
-                <b>Following</b> <a class="float-right">543</a>
-            </li>
-            <li class="list-group-item">
-                <b>Friends</b> <a class="float-right">13,287</a>
-            </li>
-        </ul>
-
-        <a href="#" class="btn btn-primary btn-block"
-            ><b>Follow</b></a
-        >
+  <div class="card-body box-profile">
+    <div class="text-center">
+      <img
+        class="img-circle elevation-2"
+        style="width: 90px; height: 90px; cursor: pointer"
+        alt="User Image"
+        [src]="data?.emp_image"
+        alt="User profile picture"
+        rounded
+      />
     </div>
-    <!-- /.card-body -->
+    <span
+      class="dot"
+      [ngClass]="{
+        'status-left':
+          userDetail?.emp_leftdate !== null && userDetail?.emp_leftdate !== '',
+        'status-active': userDetail?.emp_status === true,
+        'status-probation': userDetail?.emp_status === false
+      }"
+      [title]="
+      userDetail?.emp_leftdate !== null && userDetail?.emp_leftdate !== ''
+          ? 'Left'
+          : userDetail?.emp_status === true
+          ? 'Confirmed'
+          : userDetail?.emp_status === false
+          ? 'Probation'
+          : ''
+      "
+    ></span>
+
+    <h3 class="profile-username text-center">
+      {{ userDetail?.emp_name }}
+    </h3>
+
+    <p class="text-muted text-center" title="Designation">
+      {{ userDetail?.emp_designation }}
+    </p>
+
+    <table class="table">
+        <tr>
+            <td>
+                <b>Employee ID</b>
+            </td>
+            <td>
+                {{ userDetail?.emp_altid + (userDetail?.emp_subcode !== '' ? '('+userDetail?.emp_subcode+')' : '') }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Gender</b>
+            </td>
+            <td>
+                <i [ngClass]="userDetail?.emp_gender === 'M' ? 'fas fa-male' : 'fas fa-female'"></i>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Date of Birth</b>
+            </td>
+            <td>
+                {{ userDetail?.emp_dob }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Date of Joining</b>
+            </td>
+            <td>
+                {{ userDetail?.emp_joindate }}
+            </td>
+        </tr>
+        <tr *ngIf="userDetail?.emp_leftdate">
+            <td>
+                <b>Left Joining</b>
+            </td>
+            <td>
+                {{ userDetail?.emp_leftdate }}
+            </td>
+        </tr>
+    </table>
+  </div>
 </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
-import { EmployeeProfile } from '@/utils/employee-profile';
+import { EmployeeProfile, EmployeeProfileDetail } from '@/utils/employee-profile';
 import { Store } from '@ngrx/store';
 import { loadUserProfile } from '@/store/user/actions';
 import { LoginConfig } from '@/utils/login-config';
@@ -68,6 +68,15 @@ export class UserService {
         return new Promise<Array<Role>>((resolve) => {
             this.apiService.get<Array<Role>>(Endpoint.AssignedRoles).subscribe(roles => {
                 resolve(roles);
+            });
+        });
+    }
+
+    getProfileDetail(defaults?: EmployeeProfileDetail): Promise<EmployeeProfileDetail> {
+        return new Promise<EmployeeProfileDetail>((resolve) => {
+            this.apiService.get<EmployeeProfileDetail>(Endpoint.ProfileDetail).subscribe(profile => {
+                let userDetail = Object.assign({}, defaults || {}, profile || {});
+                resolve(userDetail);
             });
         });
     }

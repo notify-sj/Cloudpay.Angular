@@ -1,0 +1,30 @@
+p,
+h3 {
+  cursor: pointer;
+}
+a {
+  color: black;
+}
+
+.dot {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.status-active {
+  background-color: green;
+}
+
+.status-probation {
+  background-color: yellow;
+}
+
+.status-left {
+  background-color: red;
+}

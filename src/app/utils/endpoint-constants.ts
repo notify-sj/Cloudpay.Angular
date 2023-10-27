@@ -4,6 +4,7 @@ export enum Endpoint {
     SessionVariable,
     LoginConfig,
     Profile,
+    ProfileDetail,
     Notification,
     Menu,
     AssignedUnits,
@@ -31,6 +32,7 @@ export const Endpoints: Map<Endpoint, EndpointDetail> = new Map([
 Endpoints.set(Endpoint.SessionVariable, new EndpointDetail("admin", "admin/session", "Session"));
 Endpoints.set(Endpoint.LoginConfig, new EndpointDetail("hrms", "Employee/loginconfig", "Login Config"));
 Endpoints.set(Endpoint.Profile, new EndpointDetail("hrms", "Employee/Profile", "User Profile"));
+Endpoints.set(Endpoint.ProfileDetail, new EndpointDetail("hrms", "Employee/ProfileDetail", "User Profile Detail"));
 Endpoints.set(Endpoint.Notification, new EndpointDetail("notification", "Notification", "User Notification"));
 Endpoints.set(Endpoint.Menu, new EndpointDetail("admin", "admin/menu/Angular", "Menu"));
 Endpoints.set(Endpoint.AssignedUnits, new EndpointDetail("admin", "Admin/unit", "Assigned Units"));
