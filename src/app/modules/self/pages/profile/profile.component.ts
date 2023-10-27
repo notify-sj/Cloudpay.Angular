@@ -16,7 +16,7 @@ export class ProfileComponent {
     emp_image: string = "";
     emp_name: string = "";
     emp_email: string = "";
-    empData: EmployeeProfile = null;
+    emp_id: number = -1;
 
     constructor(private store: Store<AppState>) {
     }
@@ -24,12 +24,7 @@ export class ProfileComponent {
     ngOnInit(): void {
         this.user$ = this.store.pipe(select(selectUserState));
         this.user$.subscribe((user: EmployeeProfile) => {
-            this.empData = {
-                emp_image: getImage(user.emp_image),
-                emp_name: user.emp_name,
-                emp_id: user.emp_id,
-                emp_email: user.emp_email,
-            }
+            this.emp_id = user.emp_id;
         });
     }
 }

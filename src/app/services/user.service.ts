@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
-import { EmployeeProfile, EmployeeProfileDetail } from '@/utils/employee-profile';
+import { EmployeeAboutMeDetail, EmployeeProfile, EmployeeProfileDetail } from '@/utils/employee-profile';
 import { Store } from '@ngrx/store';
 import { loadUserProfile } from '@/store/user/actions';
 import { LoginConfig } from '@/utils/login-config';
@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Unit } from '@/utils/unit';
 import { AppConfigService } from './app-config.service';
 import { Role } from '@/utils/role';
+import { QueryParamType, Queryparams } from '@/utils/queryparams';
 
 @Injectable({
     providedIn: 'root'
@@ -72,10 +73,25 @@ export class UserService {
         });
     }
 
-    getProfileDetail(defaults?: EmployeeProfileDetail): Promise<EmployeeProfileDetail> {
+    getProfileDetail(id: number): Promise<EmployeeProfileDetail> {
+        let query = [
+            new Queryparams(QueryParamType.URL, "id", id)
+        ];
         return new Promise<EmployeeProfileDetail>((resolve) => {
-            this.apiService.get<EmployeeProfileDetail>(Endpoint.ProfileDetail).subscribe(profile => {
-                let userDetail = Object.assign({}, defaults || {}, profile || {});
+            this.apiService.get<EmployeeProfileDetail>(Endpoint.ProfileDetail, query).subscribe(profile => {
+                let userDetail = Object.assign({}, {}, profile || {});
+                resolve(userDetail);
+            });
+        });
+    }
+
+    getAboutMeDetail(id: number): Promise<EmployeeAboutMeDetail> {
+        let query = [
+            new Queryparams(QueryParamType.URL, "id", id)
+        ];
+        return new Promise<EmployeeAboutMeDetail>((resolve) => {
+            this.apiService.get<EmployeeAboutMeDetail>(Endpoint.AboutMeDetail, query).subscribe(profile => {
+                let userDetail = Object.assign({}, {}, profile || {});
                 resolve(userDetail);
             });
         });

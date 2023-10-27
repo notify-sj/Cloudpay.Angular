@@ -1,4 +1,5 @@
-import { EmployeeProfile, EmployeeProfileDetail } from '@/utils/employee-profile';
+import { getImage } from '@/utils/common-functions';
+import { EmployeeProfileDetail } from '@/utils/employee-profile';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { UserService } from '@services/user.service';
 
@@ -8,20 +9,20 @@ import { UserService } from '@services/user.service';
   styleUrls: ['./profile-card.component.scss']
 })
 export class ProfileCardComponent implements OnChanges {
-  @Input() data: EmployeeProfile = null;
+  @Input() id: number = -1;
   userDetail: EmployeeProfileDetail;
   constructor(private userService: UserService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes && this.data) {
+    if (changes && this.id >= 0) {
       this.getEmployeeDetail();
     }
   }
   getEmployeeDetail() {
-    this.userService.getProfileDetail().then((result) => {
-      console.log(result);
+    this.userService.getProfileDetail(this.id).then((result) => {
       this.userDetail = result;
+      this.userDetail.emp_image = getImage(this.userDetail.emp_image);
     });
   }
 

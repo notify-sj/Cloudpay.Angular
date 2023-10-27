@@ -7,8 +7,6 @@ import { BlankComponent } from './pages/blank/blank.component';
 import { SelfRoutingModule } from './self-routing.module';
 import { SharedModule } from '@modules/shared/shared.module';
 
-
-
 @NgModule({
   declarations: [
     DashboardComponent,

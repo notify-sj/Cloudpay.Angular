@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Observable, catchError, map, retry, throwError } from 'rxjs';
 import { SessionVariable } from '@/utils/session-variable';
 import { Result } from '@/utils/result';
 import { ToastrService } from 'ngx-toastr';
 import { Endpoint, EndpointDetail, Endpoints } from '@/utils/endpoint-constants';
+import { QueryParamType, Queryparams } from '@/utils/queryparams';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,9 @@ export class ApiService {
     return Endpoints.get(type) as EndpointDetail;
   }
 
-  private getApiUrl(type: Endpoint) {
+  private getApiUrl(type: Endpoint, urlParams: string = "") {
     let _endpoint = this.getEndpointDetail(type);
-    return this.getBaseUrl(_endpoint.type) + _endpoint.url;
+    return this.getBaseUrl(_endpoint.type) + _endpoint.url + (urlParams !== "" ? `/${urlParams}` : "");
   }
 
   private getBaseUrl(type: string) {
@@ -40,9 +41,22 @@ export class ApiService {
       .pipe(retry(1), catchError(err => this.errorHandler(err, _endpoint)));
   }
 
-  get<T>(_endpoint: Endpoint): Observable<T> {
+  get<T>(_endpoint: Endpoint, queryParams: Queryparams[] = []): Observable<T> {
+
+    const urlParams = queryParams
+      .filter(param => param.type === QueryParamType.URL)
+      .map(param => param.value)
+      .join('/');
+
+    let params = new HttpParams();
+    queryParams
+      .filter(param => param.type === QueryParamType.QUERY)
+      .forEach(param => {
+        params.set(param.key, param.value);
+      });
+
     return this.http
-      .get<Result<T>>(this.getApiUrl(_endpoint))
+      .get<Result<T>>(this.getApiUrl(_endpoint, urlParams), { params: params })
       .pipe(
         map((response: Result<T>) => response.data),
         retry(1),

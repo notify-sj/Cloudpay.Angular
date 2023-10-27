@@ -1,0 +1,30 @@
+<div class="card card-primary">
+  <div class="card-header">
+    <h3 class="card-title">
+      About {{ roleName === "SELF" ? "Me" : aboutMeDetail?.emp_altid }}
+    </h3>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <table class="table">
+      <tr *ngIf="aboutMeDetail?.emp_department">
+        <td>
+            <i class="fas fa-building mr-1"></i><b> Department</b>
+        </td>
+        <td>
+            {{ aboutMeDetail?.emp_department }}
+        </td>
+      </tr>
+      <tr *ngIf="aboutMeDetail?.emp_location">
+        <td>
+            <i class="fas fa-map-marker-alt mr-1"></i><b> Location</b>
+        </td>
+        <td>
+            {{ aboutMeDetail?.emp_location }}
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->
