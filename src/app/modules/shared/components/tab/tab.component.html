@@ -6,8 +6,8 @@
   aria-selected="true"
   >{{ tabData.label }}
   <a
-  [routerLink]="null"
   class="btn-iframe-close"
+  [class.show]="!tabData.isDefault"
   (click)="closeTab()"
 >
   <i class="fas fa-times"></i></a></a

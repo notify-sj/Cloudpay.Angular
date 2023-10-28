@@ -1,4 +1,4 @@
-import { Tab } from '@/utils/tab';
+import { Tab, TabType } from '@/utils/tab';
 import { Component, HostBinding, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { TabService } from '@services/tab.service';
@@ -35,7 +35,7 @@ export class TabComponent implements OnInit, OnDestroy, OnChanges {
   closeTab() {
     if (!this.tabData.isDefault) {
       let index = this.tabService.removeTab(this.tabData.id);
-      let d = this.tabService.getTab(--index);
+      let d = this.tabService.getTab(--index, TabType.MAIN);
       this.router.navigate(d.route);
     }
   }

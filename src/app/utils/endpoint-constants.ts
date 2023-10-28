@@ -11,7 +11,8 @@ export enum Endpoint {
     AssignedUnits,
     SwitchUnit,
     AssignedRoles,
-    SwitchRole
+    SwitchRole,
+    EmpTabs
 }
 
 export class EndpointDetail {
@@ -38,6 +39,7 @@ Endpoints.set(Endpoint.AboutMeDetail, new EndpointDetail("hrms", "Employee/About
 Endpoints.set(Endpoint.Notification, new EndpointDetail("notification", "Notification", "User Notification"));
 Endpoints.set(Endpoint.Menu, new EndpointDetail("admin", "admin/menu/Angular", "Menu"));
 Endpoints.set(Endpoint.AssignedUnits, new EndpointDetail("admin", "Admin/unit", "Assigned Units"));
+Endpoints.set(Endpoint.EmpTabs, new EndpointDetail("admin", "Admin/empTabs", "Employee Detail Tabs"));
 Endpoints.set(Endpoint.SwitchUnit, new EndpointDetail("admin", "Admin/switchUnit", "Switch Unit"));
 Endpoints.set(Endpoint.AssignedRoles, new EndpointDetail("admin", "Admin/role", "Assigned Role"));
 Endpoints.set(Endpoint.SwitchRole, new EndpointDetail("admin", "Admin/switchRole", "Switch Role"));

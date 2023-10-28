@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store';
 import { UserService } from '@services/user.service';
 import { Observable } from 'rxjs';
 
-const BASE_CLASSES = 'main-header navbar navbar-expand navbar-white navbar-light border-bottom-0';
+const BASE_CLASSES = 'main-header navbar navbar-expand navbar-white border-bottom-0';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     units: Array<Unit> = null;
     roles: Array<Role> = null;
     width: number = 0;
+    alignRight: number = 0;
 
     constructor(
         private appService: UserService,
@@ -40,12 +41,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     ) { }
 
     ngAfterViewInit(): void {
-        this.width = this.searchForm?.nativeElement.clientWidth;
-        if (isNaN(this.width))
-            this.width = 0;
-        this.width += this.userMenu.nativeElement.clientWidth;
+        this.alignRight = this.searchForm?.nativeElement.clientWidth;
+        if (isNaN(this.alignRight))
+            this.alignRight = 0;
+        this.alignRight += this.userMenu.nativeElement.clientWidth;
 
-        this.width = window.innerWidth - this.width;
+        this.width = window.innerWidth - this.alignRight;
         this.cdRef.detectChanges();
     }
 

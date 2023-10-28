@@ -1,24 +1,8 @@
 <a class="nav-link" (click)="onToggleMenuSidebar()" role="button"
   ><i class="fas fa-bars"></i
 ></a>
-<a
-  #prev
-  class="nav-link scroll-btn"
-  (click)="scroll(-scrollStep)"
-  [class.display]="isScrollable"
-  ><i class="fas fa-angle-double-left"></i
-></a>
-<ul class="navbar-nav overflow-hidden" #navbar>
-  <app-tab
-    [tabData]="tab"
-    *ngFor="let tab of tabs"
-    role="presentation"
-  ></app-tab>
-</ul>
-<a
-  #next
-  class="nav-link scroll-btn"
-  (click)="scroll(scrollStep)"
-  [class.display]="isScrollable"
-  ><i class="fas fa-angle-double-right"></i
-></a>
+<app-employee-navbar
+  [tabType]="tabType"
+  [width]="width - 200"
+  [alignRight]="alignRight + 8"
+></app-employee-navbar>

@@ -12,6 +12,7 @@ import { Unit } from '@/utils/unit';
 import { AppConfigService } from './app-config.service';
 import { Role } from '@/utils/role';
 import { QueryParamType, Queryparams } from '@/utils/queryparams';
+import { MenuItem, MenuItemDto } from '@/utils/menu-item';
 
 @Injectable({
     providedIn: 'root'
@@ -93,6 +94,14 @@ export class UserService {
             this.apiService.get<EmployeeAboutMeDetail>(Endpoint.AboutMeDetail, query).subscribe(profile => {
                 let userDetail = Object.assign({}, {}, profile || {});
                 resolve(userDetail);
+            });
+        });
+    }
+
+    getEmpTabs(): Promise<Array<MenuItemDto>> {
+        return new Promise<Array<MenuItemDto>>((resolve) => {
+            this.apiService.get<Array<MenuItemDto>>(Endpoint.EmpTabs).subscribe(tabs => {
+                resolve(tabs);
             });
         });
     }

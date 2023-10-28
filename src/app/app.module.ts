@@ -32,7 +32,6 @@ import { UnitsComponent } from './modules/main/header/units/units.component';
 import { RolesComponent } from './modules/main/header/roles/roles.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { LoadingComponent } from './components/loading/loading.component';
-import { TabComponent } from './components/tab/tab.component';
 import { NavbarComponent } from './modules/main/header/navbar/navbar.component';
 import { SelfModule } from '@modules/self/self.module';
 import { SharedModule } from '@modules/shared/shared.module';
@@ -62,7 +61,6 @@ function initApp(configService: AppConfigService) {
         RolesComponent,
         BreadcrumbComponent,
         LoadingComponent,
-        TabComponent,
         NavbarComponent
     ],
     imports: [

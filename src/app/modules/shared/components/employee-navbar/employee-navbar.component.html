@@ -1,0 +1,23 @@
+<a
+  #prev
+  class="nav-link scroll-btn"
+  (click)="scroll(-scrollStep)"
+  [class.display]="isScrollable && showPrev"
+  ><i class="fas fa-angle-double-left"></i
+></a>
+<ul class="navbar-nav overflow-hidden d-flex flex-nowrap " #navbar>
+    <app-tab
+      [tabData]="tab"
+      *ngFor="let tab of tabs"
+      role="presentation"
+      [class.active]="tab.active"
+      tabLink
+    ></app-tab>
+  </ul>
+  <a
+    #next
+    class="nav-link scroll-btn float-right"
+    (click)="scroll(scrollStep)"
+    [class.display]="isScrollable"
+    ><i class="fas fa-angle-double-right"></i
+  ></a>

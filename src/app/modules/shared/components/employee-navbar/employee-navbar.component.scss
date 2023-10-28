@@ -1,0 +1,22 @@
+
+.scroll-btn {
+    display: none;
+    /* Add styling for scroll buttons */
+    position: absolute; /* Absolute positioning for the "next" icon */
+    z-index: 1; /* Ensure the icon is above the scrollbar */
+    cursor: pointer; /* Add a pointer cursor for interaction */
+    background-color: rgba(255, 255, 255, 2); /* Background color for visibility */
+  }
+  
+  #prev {
+    margin-left: -15px;
+  }
+  
+  .display {
+    display: block !important; /* or display: inline-block; or any appropriate value */
+  }
+
+  .no-scroll {
+    /* Add styles to prevent scrolling here */
+    overflow-x: hidden; /* Example: Hide horizontal overflow */
+  }
