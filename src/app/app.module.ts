@@ -35,6 +35,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { NavbarComponent } from './modules/main/header/navbar/navbar.component';
 import { SelfModule } from '@modules/self/self.module';
 import { SharedModule } from '@modules/shared/shared.module';
+import { ProfileModule } from '@modules/profile/profile.module';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -79,7 +80,8 @@ function initApp(configService: AppConfigService) {
         NgbModule, 
         DataTablesModule,
         SelfModule,
-        SharedModule
+        SharedModule,
+        ProfileModule
     ],
     providers: [
         AppConfigService,

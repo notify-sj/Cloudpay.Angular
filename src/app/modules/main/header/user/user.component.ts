@@ -56,7 +56,7 @@ export class UserComponent extends HeaderChildComponent implements OnInit {
     }
 
     openProfile() {
-        const path = ['/' + this.ROLE_NAME.toLowerCase() + '/profile'];
+        const path = ['/profile'];
         const foundMenuItem = findMenuItemByPath(MENU, path) as MenuItem;
         let tab = new Tab(foundMenuItem.id, foundMenuItem.name, foundMenuItem.path, foundMenuItem.isDefault);
         this.tabService.addTab(tab);

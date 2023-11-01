@@ -20,3 +20,9 @@
     /* Add styles to prevent scrolling here */
     overflow-x: hidden; /* Example: Hide horizontal overflow */
   }
+
+  .activeTab {
+    background-color: #007bff !important;
+    color: white !important;
+    border-radius: 5px !important;
+  }

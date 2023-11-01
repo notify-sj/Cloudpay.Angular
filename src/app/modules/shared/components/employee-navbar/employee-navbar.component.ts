@@ -9,7 +9,7 @@ const BASE_CLASSES = 'navbar-nav';
   templateUrl: './employee-navbar.component.html',
   styleUrls: ['./employee-navbar.component.scss']
 })
-export class EmployeeNavbarComponent implements AfterViewInit, AfterContentChecked, OnInit, OnChanges {
+export class EmployeeNavbarComponent implements AfterContentChecked, OnChanges {
   @HostBinding('class') classes: string = BASE_CLASSES;
   @ViewChild('navbar') navbar: any;
   @ViewChild('next') nextBtn: any;
@@ -17,11 +17,13 @@ export class EmployeeNavbarComponent implements AfterViewInit, AfterContentCheck
   @Input() width: number;
   @Input() alignRight: number;
   @Input() tabType: TabType = TabType.MAIN;
+  @Input() setActive: boolean = false;
   scrollStep = 50; // Adjust the scroll step as needed
   navbarElement: HTMLElement;
   isScrollable: boolean = false;
   tabs: Tab[] = [];
   showPrev: boolean = false;
+  
 
   constructor(private tabService: TabService,
     private renderer: Renderer2,
@@ -34,12 +36,6 @@ export class EmployeeNavbarComponent implements AfterViewInit, AfterContentCheck
       this.renderer.setStyle(this.navbarElement, 'max-width', `${this.width}px`);
       this.renderer.setStyle(this.nextBtn.nativeElement, 'right', `${this.alignRight}px`);
     }
-  }
-
-  ngOnInit(): void {
-  }
-
-  ngAfterViewInit(): void {
   }
 
   ngAfterContentChecked(): void {

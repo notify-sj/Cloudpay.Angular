@@ -5,12 +5,12 @@
   [class.display]="isScrollable && showPrev"
   ><i class="fas fa-angle-double-left"></i
 ></a>
-<ul class="navbar-nav overflow-hidden d-flex flex-nowrap " #navbar>
+<ul class="navbar-nav overflow-hidden d-flex flex-nowrap" #navbar>
     <app-tab
       [tabData]="tab"
       *ngFor="let tab of tabs"
       role="presentation"
-      [class.active]="tab.active"
+      [class.activeTab]="tab.active"
       tabLink
     ></app-tab>
   </ul>

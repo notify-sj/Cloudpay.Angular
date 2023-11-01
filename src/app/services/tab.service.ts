@@ -17,7 +17,7 @@ export class TabService {
     }
   }
 
-  getTab(index: number, type:TabType): Tab {
+  getTab(index: number, type: TabType): Tab {
     return this.tabs.filter(x => x.type === type)[index];
   }
 
@@ -28,5 +28,14 @@ export class TabService {
       this.tabsMainSubject.next(this.tabs);
     }
     return index;
+  }
+
+  activeTab(tab: Tab) {
+    this.tabs.filter(x => x.type === tab.type).forEach(x => x.active = false);
+    const foundTab = this.tabs.find(t => t.id === tab.id);
+    if (foundTab) {
+      foundTab.active = true;
+    }
+    this.tabsMainSubject.next(this.tabs);
   }
 }

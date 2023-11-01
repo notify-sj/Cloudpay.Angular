@@ -37,8 +37,8 @@
       {{ userDetail?.emp_designation }}
     </p>
 
-    <table class="table">
-        <tr>
+    <table class="table table-responsive">
+        <tr class="text-truncate">
             <td>
                 <b>Employee ID</b>
             </td>
@@ -46,7 +46,7 @@
                 {{ userDetail?.emp_altid + (userDetail?.emp_subcode !== '' ? '('+userDetail?.emp_subcode+')' : '') }}
             </td>
         </tr>
-        <tr>
+        <tr class="text-truncate">
             <td>
                 <b>Gender</b>
             </td>
@@ -54,7 +54,7 @@
                 <i [ngClass]="userDetail?.emp_gender === 'M' ? 'fas fa-male' : 'fas fa-female'"></i>
             </td>
         </tr>
-        <tr>
+        <tr class="text-truncate">
             <td>
                 <b>Date of Birth</b>
             </td>
@@ -62,7 +62,7 @@
                 {{ userDetail?.emp_dob }}
             </td>
         </tr>
-        <tr>
+        <tr class="text-truncate">
             <td>
                 <b>Date of Joining</b>
             </td>
@@ -70,7 +70,7 @@
                 {{ userDetail?.emp_joindate }}
             </td>
         </tr>
-        <tr *ngIf="userDetail?.emp_leftdate">
+        <tr class="text-truncate" *ngIf="userDetail?.emp_leftdate">
             <td>
                 <b>Left Joining</b>
             </td>

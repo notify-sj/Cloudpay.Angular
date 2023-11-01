@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { ProfileComponent } from './pages/profile/profile.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { BlankComponent } from '@modules/shared/components/blank/blank.component';
 
 const routes: Routes = [
   {
@@ -9,8 +9,8 @@ const routes: Routes = [
     component: DashboardComponent
   },
   {
-    path: 'profile',
-    component: ProfileComponent
+    path: '**',
+    component: BlankComponent
   }
   // Define other routes for your submodule here
 ];

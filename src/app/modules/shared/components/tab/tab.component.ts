@@ -1,7 +1,8 @@
 import { Tab, TabType } from '@/utils/tab';
 import { Component, HostBinding, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { TabService } from '@services/tab.service';
+import { BehaviorSubject, filter } from 'rxjs';
 
 @Component({
   selector: 'app-tab',
@@ -16,8 +17,9 @@ export class TabComponent implements OnInit, OnDestroy, OnChanges {
   private classString: string = 'nav-item';
 
   @Input() tabData: Tab;
+  activeLink: string;
 
-  constructor(private tabService: TabService, private router: Router) { }
+  constructor(private tabService: TabService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && this.tabData)
@@ -25,9 +27,8 @@ export class TabComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
-
   }
-
+  
   ngOnDestroy(): void {
     this.tabService.removeTab(this.tabData.id);
   }
@@ -42,5 +43,6 @@ export class TabComponent implements OnInit, OnDestroy, OnChanges {
 
   activateTab() {
     this.router.navigate(this.tabData.route);
+    this.tabService.activeTab(this.tabData);
   }
 }

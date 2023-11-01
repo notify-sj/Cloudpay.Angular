@@ -6,8 +6,8 @@
   </div>
   <!-- /.card-header -->
   <div class="card-body">
-    <table class="table">
-      <tr *ngIf="aboutMeDetail?.emp_department">
+    <table class="table table-responsive">
+      <tr class="text-truncate" *ngIf="aboutMeDetail?.emp_department">
         <td>
             <i class="fas fa-building mr-1"></i><b> Department</b>
         </td>
@@ -15,7 +15,7 @@
             {{ aboutMeDetail?.emp_department }}
         </td>
       </tr>
-      <tr *ngIf="aboutMeDetail?.emp_location">
+      <tr class="text-truncate" *ngIf="aboutMeDetail?.emp_location">
         <td>
             <i class="fas fa-map-marker-alt mr-1"></i><b> Location</b>
         </td>

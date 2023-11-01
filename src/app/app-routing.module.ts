@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from '@modules/main/main.component';
 import { AuthGuard } from '@guards/auth.guard';
-import { BlankComponent } from '@pages/blank/blank.component';
 
 const routes: Routes = [
     {
@@ -16,8 +15,12 @@ const routes: Routes = [
                 loadChildren: () => import('@modules/self/self.module').then(m => m.SelfModule)
             },
             {
-                path: 'blank',
-                component: BlankComponent
+                path: 'shared',
+                loadChildren: () => import('@modules/shared/shared.module').then(m => m.SharedModule)
+            },
+            {
+                path: 'profile',
+                loadChildren: () => import('@modules/profile/profile.module').then(m => m.ProfileModule)
             },
             {
               path: '',
@@ -29,7 +32,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, {})],
+    imports: [RouterModule.forRoot(routes,  { enableTracing: true })],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }
