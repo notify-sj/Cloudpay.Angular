@@ -88,6 +88,7 @@ export class MenuItemComponent implements OnInit, OnChanges {
         let tab = new Tab(this.menuItem.id, this.menuItem.name,
             this.menuItem.path, this.menuItem.isDefault);
         this.tabService.addTab(tab);
+        this.tabService.activeTab(tab);
         this.router.navigate(this.menuItem.path);
     }
 

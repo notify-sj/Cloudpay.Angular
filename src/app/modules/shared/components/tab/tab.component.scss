@@ -29,3 +29,9 @@
 .show {
   display: block;
 }
+
+.nav-link.disabled {
+  color: white !important;
+  pointer-events: none;
+  cursor: default !important;
+}

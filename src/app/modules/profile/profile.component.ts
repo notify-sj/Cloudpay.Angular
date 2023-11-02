@@ -4,7 +4,7 @@ import { getImage } from '@/utils/common-functions';
 import { EmployeeProfile } from '@/utils/employee-profile';
 import { Tab, TabType } from '@/utils/tab';
 import { AfterContentChecked, AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { TabService } from '@services/tab.service';
 import { UserService } from '@services/user.service';
@@ -28,7 +28,8 @@ export class ProfileComponent implements OnInit, AfterContentChecked {
     constructor(private store: Store<AppState>,
         private userService: UserService,
         private tabService: TabService,
-        private router: Router) {
+        private router: Router,
+        private route: ActivatedRoute) {
     }
     ngAfterContentChecked(): void {
         this.width = this.tabArea?.nativeElement.clientWidth;
@@ -53,7 +54,6 @@ export class ProfileComponent implements OnInit, AfterContentChecked {
                 }
                 this.tabService.addTab(tab);
             });
-            
             this.router.navigate(firstTab.route);
             this.tabService.activeTab(firstTab);
         });
