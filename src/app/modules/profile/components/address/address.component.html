@@ -1,1 +1,161 @@
-address
+<div class="card card-primary">
+  <div class="card-header" style="cursor: pointer">
+    <h3 class="card-title">Permanent Address</h3>
+    <div class="float-right">
+      <i
+        id="fafatax"
+        class="fa fa-chevron-circle-down fa-lg"
+        (click)="Collapsed(true)"
+      ></i>
+    </div>
+  </div>
+  <div class="card-body" [class.collapse]="IsPermanentCollapsed">
+    <table class="table">
+      <tr>
+        <td colspan="4">
+          <label for="pAddr" class="form-label">Address</label>
+          <textarea class="form-control" id="pAddr" rows="3"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="pcountry" class="form-label">Country</label>
+          <select class="form-control" id="pcountry">
+            <option>Select</option>
+          </select>
+        </td>
+        <td>
+          <label for="pstate" class="form-label">State</label>
+          <select class="form-control" id="pstate">
+            <option>Select</option>
+          </select>
+        </td>
+        <td>
+          <label for="pcity" class="form-label">City</label>
+          <select class="form-control" id="pcity">
+            <option>Select</option>
+          </select>
+        </td>
+        <td>
+          <label for="ppin" class="form-label">Pin</label>
+          <input
+            type="text"
+            class="form-control"
+            id="ppin"
+            placeholder="Pincode"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="pmobile" class="form-label">Mobile</label>
+          <input
+            type="text"
+            class="form-control"
+            id="pmobile"
+            placeholder="Mobile No."
+          />
+        </td>
+        <td>
+          <label for="pphone" class="form-label">Phone</label>
+          <input
+            type="text"
+            class="form-control"
+            id="pphone"
+            placeholder="Phone No."
+          />
+        </td>
+        <td>
+          <label for="pemergphone" class="form-label">Emerg. No</label>
+          <input
+            type="text"
+            class="form-control"
+            id="pemergphone"
+            placeholder="Emerg. Contact No."
+          />
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="card card-primary">
+  <div class="card-header">
+    <h3 class="card-title">Mailing Address</h3>
+    <div class="float-right">
+      <i
+        id="fafatax"
+        class="fa fa-chevron-circle-down fa-lg"
+        (click)="Collapsed(false)"
+      ></i>
+    </div>
+  </div>
+  <div class="card-body" [class.collapse]="IsMailingCollapsed">
+    <table class="table">
+      <tr>
+        <td colspan="4">
+          <label for="mAddr" class="form-label">Address</label>
+          <textarea class="form-control" id="mAddr" rows="3"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="mcountry" class="form-label">Country</label>
+          <select class="form-control" id="mcountry">
+            <option>Select</option>
+          </select>
+        </td>
+        <td>
+          <label for="mstate" class="form-label">State</label>
+          <select class="form-control" id="mstate">
+            <option>Select</option>
+          </select>
+        </td>
+        <td>
+          <label for="mcity" class="form-label">City</label>
+          <select class="form-control" id="mcity">
+            <option>Select</option>
+          </select>
+        </td>
+        <td>
+          <label for="mpin" class="form-label">Pin</label>
+          <input
+            type="text"
+            class="form-control"
+            id="mpin"
+            placeholder="Pincode"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="mmobile" class="form-label">Mobile</label>
+          <input
+            type="text"
+            class="form-control"
+            id="mmobile"
+            placeholder="Mobile No."
+          />
+        </td>
+        <td>
+          <label for="mphone" class="form-label">Phone</label>
+          <input
+            type="text"
+            class="form-control"
+            id="mphone"
+            placeholder="Phone No."
+          />
+        </td>
+        <td>
+          <label for="memergphone" class="form-label">Emerg. No</label>
+          <input
+            type="text"
+            class="form-control"
+            id="memergphone"
+            placeholder="Emerg. Contact No."
+          />
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

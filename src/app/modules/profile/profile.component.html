@@ -1,37 +1,29 @@
 <section class="content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12 col-md-3">
-          <app-profile-card [id]="emp_id"></app-profile-card>
-          <app-about-me [id]="emp_id"></app-about-me>
-        </div>
-        <div class="col-xs-12 col-md-9" #tabArea>
-          <div class="card">
-            <div class="card-header border-bottom-0">
-              <ul class="navbar navbar-expand nav nav-tabs" role="tablist">
-                <app-employee-navbar
-                  [tabType]="tabType"
-                  [width]="width - 50"
-                  [alignRight]="-15"
-                  [setActive] = "true"
-                ></app-employee-navbar>
-              </ul>
-            </div>
-            <div class="card-body">              
-              <div role="tabpanel" class="tab-content tab-pane">
-                  <router-outlet></router-outlet>
-                </div>
-  
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-md-3">
+        <app-profile-card [id]="emp_id"></app-profile-card>
+        <app-about-me [id]="emp_id"></app-about-me>
+      </div>
+      <div class="col-xs-12 col-md-9" #tabArea>
+        <div class="card">
+          <div class="card-header border-bottom-0">
+            <ul class="navbar navbar-expand nav nav-tabs" role="tablist">
+              <app-employee-navbar
+                [tabType]="tabType"
+                [width]="width - 50"
+                [alignRight]="-15"
+                [setActive]="true"
+              ></app-employee-navbar>
+            </ul>
+          </div>
+          <div class="card-body">
+            <div role="tabpanel" class="tab-content tab-pane">
+              <router-outlet></router-outlet>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  
+  </div>
+</section>
