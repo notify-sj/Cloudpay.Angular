@@ -1,3 +1,19 @@
-table, tr, td {
-    border:0px !important;
+table,
+tr,
+td {
+  border: 0px !important;
+}
+.error-message {
+  color: red;
+  font-size: small;
+}
+
+select.placeholder {
+  color: #A39BA4;
+  cursor: pointer;
+}
+
+/* To style the select element when an option is chosen */
+select:not(.placeholder), select:not(.option) {
+  color: black;
 }

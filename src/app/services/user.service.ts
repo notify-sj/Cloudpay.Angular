@@ -13,6 +13,7 @@ import { AppConfigService } from './app-config.service';
 import { Role } from '@/utils/role';
 import { QueryParamType, Queryparams } from '@/utils/queryparams';
 import { MenuItem, MenuItemDto } from '@/utils/menu-item';
+import { MasterData } from '@/utils/master-data';
 
 @Injectable({
     providedIn: 'root'
@@ -165,4 +166,14 @@ export class UserService {
                     this.toastr.info(result.message, "Switch Role");
             });
     }
+
+    getMasterData(type: string, query: Queryparams[] = []): Promise<Array<MasterData>> {
+        query.push(new Queryparams(QueryParamType.URL, "dataSource", type));
+        return new Promise<Array<MasterData>>((resolve) => {
+            this.apiService.get<Array<MasterData>>(Endpoint.Master, query).subscribe(tabs => {
+                resolve(tabs);
+            });
+        });
+    }
+
 }

@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { Observable, catchError, map, retry, throwError } from 'rxjs';
+import { Observable, catchError, map, of, retry, tap, throwError } from 'rxjs';
 import { SessionVariable } from '@/utils/session-variable';
 import { Result } from '@/utils/result';
 import { ToastrService } from 'ngx-toastr';
 import { Endpoint, EndpointDetail, Endpoints } from '@/utils/endpoint-constants';
 import { QueryParamType, Queryparams } from '@/utils/queryparams';
+import { CacheService } from './cache.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  constructor(private http: HttpClient, private toaster: ToastrService) {
+  _useCache: boolean = false;
+  constructor(private http: HttpClient, private toaster: ToastrService,
+    private cacheService: CacheService) {
     this.errorHandler = this.errorHandler.bind(this);
   }
 
@@ -22,6 +25,7 @@ export class ApiService {
 
   private getApiUrl(type: Endpoint, urlParams: string = "") {
     let _endpoint = this.getEndpointDetail(type);
+    this._useCache = _endpoint.useCache;
     return this.getBaseUrl(_endpoint.type) + _endpoint.url + (urlParams !== "" ? `/${urlParams}` : "");
   }
 
@@ -29,36 +33,60 @@ export class ApiService {
     return environment[type];
   }
 
+  private getUrlParams(queryParams: Queryparams[]): string {
+    return queryParams
+      .filter(param => param.type === QueryParamType.URL)
+      .map(param => param.value)
+      .join('/');
+  }
+
+  private getHttpParams(queryParams: Queryparams[]): HttpParams {
+    let params = new HttpParams();
+    queryParams
+      .filter(param => param.type === QueryParamType.QUERY)
+      .forEach(param => {
+        params = params.set(param.key, param.value); // make sure to reassign
+      });
+    return params;
+  }
+
   getSessionVariable(_endpoint: Endpoint, token: string): Observable<SessionVariable> {
-    let httpOptions = {
+    const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'token': token
       }),
     };
-    return this.http
-      .get<SessionVariable>(this.getApiUrl(_endpoint), httpOptions)
-      .pipe(retry(1), catchError(err => this.errorHandler(err, _endpoint)));
+    return this.get<SessionVariable>(_endpoint, [], httpOptions.headers);
   }
 
-  get<T>(_endpoint: Endpoint, queryParams: Queryparams[] = []): Observable<T> {
+  get<T>(_endpoint: Endpoint,
+    queryParams: Queryparams[] = [],
+    headers: HttpHeaders = null
+  ): Observable<T> {
+    const url = this.getApiUrl(_endpoint, this.getUrlParams(queryParams));
+    const params = this.getHttpParams(queryParams);
+    const cacheKey = `${url}?${params.toString()}`;
 
-    const urlParams = queryParams
-      .filter(param => param.type === QueryParamType.URL)
-      .map(param => param.value)
-      .join('/');
+    const options: { params: HttpParams; headers?: HttpHeaders } = { params };
+    if (headers)
+      options.headers = headers;
 
-    let params = new HttpParams();
-    queryParams
-      .filter(param => param.type === QueryParamType.QUERY)
-      .forEach(param => {
-        params.set(param.key, param.value);
-      });
+    // Check cache first if useCache is true
+    if (this._useCache && this.cacheService.has(cacheKey)) {
+      return of(this.cacheService.get(cacheKey));
+    }
 
     return this.http
-      .get<Result<T>>(this.getApiUrl(_endpoint, urlParams), { params: params })
+      .get<Result<T>>(url, options)
       .pipe(
         map((response: Result<T>) => response.data),
+        tap(data => {
+          // Cache the result if useCache is true
+          if (this._useCache) {
+            this.cacheService.set(cacheKey, data);
+          }
+        }),
         retry(1),
         catchError(err => this.errorHandler(err, _endpoint))
       );

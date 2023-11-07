@@ -8,6 +8,7 @@ import { ProfileCardComponent } from './components/profile-card/profile-card.com
 import { AddressComponent } from './components/address/address.component';
 import { DocumentComponent } from './components/document/document.component';
 import { AboutMeComponent } from './components/about-me/about-me.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { AboutMeComponent } from './components/about-me/about-me.component';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     ProfileRoutingModule,
     SharedModule
   ]

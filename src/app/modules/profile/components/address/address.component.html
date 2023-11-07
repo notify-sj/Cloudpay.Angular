@@ -1,161 +1,264 @@
-<div class="card card-primary">
-  <div class="card-header" style="cursor: pointer">
-    <h3 class="card-title">Permanent Address</h3>
-    <div class="float-right">
-      <i
-        id="fafatax"
-        class="fa fa-chevron-circle-down fa-lg"
-        (click)="Collapsed(true)"
-      ></i>
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+  <div class="card card-primary">
+    <div class="card-header" style="cursor: pointer">
+      <h3 class="card-title">Permanent Address</h3>
+      <div class="float-right">
+        <i
+          id="fafatax"
+          class="fa fa-chevron-circle-down fa-lg"
+          (click)="collapsed(true)"
+          [@rotate]="IsPermanentCollapsed"
+        ></i>
+      </div>
+    </div>
+    <div class="card-body" [class.collapse]="IsPermanentCollapsed">
+      <table class="table">
+        <tr>
+          <td colspan="4">
+            <label for="pAddr" class="form-label">Address</label>
+            <textarea
+              class="form-control"
+              rows="3"
+              formControlName="pAddr"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="pCountry" class="form-label">Country</label>
+            <select
+              class="form-control"
+              #pCountry
+              formControlName="pCountry"
+              [class.placeholder]="!addressForm.controls.pCountry.value"
+              (change)="PopulatePState(pCountry.value)"
+            >
+              <option value="" selected>Select a Country</option>
+              <option *ngFor="let option of Country" [value]="option.id">
+                {{ option.text }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <label for="pState" class="form-label">State</label>
+            <select
+              class="form-control"
+              #pState
+              formControlName="pState"
+              [class.placeholder]="!addressForm.controls.pState.value"
+              (change)="PopulatePCity(pState.value)"
+            >
+              <option value="" disabled selected>Select a State</option>
+              <option *ngFor="let option of PState" [value]="option.id">
+                {{ option.text }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <label for="pCity" class="form-label">City</label>
+            <select
+              class="form-control"
+              formControlName="pCity"
+              [class.placeholder]="!addressForm.controls.pCity.value"
+            >
+              <option value="" disabled selected>Select a City</option>
+              <option *ngFor="let option of PCity" [value]="option.id">
+                {{ option.text }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <label for="pPin" class="form-label">Pin</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="pPin"
+              placeholder="Pincode"
+              minlength="6"
+              maxlength="6"
+              (input)="onNumInput($event)"
+            />
+            <div *ngIf="ispPinInvalid" class="error-message">
+              PIN must be exactly 6 digits.
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="pMobile" class="form-label">Mobile</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="pMobile"
+              placeholder="Mobile No."
+              minlength="10"
+              maxlength="10"
+              (input)="onNumInput($event)"
+            />
+          </td>
+          <td>
+            <label for="pPhone" class="form-label">Phone</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="pPhone"
+              placeholder="Phone No."
+              minlength="10"
+              maxlength="10"
+              (input)="onNumInput($event)"
+            />
+          </td>
+          <td>
+            <label for="pEmergPhone" class="form-label">Emerg. No</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="pEmergPhone"
+              placeholder="Emerg. Contact No."
+              minlength="10"
+              maxlength="10"
+              (input)="onNumInput($event)"
+            />
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
-  <div class="card-body" [class.collapse]="IsPermanentCollapsed">
-    <table class="table">
-      <tr>
-        <td colspan="4">
-          <label for="pAddr" class="form-label">Address</label>
-          <textarea class="form-control" id="pAddr" rows="3"></textarea>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <label for="pcountry" class="form-label">Country</label>
-          <select class="form-control" id="pcountry">
-            <option>Select</option>
-          </select>
-        </td>
-        <td>
-          <label for="pstate" class="form-label">State</label>
-          <select class="form-control" id="pstate">
-            <option>Select</option>
-          </select>
-        </td>
-        <td>
-          <label for="pcity" class="form-label">City</label>
-          <select class="form-control" id="pcity">
-            <option>Select</option>
-          </select>
-        </td>
-        <td>
-          <label for="ppin" class="form-label">Pin</label>
-          <input
-            type="text"
-            class="form-control"
-            id="ppin"
-            placeholder="Pincode"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <label for="pmobile" class="form-label">Mobile</label>
-          <input
-            type="text"
-            class="form-control"
-            id="pmobile"
-            placeholder="Mobile No."
-          />
-        </td>
-        <td>
-          <label for="pphone" class="form-label">Phone</label>
-          <input
-            type="text"
-            class="form-control"
-            id="pphone"
-            placeholder="Phone No."
-          />
-        </td>
-        <td>
-          <label for="pemergphone" class="form-label">Emerg. No</label>
-          <input
-            type="text"
-            class="form-control"
-            id="pemergphone"
-            placeholder="Emerg. Contact No."
-          />
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
 
-<div class="card card-primary">
-  <div class="card-header">
-    <h3 class="card-title">Mailing Address</h3>
-    <div class="float-right">
-      <i
-        id="fafatax"
-        class="fa fa-chevron-circle-down fa-lg"
-        (click)="Collapsed(false)"
-      ></i>
+  <div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title">Mailing Address</h3>
+      <div class="float-right">
+        <i
+          id="fafatax"
+          class="fa fa-chevron-circle-down fa-lg"
+          (click)="collapsed(false)"
+          [@rotate]="IsMailingCollapsed"
+        ></i>
+      </div>
+    </div>
+    <div class="card-body" [class.collapse]="IsMailingCollapsed">
+      <table class="table">
+        <tr>
+          <td colspan="4">
+            <label for="mAddr" class="form-label">Address</label>
+            <textarea
+              class="form-control"
+              rows="3"
+              formControlName="mAddr"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="mCountry" class="form-label">Country</label>
+            <select
+              class="form-control"
+              formControlName="mCountry"
+              #mCountry
+              [class.placeholder]="!addressForm.controls.mCountry.value"
+              (change)="PopulateMState(mCountry.value)"
+            >
+              <option value="" disabled selected>Select a Country</option>
+              <option *ngFor="let option of Country" [value]="option.id">
+                {{ option.text }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <label for="mState" class="form-label">State</label>
+            <select
+              class="form-control"
+              formControlName="mState"
+              #mState
+              [class.placeholder]="!addressForm.controls.mState.value"
+              (change)="PopulateMCity(mState.value)"
+            >
+              <option value="" disabled selected>Select a State</option>
+              <option *ngFor="let option of MState" [value]="option.id">
+                {{ option.text }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <label for="mCity" class="form-label">City</label>
+            <select
+              class="form-control"
+              formControlName="mCity"
+              [class.placeholder]="!addressForm.controls.mCity.value"
+            >
+              <option value="" disabled selected>Select a City</option>
+              <option *ngFor="let option of MCity" [value]="option.id">
+                {{ option.text }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <label for="mPin" class="form-label">Pin</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="mPin"
+              placeholder="Pincode"
+              minlength="6"
+              maxlength="6"
+              (input)="onNumInput($event)"
+            />
+            <div *ngIf="ismPinInvalid" class="error-message">
+              PIN must be exactly 6 digits.
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="mMobile" class="form-label">Mobile</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="mMobile"
+              placeholder="Mobile No."
+              minlength="10"
+              maxlength="10"
+              (input)="onNumInput($event)"
+            />
+          </td>
+          <td>
+            <label for="mPhone" class="form-label">Phone</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="mPhone"
+              placeholder="Phone No."
+              minlength="10"
+              maxlength="10"
+              (input)="onNumInput($event)"
+            />
+          </td>
+          <td>
+            <label for="mEmergPhone" class="form-label">Emerg. No</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="mEmergPhone"
+              placeholder="Emerg. Contact No."
+              minlength="10"
+              maxlength="10"
+              (input)="onNumInput($event)"
+            />
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
-  <div class="card-body" [class.collapse]="IsMailingCollapsed">
-    <table class="table">
-      <tr>
-        <td colspan="4">
-          <label for="mAddr" class="form-label">Address</label>
-          <textarea class="form-control" id="mAddr" rows="3"></textarea>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <label for="mcountry" class="form-label">Country</label>
-          <select class="form-control" id="mcountry">
-            <option>Select</option>
-          </select>
-        </td>
-        <td>
-          <label for="mstate" class="form-label">State</label>
-          <select class="form-control" id="mstate">
-            <option>Select</option>
-          </select>
-        </td>
-        <td>
-          <label for="mcity" class="form-label">City</label>
-          <select class="form-control" id="mcity">
-            <option>Select</option>
-          </select>
-        </td>
-        <td>
-          <label for="mpin" class="form-label">Pin</label>
-          <input
-            type="text"
-            class="form-control"
-            id="mpin"
-            placeholder="Pincode"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <label for="mmobile" class="form-label">Mobile</label>
-          <input
-            type="text"
-            class="form-control"
-            id="mmobile"
-            placeholder="Mobile No."
-          />
-        </td>
-        <td>
-          <label for="mphone" class="form-label">Phone</label>
-          <input
-            type="text"
-            class="form-control"
-            id="mphone"
-            placeholder="Phone No."
-          />
-        </td>
-        <td>
-          <label for="memergphone" class="form-label">Emerg. No</label>
-          <input
-            type="text"
-            class="form-control"
-            id="memergphone"
-            placeholder="Emerg. Contact No."
-          />
-        </td>
-      </tr>
-    </table>
+
+  <div class="card-footer text-center">
+    <button type="submit" class="btn btn-primary float-left">Save</button>
+    <button
+      type="button"
+      class="btn btn-outline-secondary float-right"
+      (click)="onReset()"
+    >
+      Reset
+    </button>
   </div>
-</div>
+</form>
