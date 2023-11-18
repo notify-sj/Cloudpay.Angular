@@ -14,6 +14,7 @@ import { Role } from '@/utils/role';
 import { QueryParamType, Queryparams } from '@/utils/queryparams';
 import { MenuItem, MenuItemDto } from '@/utils/menu-item';
 import { MasterData } from '@/utils/master-data';
+import { AddressDetail } from '@/utils/address-detail';
 
 @Injectable({
     providedIn: 'root'
@@ -98,6 +99,18 @@ export class UserService {
             });
         });
     }
+    
+    getAddressDetail(id: number): Promise<AddressDetail>  {
+        let query = [
+            new Queryparams(QueryParamType.URL, "id", id)
+        ];
+        return new Promise<AddressDetail>((resolve) => {
+            this.apiService.get<AddressDetail>(Endpoint.AddressDetail, query).subscribe(profile => {
+                let userDetail = Object.assign({}, {}, profile || {});
+                resolve(userDetail);
+            });
+        });
+      }
 
     getEmpTabs(): Promise<Array<MenuItemDto>> {
         return new Promise<Array<MenuItemDto>>((resolve) => {

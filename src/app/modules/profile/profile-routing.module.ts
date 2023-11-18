@@ -11,11 +11,11 @@ const routes: Routes = [
     component: ProfileComponent,
     children: [
       {
-        path: 'address',
+        path: 'address/:id',
         component: AddressComponent,
       },
       {
-        path: 'document',
+        path: 'document/:id',
         component: DocumentComponent,
       },
       {

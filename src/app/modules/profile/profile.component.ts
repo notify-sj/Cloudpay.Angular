@@ -48,6 +48,7 @@ export class ProfileComponent implements OnInit, AfterContentChecked {
             let _id = 100000;
             let firstTab;
             tabs.forEach(x => {
+                x.routePath = x.routePath.map(y => y + '/' + this.emp_id);
                 let tab = new Tab(++_id, x.name, x.routePath, x.isDefault, TabType.EMPLOYEE);
                 if (x.isDefault) {
                     firstTab = tab;

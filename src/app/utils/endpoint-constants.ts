@@ -6,6 +6,7 @@ export enum Endpoint {
     Profile,
     ProfileDetail,
     AboutMeDetail,
+    AddressDetail,
     Notification,
     Menu,
     AssignedUnits,
@@ -39,6 +40,7 @@ Endpoints.set(Endpoint.LoginConfig, new EndpointDetail("hrms", "Employee/loginco
 Endpoints.set(Endpoint.Profile, new EndpointDetail("hrms", "Employee/Profile", "User Profile", true));
 Endpoints.set(Endpoint.ProfileDetail, new EndpointDetail("hrms", "Employee/ProfileDetail", "User Profile Detail", true));
 Endpoints.set(Endpoint.AboutMeDetail, new EndpointDetail("hrms", "Employee/AboutMeDetail", "About Me Detail", true));
+Endpoints.set(Endpoint.AddressDetail, new EndpointDetail("hrms", "Employee/AddressDetail", "Address Detail", true));
 Endpoints.set(Endpoint.Notification, new EndpointDetail("notification", "Notification", "User Notification"));
 Endpoints.set(Endpoint.Menu, new EndpointDetail("admin", "admin/menu/Angular", "Menu", true));
 Endpoints.set(Endpoint.AssignedUnits, new EndpointDetail("admin", "Admin/unit", "Assigned Units", true));
@@ -46,5 +48,5 @@ Endpoints.set(Endpoint.EmpTabs, new EndpointDetail("admin", "Admin/empTabs", "Em
 Endpoints.set(Endpoint.SwitchUnit, new EndpointDetail("admin", "Admin/switchUnit", "Switch Unit"));
 Endpoints.set(Endpoint.AssignedRoles, new EndpointDetail("admin", "Admin/role", "Assigned Role", true));
 Endpoints.set(Endpoint.SwitchRole, new EndpointDetail("admin", "Admin/switchRole", "Switch Role"));
-Endpoints.set(Endpoint.Master, new EndpointDetail("admin", "Master/Data", "Master Data"));
+Endpoints.set(Endpoint.Master, new EndpointDetail("admin", "Master/Data", "Master Data", true));
 

@@ -1,9 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { openCloseAnimation, rotateAnimation } from './address.animation';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '@services/user.service';
 import { MasterData } from '@/utils/master-data';
 import { QueryParamType, Queryparams } from '@/utils/queryparams';
+import { AddressDetail } from '@/utils/address-detail';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-address',
@@ -12,7 +14,7 @@ import { QueryParamType, Queryparams } from '@/utils/queryparams';
   animations: [openCloseAnimation, rotateAnimation]
 })
 export class AddressComponent implements OnInit {
-  @Input() id: number = -1;
+  id: string;
   IsPermanentCollapsed: boolean = false;
   IsMailingCollapsed: boolean = true;
 
@@ -22,9 +24,11 @@ export class AddressComponent implements OnInit {
   MState: MasterData[];
   PCity: MasterData[];
   MCity: MasterData[];
+  addressDetail: AddressDetail;
 
   constructor(private fb: FormBuilder,
-    private userService: UserService) {
+    private userService: UserService,
+    private route: ActivatedRoute) {
     this.addressForm = this.fb.group({
       pAddr: ['', Validators.required],
       pCountry: ['', Validators.required],
@@ -87,11 +91,47 @@ export class AddressComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetMasterData('COUNTRY');
-    this.GetAddressData();
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.GetAddressData(parseInt(this.id));
   }
 
-  GetAddressData() {
-    throw new Error('Method not implemented.');
+  GetAddressData(id: number) {
+    this.userService.getAddressDetail(id).then((result) => {
+      this.addressDetail = result;
+      this.addressForm.patchValue({
+        pAddr: this.addressDetail.permanent.address,
+        pCountry: this.addressDetail.permanent.country,
+        pState: this.addressDetail.permanent.state,
+        pCity: this.addressDetail.permanent.city,
+        pPin: this.addressDetail.permanent.pincode,
+        pMobile: this.addressDetail.permanent.mobile,
+        pPhone: this.addressDetail.permanent.phone,
+        pEmergPhone: this.addressDetail.permanent.emergencycontact,
+
+        mAddr: this.addressDetail.mailing.address,
+        mCountry: this.addressDetail.mailing.country,
+        mState: this.addressDetail.mailing.state,
+        mCity: this.addressDetail.mailing.city,
+        mPin: this.addressDetail.mailing.pincode,
+        mMobile: this.addressDetail.mailing.mobile,
+        mPhone: this.addressDetail.mailing.phone,
+        mEmergPhone: this.addressDetail.mailing.emergencycontact
+      });
+
+      this.PopulatePState(parseInt(this.addressDetail.permanent.country)).then(x => {
+        this.getControl('pState').setValue(this.addressDetail.permanent.state);
+      });
+      this.PopulateMState(parseInt(this.addressDetail.mailing.country)).then(x => {
+        this.getControl('mState').setValue(this.addressDetail.mailing.state);
+      });
+
+      this.PopulatePCity(parseInt(this.addressDetail.permanent.state)).then(x => {
+        this.getControl('pCity').setValue(this.addressDetail.permanent.city);
+      });
+      this.PopulateMCity(parseInt(this.addressDetail.mailing.state)).then(x => {
+        this.getControl('mCity').setValue(this.addressDetail.mailing.city);
+      });
+    });
   }
 
   GetMasterData(type: string, query: Queryparams[] = []) {
@@ -131,32 +171,45 @@ export class AddressComponent implements OnInit {
     });
   }
 
-  PopulatePState(id: number) {
-    let query = [
-      new Queryparams(QueryParamType.QUERY, "id", id)
-    ];
-    this.GetMasterData('PSTATE', query);
+  PopulatePState(id: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      let query = [
+        new Queryparams(QueryParamType.QUERY, "id", id)
+      ];
+      this.GetMasterData('PSTATE', query);
+
+      resolve();
+    });
   }
 
-  PopulateMState(id: number) {
-    let query = [
-      new Queryparams(QueryParamType.QUERY, "id", id)
-    ];
-    this.GetMasterData('MSTATE', query);
+  PopulateMState(id: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      let query = [
+        new Queryparams(QueryParamType.QUERY, "id", id)
+      ];
+      this.GetMasterData('MSTATE', query);
+      resolve();
+    });
   }
 
-  PopulatePCity(id: number) {
-    let query = [
-      new Queryparams(QueryParamType.QUERY, "id", id)
-    ];
-    this.GetMasterData('PCITY', query);
+  PopulatePCity(id: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      let query = [
+        new Queryparams(QueryParamType.QUERY, "id", id)
+      ];
+      this.GetMasterData('PCITY', query);
+      resolve();
+    });
   }
 
-  PopulateMCity(id: number) {
-    let query = [
-      new Queryparams(QueryParamType.QUERY, "id", id)
-    ];
-    this.GetMasterData('MCITY', query);
+  PopulateMCity(id: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      let query = [
+        new Queryparams(QueryParamType.QUERY, "id", id)
+      ];
+      this.GetMasterData('MCITY', query);
+      resolve();
+    });
   }
 
   collapsed(IsPermanent: boolean) {
@@ -197,6 +250,6 @@ export class AddressComponent implements OnInit {
   }
 
   onReset() {
-
+    this.GetAddressData(parseInt(this.id));
   }
 }
