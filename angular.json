@@ -83,7 +83,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "cloudpay:build"
+            "browserTarget": "cloudpay:build",
+            "poll": 2000
           },
           "configurations": {
             "production": {

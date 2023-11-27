@@ -6,6 +6,7 @@ import { MasterData } from '@/utils/master-data';
 import { QueryParamType, Queryparams } from '@/utils/queryparams';
 import { AddressDetail } from '@/utils/address-detail';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-address',
@@ -25,9 +26,11 @@ export class AddressComponent implements OnInit {
   PCity: MasterData[];
   MCity: MasterData[];
   addressDetail: AddressDetail;
+  permission: any;
 
   constructor(private fb: FormBuilder,
     private userService: UserService,
+    private toastr: ToastrService,
     private route: ActivatedRoute) {
     this.addressForm = this.fb.group({
       pAddr: ['', Validators.required],
@@ -97,39 +100,47 @@ export class AddressComponent implements OnInit {
 
   GetAddressData(id: number) {
     this.userService.getAddressDetail(id).then((result) => {
-      this.addressDetail = result;
+      this.addressDetail = result.data;
+      this.permission = result.permission;
+
+      if (!this.permission?.["addressUpdate"]) {
+        this.addressForm.disable();
+      }
+      else {
+        this.addressForm.enable();
+      }
       this.addressForm.patchValue({
-        pAddr: this.addressDetail.permanent.address,
-        pCountry: this.addressDetail.permanent.country,
-        pState: this.addressDetail.permanent.state,
-        pCity: this.addressDetail.permanent.city,
-        pPin: this.addressDetail.permanent.pincode,
-        pMobile: this.addressDetail.permanent.mobile,
-        pPhone: this.addressDetail.permanent.phone,
-        pEmergPhone: this.addressDetail.permanent.emergencycontact,
+        pAddr: this.addressDetail.Permanent.address,
+        pCountry: this.addressDetail.Permanent.country,
+        pState: this.addressDetail.Permanent.state,
+        pCity: this.addressDetail.Permanent.city,
+        pPin: this.addressDetail.Permanent.pincode,
+        pMobile: this.addressDetail.Permanent.mobile,
+        pPhone: this.addressDetail.Permanent.phone,
+        pEmergPhone: this.addressDetail.Permanent.emergencycontact,
 
-        mAddr: this.addressDetail.mailing.address,
-        mCountry: this.addressDetail.mailing.country,
-        mState: this.addressDetail.mailing.state,
-        mCity: this.addressDetail.mailing.city,
-        mPin: this.addressDetail.mailing.pincode,
-        mMobile: this.addressDetail.mailing.mobile,
-        mPhone: this.addressDetail.mailing.phone,
-        mEmergPhone: this.addressDetail.mailing.emergencycontact
-      });
-
-      this.PopulatePState(parseInt(this.addressDetail.permanent.country)).then(x => {
-        this.getControl('pState').setValue(this.addressDetail.permanent.state);
-      });
-      this.PopulateMState(parseInt(this.addressDetail.mailing.country)).then(x => {
-        this.getControl('mState').setValue(this.addressDetail.mailing.state);
+        mAddr: this.addressDetail.Mailing.address,
+        mCountry: this.addressDetail.Mailing.country,
+        mState: this.addressDetail.Mailing.state,
+        mCity: this.addressDetail.Mailing.city,
+        mPin: this.addressDetail.Mailing.pincode,
+        mMobile: this.addressDetail.Mailing.mobile,
+        mPhone: this.addressDetail.Mailing.phone,
+        mEmergPhone: this.addressDetail.Mailing.emergencycontact
       });
 
-      this.PopulatePCity(parseInt(this.addressDetail.permanent.state)).then(x => {
-        this.getControl('pCity').setValue(this.addressDetail.permanent.city);
+      this.PopulatePState(parseInt(this.addressDetail.Permanent.country)).then(x => {
+        this.getControl('pState').setValue(this.addressDetail.Permanent.state);
       });
-      this.PopulateMCity(parseInt(this.addressDetail.mailing.state)).then(x => {
-        this.getControl('mCity').setValue(this.addressDetail.mailing.city);
+      this.PopulateMState(parseInt(this.addressDetail.Mailing.country)).then(x => {
+        this.getControl('mState').setValue(this.addressDetail.Mailing.state);
+      });
+
+      this.PopulatePCity(parseInt(this.addressDetail.Permanent.state)).then(x => {
+        this.getControl('pCity').setValue(this.addressDetail.Permanent.city);
+      });
+      this.PopulateMCity(parseInt(this.addressDetail.Mailing.state)).then(x => {
+        this.getControl('mCity').setValue(this.addressDetail.Mailing.city);
       });
     });
   }
@@ -246,7 +257,43 @@ export class AddressComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.addressForm.dirty) {
+      // Retrieve the form values
+      const formData = this.addressForm.value;
 
+      // Create an AddressDetail object from the form data
+      const addressDetail: AddressDetail = {
+        Permanent: {
+          address: formData.pAddr,
+          country: formData.pCountry,
+          state: formData.pState,
+          city: formData.pCity,
+          pincode: formData.pPin,
+          mobile: formData.pMobile,
+          phone: formData.pPhone,
+          emergencycontact: formData.pEmergPhone
+        },
+        Mailing: {
+          address: formData.mAddr,
+          country: formData.mCountry,
+          state: formData.mState,
+          city: formData.mCity,
+          pincode: formData.mPin,
+          mobile: formData.mMobile,
+          phone: formData.mPhone,
+          emergencycontact: formData.mEmergPhone
+        }
+      };
+
+      this.userService.UpdateAddress(parseInt(this.id), addressDetail).then(res => {
+        if (res) {
+          this.GetAddressData(parseInt(this.id));
+        }
+      });;
+    } else {
+      // The form has not been modified
+      this.toastr.info('No changes detected', "Employee Address");
+    }
   }
 
   onReset() {

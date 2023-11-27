@@ -12,9 +12,9 @@ import { Unit } from '@/utils/unit';
 import { AppConfigService } from './app-config.service';
 import { Role } from '@/utils/role';
 import { QueryParamType, Queryparams } from '@/utils/queryparams';
-import { MenuItem, MenuItemDto } from '@/utils/menu-item';
+import { MenuItemDto } from '@/utils/menu-item';
 import { MasterData } from '@/utils/master-data';
-import { AddressDetail } from '@/utils/address-detail';
+import { AddressDetail, AddressInformation } from '@/utils/address-detail';
 
 @Injectable({
     providedIn: 'root'
@@ -99,18 +99,18 @@ export class UserService {
             });
         });
     }
-    
-    getAddressDetail(id: number): Promise<AddressDetail>  {
+
+    getAddressDetail(id: number): Promise<AddressInformation> {
         let query = [
             new Queryparams(QueryParamType.URL, "id", id)
         ];
-        return new Promise<AddressDetail>((resolve) => {
-            this.apiService.get<AddressDetail>(Endpoint.AddressDetail, query).subscribe(profile => {
+        return new Promise<AddressInformation>((resolve) => {
+            this.apiService.get<AddressInformation>(Endpoint.AddressDetail, query).subscribe(profile => {
                 let userDetail = Object.assign({}, {}, profile || {});
                 resolve(userDetail);
             });
         });
-      }
+    }
 
     getEmpTabs(): Promise<Array<MenuItemDto>> {
         return new Promise<Array<MenuItemDto>>((resolve) => {
@@ -125,7 +125,7 @@ export class UserService {
             old_pass: value.currentPassword,
             new_pass: value.newPassword,
         };
-        this.apiService.put<BaseResult>(Endpoint.ChangePassword, data)
+        this.apiService.put<BaseResult>(Endpoint.ChangePassword, [], data)
             .subscribe((result: BaseResult) => {
                 if (result.status === "Success") {
                     this.toastr.success(result.message, "Change Password");
@@ -143,7 +143,7 @@ export class UserService {
             UNIT_ENTID: unit.UNIT_ENTID,
             UNIT_INIT: unit.UNIT_INIT,
         };
-        this.apiService.put<Result<number>>(Endpoint.SwitchUnit, data)
+        this.apiService.put<Result<number>>(Endpoint.SwitchUnit, [], data)
             .subscribe((result: Result<number>) => {
                 if (result.status === "Success") {
                     const url = new URL(window.location.href);
@@ -164,7 +164,7 @@ export class UserService {
             ROLE_NAME: role.ROLE_NAME,
             ROLE_ID: role.ROLE_ID,
         };
-        this.apiService.put<Result<string>>(Endpoint.SwitchRole, data)
+        this.apiService.put<Result<string>>(Endpoint.SwitchRole, [], data)
             .subscribe((result: Result<string>) => {
                 if (result.status === "Success") {
                     let data = {
@@ -178,6 +178,26 @@ export class UserService {
                 else
                     this.toastr.info(result.message, "Switch Role");
             });
+    }
+
+    UpdateAddress(id: number, addressDetail: AddressDetail): Promise<boolean> {
+        let query = [
+            new Queryparams(QueryParamType.URL, "id", id)
+        ];
+        return new Promise<boolean>((resolve) => {
+            this.apiService.put<Result<string>>(Endpoint.AddressDetail, query, addressDetail)
+                .subscribe((result: Result<string>) => {
+                    if (result.status === "Success") {
+                        this.toastr.success(result.message, "Employee Address");
+                        this.apiService.invalidateCache(Endpoint.AddressDetail, query);
+                        resolve(true);
+                    }
+                    else {
+                        this.toastr.info(result.message, "Employee Address");                        
+                        resolve(false);
+                    }
+                });
+        });
     }
 
     getMasterData(type: string, query: Queryparams[] = []): Promise<Array<MasterData>> {

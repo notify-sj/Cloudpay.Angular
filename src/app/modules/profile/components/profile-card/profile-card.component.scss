@@ -28,3 +28,16 @@ a {
 .status-left {
   background-color: red;
 }
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-item {
+  // flex: 0 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

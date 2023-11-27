@@ -4,26 +4,21 @@
       About {{ roleName === "SELF" ? "Me" : aboutMeDetail?.emp_altid }}
     </h3>
   </div>
-  <!-- /.card-header -->
   <div class="card-body">
-    <table class="table">
-      <tr class="text-truncate" *ngIf="aboutMeDetail?.emp_department">
-        <td>
-            <i class="fas fa-building mr-1"></i><b> Department</b>
-        </td>
-        <td>
-            {{ aboutMeDetail?.emp_department }}
-        </td>
-      </tr>
-      <tr class="text-truncate" *ngIf="aboutMeDetail?.emp_location">
-        <td>
-            <i class="fas fa-map-marker-alt mr-1"></i><b> Location</b>
-        </td>
-        <td>
-            {{ aboutMeDetail?.emp_location }}
-        </td>
-      </tr>
-    </table>
+    <ul class="list-group list-group-unbordered mb-3">
+      <li class="list-group-item flex-container"*ngIf="aboutMeDetail?.emp_department">
+        <b class="flex-item">Department</b>
+        <span class="flex-item float-right">
+          {{ aboutMeDetail?.emp_department }}
+        </span>
+      </li>
+      <li class="list-group-item flex-container"*ngIf="aboutMeDetail?.emp_location">
+        <b class="flex-item">Location</b>
+        <span class="flex-item float-right">
+          {{ aboutMeDetail?.emp_location }}
+        </span>
+      </li>
+    </ul>
   </div>
   <!-- /.card-body -->
 </div>

@@ -22,4 +22,8 @@ export class CacheService {
   has(key: string): boolean {
     return this.cache.has(key);
   }
+
+  invalidate(key: string): void {
+    this.cache.delete(key);
+  }
 }

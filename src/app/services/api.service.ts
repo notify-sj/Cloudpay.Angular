@@ -92,9 +92,16 @@ export class ApiService {
       );
   }
 
-  put<T>(_endpoint: Endpoint, data: any): Observable<T> {
+  put<T>(_endpoint: Endpoint,
+    queryParams: Queryparams[] = [],
+    data: any): Observable<T> {
+    const url = this.getApiUrl(_endpoint, this.getUrlParams(queryParams));
+    const params = this.getHttpParams(queryParams);
+
+    const options: { params: HttpParams; headers?: HttpHeaders } = { params };
+
     return this.http
-      .put<T>(this.getApiUrl(_endpoint), data)
+      .put<T>(url, data, options)
       .pipe(retry(1),
         catchError(err => this.errorHandler(err, _endpoint))
       );
@@ -115,5 +122,15 @@ export class ApiService {
     return throwError(() => {
       return errorMessage;
     });
+  }
+
+  invalidateCache(_endpoint: Endpoint, queryParams: Queryparams[] = []): void {
+    // Construct cache key for the address
+    const url = this.getApiUrl(_endpoint, this.getUrlParams(queryParams));
+    const params = this.getHttpParams(queryParams);
+    const cacheKey = `${url}?${params.toString()}`;
+
+    // Invalidate the cache using this key
+    this.cacheService.invalidate(cacheKey);
   }
 }

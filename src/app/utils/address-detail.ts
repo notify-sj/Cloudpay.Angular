@@ -9,7 +9,11 @@ export interface Address {
     emergencycontact?: string;
 }
 export interface AddressDetail {
-    permanent?: Address;
-    mailing?: Address;
+    Permanent?: Address;
+    Mailing?: Address;
     emergency?: Address;
+}
+export interface AddressInformation {
+    data?: AddressDetail;
+    permission?: any;
 }

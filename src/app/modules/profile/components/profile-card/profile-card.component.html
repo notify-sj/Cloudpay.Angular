@@ -19,7 +19,7 @@
         'status-probation': userDetail?.emp_status === false
       }"
       [title]="
-      userDetail?.emp_leftdate !== null && userDetail?.emp_leftdate !== ''
+        userDetail?.emp_leftdate !== null && userDetail?.emp_leftdate !== ''
           ? 'Left'
           : userDetail?.emp_status === true
           ? 'Confirmed'
@@ -36,48 +36,49 @@
     <p class="text-muted text-center" title="Designation">
       {{ userDetail?.emp_designation }}
     </p>
-
-    <table class="table">
-        <tr class="text-truncate">
-            <td>
-                <b>Employee ID</b>
-            </td>
-            <td>
-                {{ userDetail?.emp_altid + (userDetail?.emp_subcode !== '' ? '('+userDetail?.emp_subcode+')' : '') }}
-            </td>
-        </tr>
-        <tr class="text-truncate">
-            <td>
-                <b>Gender</b>
-            </td>
-            <td>
-                <i [ngClass]="userDetail?.emp_gender === 'M' ? 'fas fa-male' : 'fas fa-female'"></i>
-            </td>
-        </tr>
-        <tr class="text-truncate">
-            <td>
-                <b>Date of Birth</b>
-            </td>
-            <td>
-                {{ userDetail?.emp_dob }}
-            </td>
-        </tr>
-        <tr class="text-truncate">
-            <td>
-                <b>Date of Joining</b>
-            </td>
-            <td>
-                {{ userDetail?.emp_joindate }}
-            </td>
-        </tr>
-        <tr class="text-truncate" *ngIf="userDetail?.emp_leftdate">
-            <td>
-                <b>Left Joining</b>
-            </td>
-            <td>
-                {{ userDetail?.emp_leftdate }}
-            </td>
-        </tr>
-    </table>
+    <ul class="list-group list-group-unbordered mb-3">
+      <li class="list-group-item flex-container">
+        <b class="flex-item">Employee ID</b>
+        <span class="flex-item float-right">
+          {{
+            userDetail?.emp_altid +
+              (userDetail?.emp_subcode !== ""
+                ? "(" + userDetail?.emp_subcode + ")"
+                : "")
+          }}
+        </span>
+      </li>
+      <li class="list-group-item flex-container">
+        <b class="flex-item">Gender</b>
+        <span class="flex-item float-right">
+          <i
+            [ngClass]="
+              userDetail?.emp_gender === 'M' ? 'fas fa-male' : 'fas fa-female'
+            "
+          ></i>
+        </span>
+      </li>
+      <li class="list-group-item flex-container">
+        <b class="flex-item">Date of Birth</b>
+        <span class="flex-item float-right">
+          {{ userDetail?.emp_dob }}
+        </span>
+      </li>
+      <li class="list-group-item flex-container">
+        <b class="flex-item">Date of Joining</b>
+        <span class="flex-item float-right">
+          {{ userDetail?.emp_joindate }}
+        </span>
+      </li>
+      <li
+        class="list-group-item flex-container"
+        *ngIf="userDetail?.emp_leftdate"
+      >
+        <b class="flex-item">Left Date</b>
+        <span class="flex-item float-right">
+          {{ userDetail?.emp_leftdate }}
+        </span>
+      </li>
+    </ul>
   </div>
 </div>
