@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Observable, catchError, map, of, retry, tap, throwError } from 'rxjs';
 import { SessionVariable } from '@/utils/session-variable';
@@ -92,6 +92,39 @@ export class ApiService {
       );
   }
 
+  getFile(_endpoint: Endpoint,
+    queryParams: Queryparams[] = []): Observable<Blob> {
+    const url = this.getApiUrl(_endpoint, this.getUrlParams(queryParams));
+    const params = this.getHttpParams(queryParams) as HttpParams;
+
+    return this.http
+      .get<Blob>(url, {
+        params: params,
+        responseType: 'blob' as 'json'
+      }).pipe(
+        retry(1),
+        catchError(err => this.errorHandler(err, _endpoint))
+      );
+  }
+
+  post<T>(_endpoint: Endpoint,
+    queryParams: Queryparams[] = [],
+    data: any
+  ): Observable<T> {
+    const url = this.getApiUrl(_endpoint, this.getUrlParams(queryParams));
+    const params = this.getHttpParams(queryParams);
+
+    const options: { params: HttpParams; headers?: HttpHeaders } = { params };
+
+    return this.http
+      .post<T>(url, data, options)
+      .pipe(
+        map((response: Result<T>) => response.data),
+        retry(1),
+        catchError(err => this.errorHandler(err, _endpoint))
+      );
+  }
+
   put<T>(_endpoint: Endpoint,
     queryParams: Queryparams[] = [],
     data: any): Observable<T> {
@@ -102,6 +135,19 @@ export class ApiService {
 
     return this.http
       .put<T>(url, data, options)
+      .pipe(retry(1),
+        catchError(err => this.errorHandler(err, _endpoint))
+      );
+  }
+
+  delete(_endpoint: Endpoint, queryParams: Queryparams[] = []) {
+    const url = this.getApiUrl(_endpoint, this.getUrlParams(queryParams));
+    const params = this.getHttpParams(queryParams);
+
+    const options: { params: HttpParams; headers?: HttpHeaders } = { params };
+
+    return this.http
+      .delete(url, options)
       .pipe(retry(1),
         catchError(err => this.errorHandler(err, _endpoint))
       );

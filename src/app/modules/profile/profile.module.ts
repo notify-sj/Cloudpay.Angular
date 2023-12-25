@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { DataTablesModule } from 'angular-datatables';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 import { SharedModule } from '@modules/shared/shared.module';
@@ -23,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ReactiveFormsModule,
     ProfileRoutingModule,
-    SharedModule
+    SharedModule,
+    DataTablesModule
   ]
 })
 export class ProfileModule { }

@@ -16,3 +16,11 @@
   ); /* Change the color of the scrollbar thumb */
   border-radius: 5px; /* Round the corners of the thumb */
 }
+
+.btn-default:hover{
+  color: white;
+  background-color: #00C0EF;
+  -webkit-transition: background-color 1s ease;
+  -moz-transition: background-color 1s ease;
+  transition: background-color 1s ease;
+}

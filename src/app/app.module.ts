@@ -36,6 +36,7 @@ import { NavbarComponent } from './modules/main/header/navbar/navbar.component';
 import { SelfModule } from '@modules/self/self.module';
 import { SharedModule } from '@modules/shared/shared.module';
 import { ProfileModule } from '@modules/profile/profile.module';
+import { AdminModule } from '@modules/admin/admin.module';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -81,7 +82,8 @@ function initApp(configService: AppConfigService) {
         DataTablesModule,
         SelfModule,
         SharedModule,
-        ProfileModule
+        ProfileModule,
+        AdminModule
     ],
     providers: [
         AppConfigService,

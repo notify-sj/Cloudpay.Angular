@@ -1,0 +1,126 @@
+<form [formGroup]="assignmentForm" (ngSubmit)="onSubmit()">
+  <div class="card card-default">
+    <div class="card-header">
+      <div class="row form-group">
+        <div class="col-xs-12 col-md-3">
+          <label for="role" class="form-label">Role</label>
+          <select
+            class="form-control"
+            #role
+            formControlName="role"
+            (change)="PopulateEmployee(role.value)"
+          >
+            <option value="" selected>Select Role</option>
+            <option *ngFor="let option of Role" [value]="option.id">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+        <div class="col-xs-12 col-md-3">
+          <label for="employee" class="form-label">Employee</label>
+          <select
+            class="form-control"
+            #employee
+            formControlName="employee"
+            (change)="OnEmployeeChange()"
+          >
+            <option value="" selected>Select Employee</option>
+            <option *ngFor="let option of Employee" [value]="option.id">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card-body" [class.hide]="isHidden">
+      <div class="row form-group">
+        <div class="col-xs-12 col-md-5">
+          <label for="role" class="form-label">Organization Type</label>
+          <select
+            class="form-control listbox"
+            #orgType
+            multiple
+            formControlName="orgType"
+            (dblclick)="onItemDoubleClick(1)"
+          >
+            <option *ngFor="let option of OrgType" [value]="option.id">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+        <div class="col-xs-12 col-md-2 action">
+          <button class="btn btn-default" (click)="shift(2)" type="button">
+            <i class="fas fa-arrow-left"></i></button
+          ><br /><br />
+          <button class="btn btn-default" (click)="shift(1)" type="button">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+        <div class="col-xs-12 col-md-5">
+          <label for="role" class="form-label">Assigned Organization</label>
+          <select
+            class="form-control listbox"
+            #assignedOrg
+            multiple
+            formControlName="assignedOrg"
+            (dblclick)="onItemDoubleClick(2)"
+          >
+            <option *ngFor="let option of AOrgType" [value]="option.id">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-xs-12 col-md-5">
+          <label for="role" class="form-label">Organization Detail</label>
+          <select
+            class="form-control listbox"
+            #orgDetail
+            multiple
+            formControlName="orgDetail"
+            (dblclick)="onItemDoubleClick(3)"
+          >
+            <option *ngFor="let option of OrgDetail" [value]="option.id">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+        <div class="col-xs-12 col-md-2 action">
+          <button class="btn btn-default" (click)="shift(4)" type="button">
+            <i class="fas fa-arrow-left"></i></button
+          ><br /><br />
+          <button class="btn btn-default" (click)="shift(3)" type="button">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+        <div class="col-xs-12 col-md-5">
+          <label for="role" class="form-label"
+            >Assigned Organization Detail</label
+          >
+          <select
+            class="form-control listbox"
+            #assignedOrgDetail
+            multiple
+            formControlName="assignedOrgDetail"
+            (dblclick)="onItemDoubleClick(4)"
+          >
+            <option *ngFor="let option of AOrgDetail" [value]="option.id">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer" [class.hide]="isHidden">
+      <button type="submit" class="btn btn-primary float-left">Save</button>
+      <button
+        type="button"
+        class="btn btn-outline-secondary float-right"
+        (click)="onReset()"
+      >
+        Reset
+      </button>
+    </div>
+  </div>
+</form>

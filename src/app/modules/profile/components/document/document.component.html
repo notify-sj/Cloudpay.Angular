@@ -1,1 +1,41 @@
-<p>document works!</p>
+<div class="row form-group">
+  <div class="col-xs-12 col-sm-12">
+    <div class="table-responsive">
+      <table
+        datatable
+        [dtOptions]="dtOptions"
+        [dtTrigger]="dtTrigger"
+        class="table table-bordered table-hover"
+      >
+        <thead>
+          <tr>
+            <th>Document Name</th>
+            <th>Document Value</th>
+            <th>Applied Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let document of documents">
+            <td>{{ document.document_type }}</td>
+            <td>{{ document.document_value }}</td>
+            <td>{{ document.document_applieddate }}</td>
+            <td>
+              <div class="row">
+                <div class="col-xs-12 col-md-4">
+                  <i class="fas fa-file" (click)="view(document.rec_id, document.document_type, document.document_extension)"></i>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                  <i class="fas fa-edit" (click)="edit(document.rec_id)"></i>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                  <i class="fas fa-trash" (click)="delete(document.rec_id)"></i>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

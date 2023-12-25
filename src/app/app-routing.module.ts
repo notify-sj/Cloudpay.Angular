@@ -9,7 +9,7 @@ const routes: Routes = [
         component: MainComponent,
         canActivate: [AuthGuard],
         canActivateChild: [AuthGuard],
-        children: [            
+        children: [
             {
                 path: 'self',
                 loadChildren: () => import('@modules/self/self.module').then(m => m.SelfModule)
@@ -23,12 +23,22 @@ const routes: Routes = [
                 loadChildren: () => import('@modules/profile/profile.module').then(m => m.ProfileModule)
             },
             {
-              path: '',
-              redirectTo: '',
-              pathMatch: 'full'
+                path: 'admin',
+                loadChildren: () => import('@modules/admin/admin.module').then(m => m.AdminModule)
+            },
+            {
+                path: '',
+                redirectTo: '',
+                pathMatch: 'full'
             }
         ]
     },
+    {
+        path: 'system',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        loadChildren: () => import('@modules/admin/admin.module').then(m => m.AdminModule)
+    }
 ];
 
 @NgModule({

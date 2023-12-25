@@ -1,12 +1,16 @@
 
 export enum Endpoint {
+    AccessDetail,
     ChangePassword,
+    EmployeeByRole,
     SessionVariable,
     LoginConfig,
     Profile,
     ProfileDetail,
     AboutMeDetail,
     AddressDetail,
+    UserDocuments,
+    UserDocument,
     Notification,
     Menu,
     AssignedUnits,
@@ -41,6 +45,8 @@ Endpoints.set(Endpoint.Profile, new EndpointDetail("hrms", "Employee/Profile", "
 Endpoints.set(Endpoint.ProfileDetail, new EndpointDetail("hrms", "Employee/ProfileDetail", "User Profile Detail", true));
 Endpoints.set(Endpoint.AboutMeDetail, new EndpointDetail("hrms", "Employee/AboutMeDetail", "About Me Detail", true));
 Endpoints.set(Endpoint.AddressDetail, new EndpointDetail("hrms", "Employee/AddressDetail", "Address Detail", true));
+Endpoints.set(Endpoint.UserDocuments, new EndpointDetail("hrms", "Employee/Documents", "User Documents", true));
+Endpoints.set(Endpoint.UserDocument, new EndpointDetail("hrms", "Employee/Document", "User Documents", true));
 Endpoints.set(Endpoint.Notification, new EndpointDetail("notification", "Notification", "User Notification"));
 Endpoints.set(Endpoint.Menu, new EndpointDetail("admin", "admin/menu/Angular", "Menu", true));
 Endpoints.set(Endpoint.AssignedUnits, new EndpointDetail("admin", "Admin/unit", "Assigned Units", true));
@@ -49,4 +55,6 @@ Endpoints.set(Endpoint.SwitchUnit, new EndpointDetail("admin", "Admin/switchUnit
 Endpoints.set(Endpoint.AssignedRoles, new EndpointDetail("admin", "Admin/role", "Assigned Role", true));
 Endpoints.set(Endpoint.SwitchRole, new EndpointDetail("admin", "Admin/switchRole", "Switch Role"));
 Endpoints.set(Endpoint.Master, new EndpointDetail("admin", "Master/Data", "Master Data", true));
+Endpoints.set(Endpoint.EmployeeByRole, new EndpointDetail("hrms", "Employee/Role", "Employee By Role"));
+Endpoints.set(Endpoint.AccessDetail, new EndpointDetail("admin", "Admin/assignment", "Assignment Detail", false));
 
