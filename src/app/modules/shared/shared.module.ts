@@ -8,6 +8,7 @@ import { TabComponent } from './components/tab/tab.component';
 import { AddressComponent } from '../profile/components/address/address.component';
 import { DocumentComponent } from '../profile/components/document/document.component';
 import { BlankComponent } from './components/blank/blank.component';
+import { DualListboxComponent } from './components/dual-listbox/dual-listbox.component';
 
 
 
@@ -16,7 +17,8 @@ import { BlankComponent } from './components/blank/blank.component';
     ModalComponent,
     EmployeeNavbarComponent,
     TabComponent,
-    BlankComponent
+    BlankComponent,
+    DualListboxComponent
   ],
   imports: [
     CommonModule
@@ -24,7 +26,8 @@ import { BlankComponent } from './components/blank/blank.component';
   exports: [
     ModalComponent,
     EmployeeNavbarComponent,
-    TabComponent
+    TabComponent,
+    DualListboxComponent
   ]
 })
 export class SharedModule { }

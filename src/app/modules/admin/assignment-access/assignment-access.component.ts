@@ -19,6 +19,7 @@ export class AssignmentAccessComponent implements OnInit {
   AOrgType: MasterData[] = [];
   OrgDetail: MasterData[] = [];
   AOrgDetail: MasterData[] = [];
+  OrgdetIds: Array<number> = [];
   isHidden: boolean = true;
   /**
    *
@@ -39,8 +40,8 @@ export class AssignmentAccessComponent implements OnInit {
     this.GetMasterData('ROLE');
   }
 
-  GetMasterData(type: string, query: Queryparams[] = []) {
-    this.userService.getMasterData(type, query).then(res => {
+  GetMasterData(type: string, query: Queryparams[] = []): Promise<void> {
+    return this.userService.getMasterData(type, query).then(res => {
       if (type === "ROLE")
         this.Role = res;
       else if (type === "ORGANISATION")
@@ -49,6 +50,20 @@ export class AssignmentAccessComponent implements OnInit {
         this.OrgDetail = res;
     });
   }
+
+  onOrgTypeChanged(event: any) {
+    this.OrgType = event.left;
+    this.AOrgType = event.right;
+
+    this.OrgdetIds = this.AOrgDetail.map(x => x.id);
+    this.UpdateDataSource();
+  }
+
+  onOrgDetailChanged(event: { left: any[], right: any[] }) {
+    this.OrgDetail = event.left;
+    this.AOrgDetail = event.right;
+  }
+
 
   PopulateEmployee(id: number): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -63,93 +78,20 @@ export class AssignmentAccessComponent implements OnInit {
     });
   }
 
-  reset() {
-    this.AOrgType.forEach(x => {
-      this.setData(2, x.id, false);
-    });
-    this.UpdateDataSource();
-  }
-
-  private getSource(type) {
-    switch (type) {
-      case 1:
-        return [this.OrgType, this.AOrgType];
-      case 2:
-        return [this.AOrgType, this.OrgType];
-
-      case 3:
-        return [this.OrgDetail, this.AOrgDetail];
-      case 4:
-        return [this.AOrgDetail, this.OrgDetail];
-
-    }
-  }
-
   getControl(id) {
     return this.assignmentForm.get(id);
   }
 
-  private getControlType(type: number) {
-    switch (type) {
-      case 1: return this.getControl('orgType');
-      case 2: return this.getControl('assignedOrg');
-      case 3: return this.getControl('orgDetail');
-      case 4: return this.getControl('assignedOrgDetail');
-      default: return null; // Default or fallback case
-    }
-  }
-
-  shift(type: number) {
-    let control = this.getControlType(type);
-    if (control) {
-      let selectedValues = control.value;
-      if (selectedValues.length > 0) {
-        selectedValues.forEach(x => {
-          this.setData(type, parseInt(x), false);
-        });
-
-        if ((type == 1 || type == 2))
-          this.UpdateDataSource();
-      }
-    }
-  }
-
-  onItemDoubleClick(type: number) {
-    let control = this.getControlType(type);
-    if (control) {
-      let value = control.value;
-      this.setData(type, value[0]);
-    }
-  }
-
-  setData(type: number, id: number, updateData: boolean = true) {
-    let [source, destination] = this.getSource(type);
-    const index = source.findIndex(item => item.id == id);
-    if (index > -1) {
-      const [item] = source.splice(index, 1);
-      destination.push(item);
-
-      // Update the component's properties to reflect the changes
-      this.updateSource(type, source, destination);
-
-      if (updateData && (type == 1 || type == 2)) {
-        this.UpdateDataSource();
-        if (type == 2) {
-          this.AOrgDetail = this.AOrgDetail.filter(ad => this.AOrgType.some(at => at.id?.toString() === ad.value));
-        }
-      }
-    }
-  }
-
-  UpdateDataSource(AOrgData: Array<number> = []) {
+  UpdateDataSource() {
     if (this.AOrgType.length > 0) {
       let data = this.AOrgType.map(x => ({ id: x.id }));
       this.userService.getMasterDataPost("ORGANISATIONDETAIL", data).then(res => {
         this.OrgDetail = res;
-        if (AOrgData.length > 0) {
-          AOrgData.forEach(x => {
-            this.setData(3, x, false);
-          });
+
+        if (this.OrgdetIds.length > 0) {
+          this.AOrgDetail = this.OrgDetail.filter(y => this.OrgdetIds.some(z => z == y.id));
+          this.OrgDetail = this.OrgDetail.filter(y => !this.OrgdetIds.some(z => z == y.id));
+          this.OrgdetIds = [];
         }
       });
     } else {
@@ -158,41 +100,29 @@ export class AssignmentAccessComponent implements OnInit {
     }
   }
 
-  private updateSource(type: number, source: MasterData[], destination: MasterData[]) {
-    switch (type) {
-      case 1:
-        this.OrgType = source;
-        this.AOrgType = destination;
-        break;
-      case 2:
-        this.AOrgType = source;
-        this.OrgType = destination;
-        break;
-      case 3:
-        this.OrgDetail = source;
-        this.AOrgDetail = destination;
-        break;
-      case 4:
-        this.AOrgDetail = source;
-        this.OrgDetail = destination;
-        break;
-    }
-  }
-
   OnEmployeeChange() {
     let control = this.getControl('employee');
     if (control) {
       let value = control.value;
       if (value != "") {
+        this.OrgType = [];
+        this.AOrgType = [];
+        this.OrgDetail = [];
+        this.AOrgDetail = [];
         this.isHidden = false;
-        this.userService.getEmployeeAccessDetail(parseInt(value), parseInt(this.getControl('role').value)).then(res => {
-          this.reset();
-          let OrgIds = res.map(org => org.OrgId);
-          OrgIds.forEach(x => {
-            this.setData(1, parseInt(x), false);
+        this.GetMasterData('ORGANISATION').then(x => {
+          this.userService.getEmployeeAccessDetail(parseInt(value), parseInt(this.getControl('role').value)).then(res => {
+            let OrgIds = res.map(org => org.OrgId);
+            OrgIds.forEach(orgId => {
+              const index = this.OrgType.findIndex(item => item.id == orgId);
+              if (index > -1) {
+                const [item] = this.OrgType.splice(index, 1);
+                this.AOrgType.push(item);
+              }
+            });
+            this.OrgdetIds = res.map(org => org.OrgDetIds).flat();
+            this.UpdateDataSource();
           });
-          let OrgdetIds = res.map(org => org.OrgDetIds).flat();
-          this.UpdateDataSource(OrgdetIds);
         });
       }
       else

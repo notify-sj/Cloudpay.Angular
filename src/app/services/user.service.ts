@@ -272,7 +272,7 @@ export class UserService {
         query.push(new Queryparams(QueryParamType.URL, "dataSource", type));
         return new Promise<Array<MasterData>>((resolve) => {
             this.apiService.get<Array<MasterData>>(Endpoint.Master, query).subscribe(tabs => {
-                resolve(tabs);
+                resolve(Object.assign([], [], tabs || []));
             });
         });
     }

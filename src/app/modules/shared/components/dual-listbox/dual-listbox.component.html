@@ -1,0 +1,37 @@
+<div class="dual-listbox row">
+  <!-- Left List -->
+  <div class="listbox col-xs-12 col-md-5">
+    <div class="listbox-header">{{leftHeader}}</div>
+    <ul>
+      <li
+        *ngFor="let item of leftItems"
+        [class.selected]="selectedLeftItems.includes(item)"
+        (click)="selectItem(item, 'left')"
+        (dblclick)="moveItemOnDoubleClick(item, 'right')"
+      >
+        {{ item.text }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="actions col-xs-12 col-md-2">
+    <button type="button" class="btn btn-default" (click)="moveSelected('right')"><i class="fas fa-arrow-right"></i></button><br /><br />
+    <button type="button" class="btn btn-default" (click)="moveSelected('left')"><i class="fas fa-arrow-left"></i></button>
+  </div>
+
+  <!-- Right List -->
+  <div class="listbox col-xs-12 col-md-5">
+    <div class="listbox-header">{{rightHeader}}</div>
+    <ul>
+      <li
+        *ngFor="let item of rightItems"
+        [class.selected]="selectedRightItems.includes(item)"
+        (click)="selectItem(item, 'right')"
+        (dblclick)="moveItemOnDoubleClick(item, 'left')"
+      >
+        {{ item.text }}
+      </li>
+    </ul>
+  </div>
+</div>

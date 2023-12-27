@@ -33,82 +33,22 @@
       </div>
     </div>
     <div class="card-body" [class.hide]="isHidden">
+
       <div class="row form-group">
-        <div class="col-xs-12 col-md-5">
-          <label for="role" class="form-label">Organization Type</label>
-          <select
-            class="form-control listbox"
-            #orgType
-            multiple
-            formControlName="orgType"
-            (dblclick)="onItemDoubleClick(1)"
-          >
-            <option *ngFor="let option of OrgType" [value]="option.id">
-              {{ option.text }}
-            </option>
-          </select>
-        </div>
-        <div class="col-xs-12 col-md-2 action">
-          <button class="btn btn-default" (click)="shift(2)" type="button">
-            <i class="fas fa-arrow-left"></i></button
-          ><br /><br />
-          <button class="btn btn-default" (click)="shift(1)" type="button">
-            <i class="fas fa-arrow-right"></i>
-          </button>
-        </div>
-        <div class="col-xs-12 col-md-5">
-          <label for="role" class="form-label">Assigned Organization</label>
-          <select
-            class="form-control listbox"
-            #assignedOrg
-            multiple
-            formControlName="assignedOrg"
-            (dblclick)="onItemDoubleClick(2)"
-          >
-            <option *ngFor="let option of AOrgType" [value]="option.id">
-              {{ option.text }}
-            </option>
-          </select>
+        <div class="col-xs-12 col-md-12">
+          <app-dual-listbox [leftItems]="OrgType" [rightItems]="AOrgType" 
+          [leftHeader]="'Organisation Type'" 
+          [rightHeader]="'Assigned Organisation '"
+          (itemsMoved)="onOrgTypeChanged($event)"></app-dual-listbox>
         </div>
       </div>
+
       <div class="row form-group">
-        <div class="col-xs-12 col-md-5">
-          <label for="role" class="form-label">Organization Detail</label>
-          <select
-            class="form-control listbox"
-            #orgDetail
-            multiple
-            formControlName="orgDetail"
-            (dblclick)="onItemDoubleClick(3)"
-          >
-            <option *ngFor="let option of OrgDetail" [value]="option.id">
-              {{ option.text }}
-            </option>
-          </select>
-        </div>
-        <div class="col-xs-12 col-md-2 action">
-          <button class="btn btn-default" (click)="shift(4)" type="button">
-            <i class="fas fa-arrow-left"></i></button
-          ><br /><br />
-          <button class="btn btn-default" (click)="shift(3)" type="button">
-            <i class="fas fa-arrow-right"></i>
-          </button>
-        </div>
-        <div class="col-xs-12 col-md-5">
-          <label for="role" class="form-label"
-            >Assigned Organization Detail</label
-          >
-          <select
-            class="form-control listbox"
-            #assignedOrgDetail
-            multiple
-            formControlName="assignedOrgDetail"
-            (dblclick)="onItemDoubleClick(4)"
-          >
-            <option *ngFor="let option of AOrgDetail" [value]="option.id">
-              {{ option.text }}
-            </option>
-          </select>
+        <div class="col-xs-12 col-md-12">
+          <app-dual-listbox [leftItems]="OrgDetail" [rightItems]="AOrgDetail" 
+          [leftHeader]="'Organisation Detail'" 
+          [rightHeader]="'Assigned Organisation Detail'"
+          (itemsMoved)="onOrgDetailChanged($event)"></app-dual-listbox>
         </div>
       </div>
     </div>
