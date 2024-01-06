@@ -1,6 +1,6 @@
 export const environment = {
     production: true,    
-    admin: 'http://localhost/Admin/api/',
-    hrms:'http://localhost/HRMS/api/',
-    notification:'http://localhost/Notification/api/'
+    admin: 'https://api.smartperks.in/Admin/api/',
+    hrms:'https://api.smartperks.in/Hrms/api/',
+    notification:'https://api.smartperks.in/Notification/api/'
 };
